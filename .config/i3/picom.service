@@ -1,0 +1,17 @@
+[Unit]
+Description=Picom compositor
+
+After=graphical.target multi-user.target
+Wants=graphical.target
+
+StartLimitIntervalSec=500
+StartLimitBurst=5
+
+[Service]
+Restart=on-failure
+RestartSec=5s
+
+ExecStart=/usr/bin/picom --config=/home/guesswhatbbq/.config/i3/picom.conf --experimental-backends
+
+[Install]
+WantedBy=multi-user.target

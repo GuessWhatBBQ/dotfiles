@@ -1,0 +1,320 @@
+[colors]
+bg_transparent = "#bb1f141f"
+bg_opaque = "#1f141f"
+bg_current = ${colors.bg_opaque}
+
+shade1 = #4A148C
+shade2 = #6A1B9A
+shade3 = #7B1FA2
+shade4 = #8E24AA
+shade5 = #9C27B0
+shade6 = #AB47BC
+shade7 = #BA68C8
+shade8 = #CE93D8
+
+modulefg = #ffffff
+
+[bar/bottombar]
+font-0 = "TerminessTTF Nerd Font:size=10;2"
+font-1 = "TerminessTTF Nerd Font:size=17;4"
+monitor =
+include-file = /home/guesswhatbbq/.config/i3/polybar/bottombar
+
+background = ${colors.bg_current}
+foreground = #ffffff
+
+modules-left = i3 title
+modules-center =
+modules-right = memory cpu temp battery
+
+[bar/topbar]
+monitor =
+
+background = ${colors.bg_current}
+include-file = /home/guesswhatbbq/.config/i3/polybar/topbar
+foreground = #ffffff
+
+modules-left = wlan eth speed
+modules-center = date
+modules-right = player-mpris-tail pulseaudio volume_settings
+
+
+[bar/notif_bar]
+include-file = /home/guesswhatbbq/.config/i3/polybar/notif_bar
+
+background = ${colors.shade1}
+foreground = "#ffffff"
+
+modules-left = dummymodule
+
+[module/dummymodule]
+type = custom/text
+content = " "
+
+[module/left]
+type = custom/text
+content-background = ${colors.bg_current}
+content-foreground = ${colors.shade2}
+content = "%{T2} %{T-}"
+content-padding = 0
+
+[module/right]
+type = custom/text
+content-background = ${colors.bg_current}
+content-foreground = ${colors.shade3}
+content-padding = 0
+content = "%{T2} %{T-}"
+
+[module/player-mpris-tail]
+type = custom/script
+exec = player-mpris-tail --icon-playing "" --icon-paused "" -f 'ﱘ  {:artist:t100:{artist}:}{:artist: - :}{:t80:{title}:}%{A1:player-mpris-tail previous:}   %{A}%{A1:player-mpris-tail play-pause:}{icon-reversed}%{A}%{A1:player-mpris-tail next:}  %{A}'
+tail = true
+format-foreground = ${colors.shade7}
+
+[module/xbacklight]
+type = internal/xbacklight
+;card = intel_backlight
+output = eDP-1
+format = <ramp> <bar>
+
+ramp-0 = 
+ramp-0-foreground = #666
+ramp-1 = 
+ramp-1-foreground = #999
+ramp-2 = 
+ramp-2-foreground = #fff
+
+bar-width = 12
+bar-indicator = |
+bar-indicator-font = 6
+bar-indicator-foreground = #bbffffff
+bar-fill = ─
+bar-fill-font = 6
+bar-fill-foreground = #9f78e1
+bar-empty = ─
+bar-empty-font = 6
+bar-empty-foreground = #44
+
+[module/volume_settings]
+type = custom/text
+content = "   "
+click-left = pavucontrol &
+
+[module/memory]
+type = internal/memory
+internal = 5
+format = "<label> "
+format-background = ${colors.shade4}
+format-prefix = "   "
+label = "%mb_used:6%"
+
+[module/cpu]
+type = internal/cpu
+internal = 1
+
+format = "<label>% "
+format-prefix = " ﬙ "
+format-background = ${colors.shade4}
+
+label =  %percentage:2%
+
+
+;[module/system-usb-udev]
+;type = custom/script
+;exec = /home/guesswhatbbq/.config/i3/polybar/system-usb-udev.sh
+;tail = true
+;click-left = /home/guesswhatbbq/.config/i3/polybar/system-usb-udev.sh --mount &
+;click-right = /home/guesswhatbbq/.config/i3/polybar/system-usb-udev.sh --unmount &
+
+[module/date]
+type = internal/date
+interval = 1
+date = %a %d %b
+time = %l:%M:%S %p
+label = %date% %time%
+label-font = 2
+format-padding = 0
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ACAD
+poll-interval = 2
+
+format-discharging = "<label-discharging> "
+format-discharging-prefix = "  "
+label-discharging = %percentage%% (%time%)
+format-discharging-background = ${colors.shade2}
+
+format-charging = "<label-charging> "
+format-charging-prefix = "  "
+label-charging = %percentage%% (%time%)
+format-charging-background = ${colors.shade2}
+
+format-full = "<label-full> "
+format-full-prefix = "  "
+label-full =  Fully Charged
+format-full-background = ${colors.shade2}
+
+time-format = %H:%M
+
+[module/temp]
+type = internal/temperature
+interval = 1
+thermal-zone = 6
+
+format = "<ramp> <label> "
+format-background = ${colors.shade2}
+label = %temperature-c%
+
+base-temperature = 30
+warn-temperature = 90
+
+ramp-0 = " "
+ramp-1 = " "
+ramp-2 = " "
+ramp-3 = " "
+ramp-4 = " "
+ramp-5 = " "
+ramp-6 = " "
+
+[module/wlan]
+type = internal/network
+interface = wlo1
+interval = 5
+label-connected = "  直  %essid%"
+label-disconnected = "  睊  Wifi Disconnected "
+content-padding = 0
+
+[module/eth]
+type = internal/network
+interface = enp0s20f0u1
+interval = 5
+
+format-connected = <label-connected>
+format-connected-prefix = "  "
+label-connected = "Ethernet Connected"
+
+format-disconnected-prefix = "  "
+format-disconnected = <label-disconnected>
+label-disconnected = Ethernet Disconnected
+
+[module/speed]
+type = internal/network
+interface = wlo1
+interval = 1
+accumulate-stats = true
+label-connected = " %downspeed:10%  %upspeed:10%"
+label-disconnected = " %downspeed:10%  %upspeed:10%"
+format-padding = 0
+
+[module/pulseaudio]
+type = internal/pulseaudio
+sink = alsa_output.pci-0000_00_1b.0.analog-stereo
+interval = 5
+format-volume = "<ramp-volume>  <label-volume>"
+format-muted = "  婢  Muted"
+ramp-volume-0 = "  "
+ramp-volume-1 = "  墳"
+ramp-volume-2 ="  "
+
+[module/mpd]
+type = internal/mpd
+interval = 2
+format-online = <icon-prev> <toggle> <icon-next> <label-song>
+label-song = %artist% - %title%
+label-song-maxlen = 20
+label-song-ellipsis = true
+format-online-foreground = "#bd93f9"
+label-offline = ﱘ Offline
+format-offline = <label-offline>
+icon-play = 契
+icon-pause = 
+icon-stop = 栗
+icon-prev = 玲
+icon-next = 怜
+format-padding = 2
+
+[module/title]
+type = internal/xwindow
+format = <label>
+label = " %title:0:80:...% "
+format-font = 0
+label-foreground = ${colors.modulefg}
+label-background = ${colors.shade2}
+
+label-empty-foreground = ${colors.shade1}
+
+[module/notifications]
+type = custom/text
+content = 
+click-left = kill -s USR1 $(pidof deadd-notification-center)
+
+;[module/updates]
+;type = custom/script
+;exec = /home/guesswhatbbq/.config/i3/polybar/updates.sh
+;tail = true
+;interval = 5
+
+[module/powermenu]
+type = custom/menu
+expand-left = true
+menu-0-0 = "   Poweroff"
+menu-0-0-exec = shutdown now
+menu-0-1 = "勒  Reboot"
+menu-0-1-exec = shutdown -r now
+menu-0-2 = "   Logout"
+menu-0-2-exec = i3-msg exit
+menu-0-3 = "  Lock"
+menu-0-3-exec = /home/guesswhatbbq/.config/i3/i3-lock/lockscreen.sh
+format-spacing = 1
+format-padding = 2
+label-open = ⏻
+label-close = " "
+label-separator = |
+
+[module/i3]
+type = internal/i3
+pin-workspace = false
+index-sort = true
+enable-click = true
+enable-scroll = true
+wrapping-scroll = false
+reverse-scroll = true
+
+format = <label-state> <label-mode>
+
+label-focused ="%name%:%icon% "
+label-focused-padding = 1
+label-focused-foreground = ${colors.modulefg}
+label-focused-background = ${colors.shade2}
+
+label-unfocused ="%name%:%icon% "
+label-unfocused-padding = 1
+label-unfocused-foreground = ${colors.modulefg}
+label-unfocused-background = ${colors.shade1}
+
+
+label-visible ="%name%:%icon% "
+label-visible-padding = 1
+label-visible-foreground = ${colors.modulefg}
+label-visible-background = ${colors.shade5}
+
+label-mode = %mode%
+label-mode-padding = 1
+label-mode-foreground = ${colors.modulefg}
+label-mode-background = ${colors.shade5}
+
+label-urgent ="%name%:%icon% "
+label-urgent-padding = 1
+label-urgent-foreground = ${colors.modulefg}
+label-urgent-background = ${colors.shade5}
+
+ws-icon-0 = "1;"
+ws-icon-1 = "2;"
+ws-icon-2 = "3;"
+ws-icon-3 = "4;"
+ws-icon-4 = "5;阮"
+ws-icon-5 = "6;ﭮ"
+ws-icon-6 = "10;"
+ws-icon-default = ""
