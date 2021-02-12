@@ -27,7 +27,6 @@ i3-msg -t subscribe -m '[ "window" ]' |
             sed "s/$transparent_str/$opaque_str/" "$config_file" > "${tmpfile}"
             cat ${tmpfile} > "$config_file"
             rm -f ${tmpfile}
-
         fi
         if [ $window_count -ne 1 ] && [ $opaque -eq 1 ]; then
             tmpfile=$(mktemp)
