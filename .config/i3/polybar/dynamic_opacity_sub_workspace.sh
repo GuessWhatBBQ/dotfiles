@@ -24,6 +24,9 @@ i3-msg -t subscribe -m '[ "workspace" ]' |
         if [ $window_count -ne 1 ] && [ $opaque -eq 1 ];
         then
 #           setting to transparent
-            sed "s/$opaque_str/$transparent_str/" "$config_file" <> "$config_file"
+            tmpfile=$(mktemp)
+            sed "s/$opaque_str/$transparent_str/" "$config_file" > "${tmpfile}"
+            cat ${tmpfile} > "$config_file"
+            rm -f ${tmpfile}
         fi
     done

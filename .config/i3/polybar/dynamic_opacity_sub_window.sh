@@ -23,10 +23,17 @@ i3-msg -t subscribe -m '[ "window" ]' |
         let workspace_number=$workspace_number+1
 
         if [ $window_count -eq 1 ] && [ $opaque -eq 0 ]; then
-            sed "s/$transparent_str/$opaque_str/" "$config_file" <> "$config_file"
+            tmpfile=$(mktemp)
+            sed "s/$transparent_str/$opaque_str/" "$config_file" > "${tmpfile}"
+            cat ${tmpfile} > "$config_file"
+            rm -f ${tmpfile}
+
         fi
         if [ $window_count -ne 1 ] && [ $opaque -eq 1 ]; then
-            sed "s/$opaque_str/$transparent_str/" "$config_file" <> "$config_file"
+            tmpfile=$(mktemp)
+            sed "s/$opaque_str/$transparent_str/" "$config_file" > "${tmpfile}"
+            cat ${tmpfile} > "$config_file"
+            rm -f ${tmpfile}
         fi
         if [ "$current_gaps" == "5 5 5 5 5 5" ] || [ "$current_gaps" == "0 0 0 0 0 0 5 5 5 5 5 5" ] && [ $window_count -eq 1 ]; then
           i3-msg gaps inner current minus 5
