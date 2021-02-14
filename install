@@ -1,15 +1,29 @@
 #!/usr/bin/bash
 
-exclude=("bin" "systemd" ".gitignore" ".git" "$(echo $0 | cut -c3-)")
+backup_dir="$HOME/.config/config.bak"
+exclude=("bin" "systemd" ".gitignore" ".git" "$(echo ${0##*/})")
 
+# Ensuring the script is always run relative to the correct directory
+cd $(dirname $0)
+
+# Setting up globs
+shopt -s extglob dotglob
+GLOBIGNORE=".:.."
+
+# Checking whether the backup_dir exists and creating it if it doesn't
+if [ ! -d "$backup_dir" ]
+then
+    mkdir $backup_dir
+fi
+
+# Creating string patterns for the cp command to ignore
 for string in ${exclude[@]}; do
     exclude_string="$exclude_string|$string"
 done
 exclude_string=$(echo $exclude_string | cut -c2-)
 
-shopt -s extglob dotglob
-GLOBIGNORE=".:.."
-echo ./!($exclude_string)
+# Cleaning up old config files
+find .config -mindepth 1 -maxdepth 1 -type d -exec cp -afr $HOME/{} $backup_dir \; -exec rm -rf $HOME/{} \;
 
 # Copying .config/* files and .rc files
 cp -flav ./!($exclude_string) $HOME/
