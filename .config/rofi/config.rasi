@@ -6,7 +6,7 @@ configuration {
 	show-icons: true;
 	icon-theme: "Papirus-Dark";
 	fake-transparency: true;
-	theme: "/home/guesswhatbbq/.config/i3/rofi/blurry.rasi";
+	theme: "blurry.rasi";
 /*	width: 50;*/
 /*	columns: 1;*/
 /*	bw: 1;*/

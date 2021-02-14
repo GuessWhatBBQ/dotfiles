@@ -5,7 +5,7 @@ transparent_str="bg_current = \${colors.bg_transparent}"
 # String to set for opacity
 opaque_str="bg_current = \${colors.bg_opaque}"
 # Config file location
-config_file="/home/guesswhatbbq/.config/i3/polybar/config"
+config_file="/home/guesswhatbbq/.config/polybar/config"
 
 let hidden=1
 i3-msg -t subscribe -m '[ "workspace" ]' |

@@ -18,7 +18,7 @@ modulefg = #ffffff
 font-0 = "TerminessTTF Nerd Font:size=10;2"
 font-1 = "TerminessTTF Nerd Font:size=17;4"
 monitor =
-include-file = /home/guesswhatbbq/.config/i3/polybar/bottombar
+include-file = /home/guesswhatbbq/.config/polybar/bars/bottombar
 
 background = ${colors.bg_current}
 foreground = #ffffff
@@ -31,7 +31,7 @@ modules-right = memory cpu temp battery
 monitor =
 
 background = ${colors.bg_current}
-include-file = /home/guesswhatbbq/.config/i3/polybar/topbar
+include-file = /home/guesswhatbbq/.config/polybar/bars/topbar
 foreground = #ffffff
 
 modules-left = wlan eth speed
@@ -40,7 +40,7 @@ modules-right = player-mpris-tail pulseaudio volume_settings
 
 
 [bar/notif_bar]
-include-file = /home/guesswhatbbq/.config/i3/polybar/notif_bar
+include-file = /home/guesswhatbbq/.config/polybar/bars/notif_bar
 
 background = ${colors.shade1}
 foreground = "#ffffff"
@@ -121,10 +121,10 @@ label =  %percentage:2%
 
 ;[module/system-usb-udev]
 ;type = custom/script
-;exec = /home/guesswhatbbq/.config/i3/polybar/system-usb-udev.sh
+;exec = /home/guesswhatbbq/.config/polybar/system-usb-udev.sh
 ;tail = true
-;click-left = /home/guesswhatbbq/.config/i3/polybar/system-usb-udev.sh --mount &
-;click-right = /home/guesswhatbbq/.config/i3/polybar/system-usb-udev.sh --unmount &
+;click-left = /home/guesswhatbbq/.config/polybar/system-usb-udev.sh --mount &
+;click-right = /home/guesswhatbbq/.config/polybar/system-usb-udev.sh --unmount &
 
 [module/date]
 type = internal/date
@@ -252,7 +252,7 @@ click-left = kill -s USR1 $(pidof deadd-notification-center)
 
 ;[module/updates]
 ;type = custom/script
-;exec = /home/guesswhatbbq/.config/i3/polybar/updates.sh
+;exec = /home/guesswhatbbq/.config/polybar/updates.sh
 ;tail = true
 ;interval = 5
 

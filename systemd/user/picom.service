@@ -11,7 +11,7 @@ StartLimitBurst=5
 Restart=on-failure
 RestartSec=5s
 
-ExecStart=/usr/bin/picom --config=/home/guesswhatbbq/.config/i3/picom.conf --experimental-backends
+ExecStart=/usr/bin/picom --config=/home/guesswhatbbq/.config/picom/picom.conf --experimental-backends
 
 [Install]
 WantedBy=multi-user.target

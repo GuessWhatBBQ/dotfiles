@@ -14,15 +14,15 @@ rm $(ls /tmp/polybar*) /tmp/notif_bar /tmp/bottombar /tmp/topbar
 
 # Launch Polybar, using default config location ~/.config/polybar/config
 
-polybar --config=$HOME/.config/i3/polybar/config notif_bar &
+polybar --config=$HOME/.config/polybar/config notif_bar &
 ln -s /tmp/polybar_mqueue.$! /tmp/notif_bar
 sleep 0.1
 
-polybar --config=$HOME/.config/i3/polybar/config -r bottombar &
+polybar --config=$HOME/.config/polybar/config -r bottombar &
 ln -s /tmp/polybar_mqueue.$! /tmp/bottombar
 sleep 0.1
 
-polybar --config=$HOME/.config/i3/polybar/config -r topbar &
+polybar --config=$HOME/.config/polybar/config -r topbar &
 ln -s /tmp/polybar_mqueue.$! /tmp/topbar
 sleep 0.1
 
@@ -33,5 +33,5 @@ sleep 0.1
 
 echo "Polybar launched..."
 
-/home/guesswhatbbq/.config/i3/polybar/dynamic_opacity_sub_workspace.sh &
-/home/guesswhatbbq/.config/i3/polybar/dynamic_opacity_sub_window.sh &
+/home/guesswhatbbq/.config/polybar/dynamic-opacity-scripts/dynamic_opacity_sub_workspace.sh &
+/home/guesswhatbbq/.config/polybar/dynamic-opacity-scripts/dynamic_opacity_sub_window.sh &
