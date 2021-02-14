@@ -1,0 +1,96 @@
+#!/usr/bin/bash
+
+declare -a commands=(
+"nmcli networking off"
+"sudo systemctl stop NetworkManager"
+"sudo ip link set wlo1 down"
+"sudo modprobe -r ath10k_pci"
+"sleep 1"
+"sudo modprobe ath10k_pci"
+"sleep 1"
+"sudo ip link set wlo1 up"
+"sudo systemctl start NetworkManager"
+"nmcli networking on")
+
+#Default parameters
+ignore_errors=0
+smoothing_time=0.0
+log_file=/dev/null
+
+function printCharNTimes () {
+	#Appends a character to the string for a certain number of times
+	for j in $(seq 0 $1)
+	do
+		progressbar=${progressbar}"$2"
+	done
+}
+
+while getopts 'it:l:' PARAMS; do
+  case "$PARAMS" in
+	i)
+		ignore_errors=1
+		;;
+	t)
+		smoothing_time=$OPTARG
+		if [ $(echo "$smoothing_time < 0" | bc -l) -eq 1 ]
+		then
+			echo "Negative values not supported for -t"
+			exit 1
+		fi
+		;;
+	l)
+		log_file=$OPTARG
+		;;
+	?)
+		echo "script usage: $(basename $0) [-i ignore_errors] [-t smoothing_time] [-l log_file]" >&2
+		exit 1
+		;;
+  esac
+done
+
+let blocks=${#commands[@]}
+let barsize=($(tput cols) - 20)
+let blocksize=($barsize+$blocks-1)/$blocks
+
+for i in $(seq 0 $(($blocks-1)));
+do
+	# Create progress bar and update it every iteration
+
+    let hashes=($blocksize*$i - 1)
+    let dots=($barsize-$hashes-1)
+
+    progressbar=""
+    printCharNTimes $hashes "#"
+    printCharNTimes $dots "."
+
+    let percentage=($i*100)/$blocks
+    printf "Progress: [%3d%%] [%s]\r" "$percentage" "$progressbar"
+    sleep $smoothing_time;
+
+    # Run each command in array and redirect all output to log_file
+    $(${commands[$i]} >> $log_file 2>&1)
+
+    retval=$?
+
+    #Check for errors and exit in case of failure
+    if [ $retval -ne 0 ]
+    then
+    	echo -ne "\033[2K"
+
+    	echo -ne "The command: "${commands[$i]}" has failed with error code $retval. Check $log_file for details."
+    	# The script has failed at "$percentage"% due to
+    	if [ $ignore_errors -eq 1 ]
+    	then
+    		echo -e " Continuing regardless...\n"
+    	else
+    		echo " Stopping immediately!"
+    		exit 1
+    	fi
+    fi
+done
+
+progressbar=""
+percentage=100
+printCharNTimes $barsize "#"
+printf "Progress: [%3d%%] [%s]\n" "$percentage" "$progressbar"
+echo Done.
