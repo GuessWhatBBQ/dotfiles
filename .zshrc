@@ -122,7 +122,6 @@ alias l.="ls -A | egrep '^\.'"
 
 alias get="aria2c -x16 -s64 -j64 -k2M"
 alias hogs="sudo nethogs"
-alias wifimed="bash ~/Dropbox/Config/WifiMed.sh"
 alias full="i3-swallow"
 alias routine="full zathura Dropbox/2nd\ Semester\ Routine.pdf"
 alias pdf="full zathura"
