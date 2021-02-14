@@ -346,7 +346,7 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh &
 #####################################################################################################################
 
 #exec --no-startup-id xfce4-power-manager &
-exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; $HOME/.config/i3/battery_stats/low_batter.sh"
+exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; battery_charge_notifier"
 # ommitted next line to get super key to bring up the menu in xfce and avoid error then in i3
 # IF xfsettingsd is activated you can not change themes
 #exec --no-startup-id xfsettingsd &

@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-exclude=("systemd" ".gitignore" ".git" "$(echo $0 | cut -c3-)")
+exclude=("bin" "systemd" ".gitignore" ".git" "$(echo $0 | cut -c3-)")
 
 for string in ${exclude[@]}; do
     exclude_string="$exclude_string|$string"
@@ -15,4 +15,7 @@ echo ./!($exclude_string)
 cp -flav ./!($exclude_string) $HOME/
 
 # Copying systemd user service files
-cp -fva systemd/user  /usr/lib/systemd
+sudo cp -fva systemd/user  /usr/lib/systemd
+
+# Copying bins to be installed locally
+cp -flav bin $HOME/.local
