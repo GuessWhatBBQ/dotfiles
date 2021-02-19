@@ -104,6 +104,11 @@
     foreground = "#FFFFFF"
     timeout = 0
 
+[fullscreen_delay_everything]
+    fullscreen = delay
+[fullscreen_show_critical]
+    msg_urgency = critical
+    fullscreen = show
 
 # Every section that isn't one of the above is interpreted as a rules
 # to override settings for certain messages.
