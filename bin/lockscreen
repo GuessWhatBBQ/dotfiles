@@ -4,21 +4,21 @@ icon='/tmp/lock_icon.png'
 tmpbg='/tmp/background_with_effects.png'
 contrast_snippet='/tmp/contrast_snippet.png'
 # finding the background image filename (saved to $4)
-eval "set -- $(sed 1d "/home/guesswhatbbq/.fehbg")"
+eval "set -- $(sed 1d "$HOME/.fehbg")"
 
 # blur the background
-convert "$4" -resize 1920x1080^ -gravity center -extent 1920x1080 -brightness-contrast -0x0 -filter Gaussian -blur 0x8 "$tmpbg"
-
-convert "/home/guesswhatbbq/.config/i3/i3-lock/lock_icon.png" -scale 18% "$icon"
+convert "$4" -resize 1920x1080^ -gravity center -extent 1920x1080 -brightness-contrast -0x0 -filter Gaussian -blur 0x8 -fill "rgba( 0, 0, 0, 0.4 )" -draw "rectangle 0,0 1920,1920" "$tmpbg"
+# convert test.jpg -fill "rgba( 0, 0, 0, 0.6 )" -draw "rectangle 87,874 610,1016" test2.jpg
+convert "$HOME/.config/i3/i3-lock/lock_icon.png" -scale 18% "$icon"
 
 convert "$tmpbg" -gravity center -extent 550x170-620+400 "$contrast_snippet"
 contrast=$(echo "$(convert "$contrast_snippet" -colorspace Gray -format "%[fx:image.mean]" info:) > 0.5" | bc)
-
-if [ "$contrast" -eq "1" ]; then
-    color="111111ff"
-else
-    color="d1cbbfff"
-fi
+color="d1cbbfff"
+# if [ "$contrast" -eq "1" ]; then
+#     color="111111ff"
+# else
+#     color="d1cbbfff"
+# fi
 # overlay the icon onto the image
 convert "$tmpbg" "$icon" -gravity center -composite "$tmpbg"
 

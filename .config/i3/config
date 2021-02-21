@@ -354,7 +354,7 @@ exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; battery_charge_notifie
 exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; dunst -config .config/dunst/dunstrc"
 
 ### Lockscreen
-exec --no-startup-id xss-lock -l -- /home/guesswhatbbq/.config/i3/i3-lock/lockscreen.sh
+exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH;xss-lock -l -- lockscreen"
 
 #####################################################################################################################
 #################                          applications keyboard shortcuts                          #################
