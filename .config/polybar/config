@@ -53,7 +53,7 @@ content = " "
 
 [module/player-mpris-tail]
 type = custom/script
-exec = player-mpris-tail --icon-playing "" --icon-paused "" -f 'ﱘ  {:artist:t100:{artist}:}{:artist: - :}{:t80:{title}:}%{A1:player-mpris-tail previous:}   %{A}%{A1:player-mpris-tail play-pause:}{icon-reversed}%{A}%{A1:player-mpris-tail next:}  %{A}'
+exec = "export PATH=$HOME/.local/bin/polybar-scripts:$PATH; player-mpris-tail --icon-playing "" --icon-paused "" -f 'ﱘ  {:artist:t100:{artist}:}{:artist: - :}{:t80:{title}:}%{A1:player-mpris-tail previous:}   %{A}%{A1:player-mpris-tail play-pause:}{icon-reversed}%{A}%{A1:player-mpris-tail next:}  %{A}'"
 tail = true
 format-foreground = ${colors.shade7}
 
