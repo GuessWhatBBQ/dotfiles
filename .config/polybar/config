@@ -59,7 +59,7 @@ format-foreground = ${colors.shade7}
 
 [module/io]
 type = custom/script
-exec = /home/guesswhatbbq/GitHubRepos/dotfiles/.config/polybar/scripts/iostat.sh
+exec = "export PATH=$HOME/.local/bin:$PATH; iostatf"
 tail = true
 interval = 1
 format-background = ${colors.shade4}
