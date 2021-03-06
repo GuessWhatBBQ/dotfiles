@@ -118,7 +118,6 @@ fi
 #list
 alias ls='ls --color=auto'
 alias lsa="ls -lah --color=auto"
-alias l.="ls -A | egrep '^\.'"
 
 alias get="aria2c -x16 -s64 -j64 -k2M"
 alias hogs="sudo nethogs"
@@ -126,10 +125,6 @@ alias full="i3-swallow"
 alias routine="full zathura Dropbox/2nd\ Semester\ Routine.pdf"
 alias pdf="full zathura"
 alias play="full mpv"
-
-#fix obvious typo's
-alias cd..='cd ..'
-alias pdw="pwd"
 
 ## Colorize the grep command output for ease of use (good for log files)##
 alias grep='grep --color=auto'
@@ -179,24 +174,8 @@ alias skel='cp -Rf ~/.config ~/.config-backup-$(date +%Y.%m.%d-%H.%M.%S) && cp -
 #backup contents of /etc/skel to hidden backup folder in home/user
 alias bupskel='cp -Rf /etc/skel ~/.skel-backup-$(date +%Y.%m.%d-%H.%M.%S)'
 
-#copy bashrc-latest over on bashrc - cb= copy bashrc
-#alias cb='sudo cp /etc/skel/.bashrc ~/.bashrc && source ~/.bashrc'
-#copy /etc/skel/.zshrc over on ~/.zshrc - cb= copy zshrc
-alias cz='sudo cp /etc/skel/.zshrc ~/.zshrc && source ~/.zshrc'
-
-#switch between bash and zsh
-alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
-alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
-
-#quickly kill conkies
-alias kc='killall conky'
-
 #hardware info --short
 alias hw="hwinfo --short"
-
-#skip integrity check
-alias yayskip='yay -S --mflags --skipinteg'
-alias trizenskip='trizen -S --skipinteg'
 
 #check vulnerabilities microcode
 alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
@@ -215,17 +194,6 @@ alias vbm="sudo /usr/local/bin/arcolinux-vbox-share"
 #shopt -s histappend # do not overwrite history
 #shopt -s expand_aliases # expand aliases
 
-#youtube-dl
-alias yta-aac="youtube-dl --extract-audio --audio-format aac "
-alias yta-best="youtube-dl --extract-audio --audio-format best "
-alias yta-flac="youtube-dl --extract-audio --audio-format flac "
-alias yta-m4a="youtube-dl --extract-audio --audio-format m4a "
-alias yta-mp3="youtube-dl --extract-audio --audio-format mp3 "
-alias yta-opus="youtube-dl --extract-audio --audio-format opus "
-alias yta-vorbis="youtube-dl --extract-audio --audio-format vorbis "
-alias yta-wav="youtube-dl --extract-audio --audio-format wav "
-
-alias ytv-best="youtube-dl -f bestvideo+bestaudio "
 
 #Recent Installed Packages
 alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
@@ -240,26 +208,11 @@ alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
 #get the error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
 
-#nano for important configration files
-#know what you do in these files
-alias nlightdm="sudo nano /etc/lightdm/lightdm.conf"
-alias npacman="sudo nano /etc/pacman.conf"
-alias ngrub="sudo nano /etc/default/grub"
-alias nmkinitcpio="sudo nano /etc/mkinitcpio.conf"
-alias nslim="sudo nano /etc/slim.conf"
-alias noblogout="sudo nano /etc/oblogout.conf"
-alias nmirrorlist="sudo nano /etc/pacman.d/mirrorlist"
-alias nconfgrub="sudo nano /boot/grub/grub.cfg"
-
 #gpg
 #verify signature for isos
 alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
 #receive the key of a developer
 alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
-
-#shutdown or reboot
-alias ssn="sudo shutdown now"
-alias sr="sudo reboot"
 
 #maintenance
 alias big="expac -H M '%m\t%n' | sort -h | nl"
@@ -287,6 +240,7 @@ ex ()
       *.7z)        7z x $1      ;;
       *.deb)       ar x $1      ;;
       *.tar.xz)    tar xf $1    ;;
+      *.tar.zst)   unzstd $1    ;;
       *)           echo "'$1' cannot be extracted via ex()" ;;
     esac
   else
