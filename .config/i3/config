@@ -1,17 +1,3 @@
-# KEY DEFINITIONS TO REMEMBER
-
-# $Mod = WINDOWS key or Super key or Mod4
-# Mod1 = ALT key
-# Mod4 = Windows or Super key
-# Control = CTRL key
-# Shift = SHIFT key
-# Escape = ESCAPE key
-# Return = ENTER or RETURN key
-# KP_Enter = Keypad Enter
-# Pause = PAUSE key
-# Print = PRINT key
-# Tab = TAB key
-
 ################################
 ##### i3 Specific Settings #####
 ################################
@@ -48,12 +34,12 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-
 bindsym $mod+r mode "resize"
+bindsym $mod+Shift+g mode "$mode_gaps"
+
 set $mode_gaps Gaps: (o) outer, (i) inner
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
 set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-bindsym $mod+Shift+g mode "$mode_gaps"
 
 
 ##### i3 Modes #####
@@ -112,7 +98,7 @@ for_window [class="^.*"] border pixel 2
 gaps top 25
 gaps bottom 22
 
-#Theme name : ArcoLinux Default
+##### Theme name : ArcoLinux Default
 
     # class                 border  backgr. text    indicator
     client.placeholder      #242424 #242424 #242424
@@ -164,8 +150,6 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+s layout stacking
 bindsym $mod+z layout tabbed
 bindsym $mod+e layout toggle split
-
-
 
 ##### border control ######
 
@@ -245,7 +229,7 @@ for_window [class="Termite"] focus
 for_window [class="Terminator"] focus
 for_window [class="Alacritty"] focus
 
-##### assign applications to workspaces ######
+##### Applications Workspaces Assignment ######
 
 assign [class="atom|Atom"] workspace 4
 assign [class="Spotify|spotify"] workspace 5
@@ -265,9 +249,7 @@ assign [class="zoom"] workspace 10
 #Authentication dialog
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-# network
 exec --no-startup-id nm-applet
-
 exec --no-startup-id dbus-launch dropbox start
 exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; variety"
 
