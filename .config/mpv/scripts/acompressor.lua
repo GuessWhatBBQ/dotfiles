@@ -27,11 +27,11 @@ local o = {
 	key_increase_release = 'F6',
 	key_decrease_release = 'Shift+F6',
 
-	default_threshold = -27.5,
-	default_ratio = 20.0,
-	default_knee = 1.0,
-	default_makeup = 3.0,
-	default_attack = 0.01,
+	default_threshold = -25.0,
+	default_ratio = 10,
+	default_knee = 3.0,
+	default_makeup = 9.0,
+	default_attack = 25,
 	default_release = 400.0,
 
 	step_threshold = -2.5,

@@ -1,0 +1,88 @@
+[options]
+#https://github.com/thestinger/termite/blob/master/config
+allow_bold = true
+audible_bell = false
+browser = xdg-open
+clickable_url = true
+cursor_blink = system
+cursor_shape = block
+dynamic_title = true
+filter_unmatched_urls = true
+font = Monospace 11
+#font = Hack Bold 10
+geometry = 900x650
+highlight = #2f2f2f
+icon_name = terminal
+modify_other_keys = false
+mouse_autohide = false
+scroll_on_output = false
+scroll_on_keystroke = true
+scrollback_lines = 15000
+size_hints = false
+search_wrap = true
+urgent_on_bell = true
+
+[hints]
+#font = Monospace 12
+#foreground = #dcdccc
+#background = #3f3f3f
+#active_foreground = #e68080
+#active_background = #3f3f3f
+#padding = 2
+#border = #3f3f3f
+#border_width = 10
+#roundness = 2.0
+
+############################################################
+#### You can change the color coding to your liking
+#### There is a folder themes in ~/config/termite/themes
+#### Copy/paste the colors from one of the 79+ templates to this one
+#### A backup of the original config termite is present
+############################################################
+#### Use websites to make the terminal your own
+#### https://terminal.sexy
+#### https://critical.ch/xterm/
+############################################################
+
+[colors]
+# Cyberpunk Neon: https://github.com/Roboron3042/Cyberpunk-Neon
+# Author: Roberto Michán Sánchez (Roboron)
+# License: CC-BY-SA-4.0
+
+foreground          = #0abdc6
+foreground_bold     = #0abdc6
+cursor              = #0abdc6
+cursor_foreground   = #000b1e
+background          = rgba(0,11,30, 0.6)
+
+# 16 color space
+
+# Black, Gray, Silver, White
+color0  = #123e7c
+color8  = #1c61c2
+color7  = #d7d7d5
+color15 = #d7d7d5
+
+# Red
+color1  = #ff0000
+color9  = #ff0000
+
+# Green
+color2  = #d300c4
+color10 = #d300c4
+
+# Yellow
+color3  = #f57800
+color11 = #ff5780
+
+# Blue
+color4  = #123e7c
+color12 = #00ff00
+
+# Purple
+color5  = #711c91
+color13 = #711c91
+
+# Teal
+color6  = #0abdc6
+color14 = #0abdc6
