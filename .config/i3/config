@@ -235,6 +235,7 @@ assign [class="atom|Atom"] workspace 4
 assign [class="Spotify|spotify"] workspace 5
 for_window [class="Spotify"] move to workspace 5
 assign [class="discord"] workspace 6
+assign [title="qBittorrent v4.3.3"] workspace 7
 assign [class="zoom"] workspace 10
 
 
@@ -306,6 +307,11 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pulse sset Master '
 bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse sset Master '5%-'"
 bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle"
 
+##### BackLight #####
+
+bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5 # decrease screen brightness
+
 
 #################
 ##### Menus #####
@@ -365,11 +371,3 @@ bindsym XF86AudioStop exec --no-startup-id playerctl stop
 #bindsym XF86AudioNext exec --no-startup-id "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
 #bindsym XF86AudioPrev exec --no-startup-id "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
 #bindsym XF86AudioStop exec --no-startup-id "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
-
-
-#####################################################################################################################
-#################                          xbacklight                                               #################
-#####################################################################################################################
-
-bindsym XF86MonBrightnessUp exec --no-startup-id light -A 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10 # decrease screen brightness
