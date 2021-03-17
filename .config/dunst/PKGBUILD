@@ -4,7 +4,7 @@
 # Contributor: Stefan-Husmann@t-online.de
 # Contributor: Army
 
-# makepkg -srcfi --noconfirm && pkill dunst; exist dunst -config $HOME/.config/i3/dunstrc
+# makepkg -srcfi --noconfirm && pkill dunst; exist dunst -config $HOME/.config/dunst/dunstrc
 
 pkgname=dunst-git
 _pkgname=dunst

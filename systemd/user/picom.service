@@ -4,7 +4,7 @@ Description=Picom compositor
 After=graphical.target multi-user.target
 Wants=graphical.target
 
-StartLimitIntervalSec=500
+StartLimitIntervalSec=30
 StartLimitBurst=5
 
 [Service]
