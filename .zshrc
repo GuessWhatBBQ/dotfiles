@@ -45,10 +45,10 @@ ZSH_THEME="xiong-chiamiov-plus"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -99,7 +99,7 @@ source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 setopt GLOB_DOTS
-
+setopt COMPLETE_ALIASES
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -156,7 +156,7 @@ alias merge="xrdb -merge ~/.Xresources"
 # pacman or pm
 alias pacman="sudo pacman --color auto"
 alias update="sudo pacman -Syu"
-alias updateaur="yay -Syua"
+alias updateaur="yay -Syua --devel --timeupdate"
 alias sysup="update;updateaur"
 
 #ps
@@ -251,4 +251,3 @@ ex ()
 exist () {
   nohup $@ > /dev/null &
 }
-

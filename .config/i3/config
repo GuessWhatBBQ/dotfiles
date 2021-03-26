@@ -199,6 +199,7 @@ for_window [class="Xfburn"] floating disable
 for_window [class="Xfce4-appfinder"] floating enable
 for_window [class="Xfce4-settings-manager"] floating disable
 for_window [class="Xfce4-taskmanager"] floating enable
+for_window [class="Qalculate-gtk"] floating enable
 for_window [instance="script-fu"] border normal
 for_window [instance="Variety"] floating enable
 
