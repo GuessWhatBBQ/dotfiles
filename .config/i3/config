@@ -290,15 +290,18 @@ bindsym Control+Shift+Print exec --no-startup-id gnome-screenshot -i
 
 ##### Audio Settings #####
 
-#Volume Control
+###Volume Control
 bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pulse sset Master '5%+'"
 bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse sset Master '5%-'"
 bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle"
 
-#Player Control (playerctl)
-bindsym $mod+p exec --no-startup-id playerctl play-pause
-bindsym $mod+bracketleft exec --no-startup-id playerctl previous
-bindsym $mod+bracketright exec --no-startup-id playerctl next
+###Player Control (playerctl)
+#Spotify
+bindsym $mod+p exec --no-startup-id playerctl -p spotify play-pause
+bindsym $mod+bracketleft exec --no-startup-id playerctl -p spotify previous
+bindsym $mod+bracketright exec --no-startup-id playerctl -p spotify next
+#All
+bindsym $mod+p exec --no-startup-id playerctl --all-players play-pause
 
 ##### BackLight #####
 

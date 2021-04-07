@@ -99,7 +99,7 @@ source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 setopt GLOB_DOTS
-setopt COMPLETE_ALIASES
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 

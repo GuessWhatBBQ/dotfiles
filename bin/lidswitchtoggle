@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+if grep -q "^#HandleLidSwitch" /etc/systemd/logind.conf; then
+	sudo sed -i "s/^#HandleLidSwitch/HandleLidSwitch/" /etc/systemd/logind.conf
+	echo "Lid switch no longer ignored"
+else
+	sudo sed -i "s/^HandleLidSwitch/#HandleLidSwitch/" /etc/systemd/logind.conf
+	echo "Lid switch ignored"
+fi
+sudo systemctl restart systemd-logind.service
+
