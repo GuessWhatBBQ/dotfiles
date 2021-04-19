@@ -1,18 +1,7 @@
 height = 25
 width = 100%
 
-;radius                   = 0
-line-size                = 0
 bottom                   = false
-;border-top-size = 0
-;border-bottom-size = 0
-;border-color = "#424242"
-
-;font-1 = "Ubuntu:size=10;2"
-;font-2 = "Ubuntu:style=Bold:size=10;2"
-font-0 = "TerminessTTF Nerd Font:size=10;2"
-font-1 = "TerminessTTF Nerd Font:style=Bold:size=11;2"
-font-2 = "TerminessTTF Nerd Font:style=Bold:size=30;4"
 
 override-redirect = true
 wm-restack = i3
@@ -20,10 +9,3 @@ wm-restack = i3
 enable-ipc = true
 
 screenchange-reload      = true
-throttle-output          = 5
-throttle-output-for      = 10
-throttle-input-for       = 30
-padding-left             = 0
-padding-right            = 0
-module-margin-left       = 0
-module-margin-right      = 0

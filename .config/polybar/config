@@ -15,24 +15,31 @@ shade8 = #CE93D8
 modulefg = #ffffff
 
 [bar/bottombar]
-font-0 = "TerminessTTF Nerd Font:size=10;2"
-font-1 = "TerminessTTF Nerd Font:size=17;4"
-monitor =
+
 include-file = /home/guesswhatbbq/.config/polybar/bars/bottombar
 
+monitor =
+
+font-0 = "Iosevka Nerd Font:size=10;3"
+
 background = ${colors.bg_current}
-foreground = #ffffff
+foreground = ${colors.modulefg}
 
 modules-left = i3 title
 modules-center =
 modules-right = memory cpu temp battery
 
 [bar/topbar]
+
+include-file = /home/guesswhatbbq/.config/polybar/bars/topbar
+
 monitor =
 
+font-0 = "Iosevka Nerd Font:size=10;2"
+font-1 = "Iosevka Nerd Font:size=11;2"
+
 background = ${colors.bg_current}
-include-file = /home/guesswhatbbq/.config/polybar/bars/topbar
-foreground = #ffffff
+foreground = ${colors.modulefg}
 
 modules-left = wlan eth speed
 modules-center = date
@@ -43,7 +50,7 @@ modules-right = player-mpris-tail pulseaudio volume_settings
 include-file = /home/guesswhatbbq/.config/polybar/bars/notif_bar
 
 background = ${colors.shade1}
-foreground = "#ffffff"
+foreground = ${colors.modulefg}
 
 modules-left = dummymodule
 
@@ -68,14 +75,14 @@ format-background = ${colors.shade4}
 [module/volume_settings]
 type = custom/text
 content = "   "
-click-left = pavucontrol &
+click-left = pavucontrol
 
 [module/memory]
 type = internal/memory
 internal = 5
 format = "<label> "
 format-background = ${colors.shade4}
-format-prefix = "   "
+format-prefix = "  "
 label = "%mb_used:6%"
 
 [module/cpu]
@@ -94,7 +101,7 @@ interval = 1
 date = %a %d %b
 time = %l:%M:%S %p
 label = %date% %time%
-label-font = 2
+format-font = 2
 format-padding = 0
 
 [module/battery]
@@ -144,7 +151,7 @@ ramp-6 = " "
 type = internal/network
 interface = wlo1
 interval = 5
-label-connected = "  直  %essid%"
+label-connected = " 直  %essid%"
 label-disconnected = "  睊  Wifi Disconnected "
 content-padding = 0
 
@@ -166,8 +173,8 @@ type = internal/network
 interface = wlo1
 interval = 1
 accumulate-stats = true
-label-connected = " %downspeed:10%  %upspeed:10%"
-label-disconnected = " %downspeed:10%  %upspeed:10%"
+label-connected = "  %downspeed:10%  %upspeed:10%"
+label-disconnected = "  %downspeed:10%  %upspeed:10%"
 format-padding = 0
 
 [module/pulseaudio]
@@ -184,7 +191,6 @@ ramp-volume-2 ="  "
 type = internal/xwindow
 format = <label>
 label = " %title:0:80:...% "
-format-font = 0
 label-foreground = ${colors.modulefg}
 label-background = ${colors.shade2}
 
