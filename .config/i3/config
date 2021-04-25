@@ -207,6 +207,7 @@ for_window [title="Deleting"] floating enable
 for_window [title="Moving"] floating enable
 for_window [title="^Terminator Preferences$"] floating enable
 for_window [title="pulsemixer"] floating enable
+for_window [title="zoom"] floating enable
 
 
 #for_window [window_role="^gimp-toolbox-color-dialog$"] floating enable
@@ -242,13 +243,21 @@ exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; variety"
 ##### system applications ######
 
 exec_always --no-startup-id autotiling
-exec_always --no-startup-id numlockx on
 exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; battery_charge_notifier"
 exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; dunst -config .config/dunst/dunstrc"
 exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; xss-lock -l -- lockscreen"
 exec --no-startup-id unclutter --ignore-scrolling --fork --timeout 2
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh &
 exec_always --no-startup-id systemctl --user start picom.service
+
+################################
+##### System Configuration #####
+################################
+
+
+exec_always --no-startup-id numlockx on
+exec_always --no-startup-id xset s off
+exec_always --no-startup-id xset -dpms
 
 
 ################################
@@ -299,7 +308,7 @@ bindsym $mod+p exec --no-startup-id playerctl -p spotify play-pause
 bindsym $mod+bracketleft exec --no-startup-id playerctl -p spotify previous
 bindsym $mod+bracketright exec --no-startup-id playerctl -p spotify next
 #All
-bindsym $mod+Shift+p exec --no-startup-id playerctl --all-players play-pause
+bindsym $mod+Shift+p exec --no-startup-id playerctl --all-players pause
 
 ##### BackLight #####
 

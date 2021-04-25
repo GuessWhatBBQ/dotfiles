@@ -122,7 +122,7 @@ alias lsa="ls -lah --color=auto"
 alias get="aria2c -x16 -s64 -j64 -k2M"
 alias hogs="sudo nethogs"
 alias full="i3-swallow"
-alias routine="full zathura Dropbox/2nd\ Semester\ Routine.pdf"
+alias routine="full zathura $HOME/Dropbox/routine.pdf"
 alias pdf="full zathura"
 alias play="full mpv"
 
