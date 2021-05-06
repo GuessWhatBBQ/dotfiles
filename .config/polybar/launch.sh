@@ -14,15 +14,15 @@ rm $(ls /tmp/polybar*) /tmp/notif_bar /tmp/bottombar /tmp/topbar
 
 # Launch Polybar, using default config location ~/.config/polybar/config
 
-polybar --config=$HOME/.config/polybar/config notif_bar &
+nohup polybar --config=$HOME/.config/polybar/config notif_bar >> /tmp/polybar.log &
 ln -s /tmp/polybar_mqueue.$! /tmp/notif_bar
 sleep 0.1
 
-polybar --config=$HOME/.config/polybar/config -r bottombar &
+nohup polybar --config=$HOME/.config/polybar/config -r bottombar >> /tmp/polybar.log &
 ln -s /tmp/polybar_mqueue.$! /tmp/bottombar
 sleep 0.1
 
-polybar --config=$HOME/.config/polybar/config -r topbar &
+nohup polybar --config=$HOME/.config/polybar/config -r topbar >> /tmp/polybar.log &
 ln -s /tmp/polybar_mqueue.$! /tmp/topbar
 sleep 0.1
 

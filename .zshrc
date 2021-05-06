@@ -118,6 +118,7 @@ fi
 #list
 alias ls='ls --color=auto'
 alias lsa="ls -lah --color=auto"
+alias exa="exa --icons"
 
 alias get="aria2c -x16 -s64 -j64 -k2M"
 alias hogs="sudo nethogs"
