@@ -1,55 +1,61 @@
 #!/usr/bin/bash
 
+LOGIND_USER_CONFIG="/usr/lib/systemd/logind.conf.d/99-lidswitchtoggle.conf"
+
+function getState {
+    let cutoff=${#1}+2
+    grep "^$1=" $LOGIND_USER_CONFIG | cut --characters="$cutoff"-
+}
+
+function setState {
+    sudo sed -i "s/^$1=.*/$1=$2/" $LOGIND_USER_CONFIG
+}
+
+general=$(getState "HandleLidSwitch")
+externalPower=$(getState "HandleLidSwitchExternalPower")
+docked=$(getState "HandleLidSwitchDocked")
+
+# echo $general
+# echo $externalPower
+# echo $docked
+
 while getopts 'gts:' PARAMS; do
-  case "$PARAMS" in
-	g)
-		if $(grep -q "^#HandleLidSwitch" /etc/systemd/logind.conf); then
-			echo "Lid switch is triggering ACPI events"
-		else
-			echo "Lid switch is being ignored"
-		fi
-		exit 0
-		;;
-	t)
-		if $(grep -q "^#HandleLidSwitch" /etc/systemd/logind.conf); then
-			sudo sed -i "s/^#HandleLidSwitch/HandleLidSwitch/" /etc/systemd/logind.conf
-			echo "Lid switch will now be ignored"
-		else
-			sudo sed -i "s/^HandleLidSwitch/#HandleLidSwitch/" /etc/systemd/logind.conf
-			echo "Lid switch will now be triggering ACPI events"
-		fi
-		sudo systemctl kill -s HUP systemd-logind
-		exit 0
-		;;
-	s)
-		mode=$OPTARG
-		if [[ "$mode" = "ignore" ]]; then
-			if grep -q "^#HandleLidSwitch" /etc/systemd/logind.conf; then
-				sudo sed -i "s/^#HandleLidSwitch/HandleLidSwitch/" /etc/systemd/logind.conf
-				echo "Lid switch will now be ignored"
-			else
-				echo "Lid switch already ignored"
-			fi
-		elif [[ "$mode" == "handle" ]]; then
-			if grep -q "^HandleLidSwitch" /etc/systemd/logind.conf; then
-				sudo sed -i "s/^HandleLidSwitch/#HandleLidSwitch/" /etc/systemd/logind.conf
-				echo "Lid switch will now be triggering ACPI events"
-			else
-				echo "Lid switch is already triggering ACPI events"
-			fi
-		fi
-		sudo systemctl kill -s HUP systemd-logind
-		exit 0
-		;;
-	?)
-		echo "script usage: $(basename $0) [-t toggle] [-g get_mode] [-s set_mode]" >&2
-		exit 1
-		;;
-  esac
+    case "$PARAMS" in
+    g)
+        if [[ "$general" =~ ignore ]]; then
+            echo "Lid switch is being ignored"
+        else if [[ "$general" =~ (suspend|hibernate) ]]; then
+            echo "Lid switch is triggering ACPI events"
+            fi
+        fi
+        exit 0
+        ;;
+    t)
+        if [[ "$general" =~ ignore ]]; then
+            setState "HandleLidSwitch" "suspend"
+            setState "HandleLidSwitchExternalPower" "suspend"
+            setState "HandleLidSwitchDocked" "suspend"
+            echo "Lid switch will now be triggering ACPI events"
+        else if [[ "$general" =~ (suspend|hibernate) ]]; then
+            setState "HandleLidSwitch" "ignore"
+            setState "HandleLidSwitchExternalPower" "ignore"
+            setState "HandleLidSwitchDocked" "ignore"
+            echo "Lid switch will now be ignored"
+            fi
+        fi
+        sudo systemctl kill -s HUP systemd-logind
+        exit 0
+        ;;
+    ?)
+        echo "script usage: $(basename $0) [-t toggle] [-g get_mode]" >&2
+        exit 1
+        ;;
+    esac
 done
 
-if $(grep -q "^#HandleLidSwitch" /etc/systemd/logind.conf); then
-	echo "Lid switch is triggering ACPI events"
-else
-	echo "Lid switch is being ignored"
+if [[ "$general" =~ ignore ]]; then
+    echo "Lid switch is being ignored"
+else if [[ "$general" =~ (suspend|hibernate) ]]; then
+    echo "Lid switch is triggering ACPI events"
+    fi
 fi

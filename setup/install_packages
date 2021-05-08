@@ -1,0 +1,33 @@
+#!/usr/bin/bash
+
+pkgbuild_folder_base=$HOME/.local/builds
+
+sudo reflector --verbose --country Hong\ Kong,Bangladesh,Japan,China --sort age --fastest 3 --score 3 --save /etc/pacman.d/mirrorlist
+
+# Ensuring yay is installed
+if ! command -v yay &> /dev/null
+then
+  git clone https://aur.archlinux.org/yay.git /tmp/yay
+  cd /tmp/yay
+  makepkg --syncdeps --noconfirm --install
+fi
+
+cd $(dirname $0)/..
+
+sudo pacman -Syu --noconfirm --needed alacritty aria2 atom audacity base-devel bat cronie darktable exa ffmpeg firefox gimp git gparted htop i3-gaps jq kdeconnect libreoffice-still light lxappearance-gtk3 mpv nano neovim nethogs nomacs p7zip papirus-icon-theme playerctl polybar pulseaudio pulsemixer qbittorrent ranger rofi thunar unclutter unrar xclip xss-lock youtube-dl zathura zathura-pdf-poppler
+
+yay -Syua --answerdiff None --answerclean All --noremovemake --noconfirm --needed autotiling discord-canary dropbox dunst-git git-secret i3lock-color i3-swallow nerd-fonts-complete picom-git spotify spotify-adblock-git windscribe-cli yay zoom
+
+# Setup personal PKGBUILDs
+if [ ! -d "$pkgbuild_folder_base" ]
+then
+    mkdir $pkgbuild_folder_base
+fi
+
+cp -flav builds/* $pkgbuild_folder_base
+
+# Reveal encrypted files
+git-secret reveal -f
+
+# Install personal PKGBUILDs
+bash bin/automakepkg $pkgbuild_folder_base

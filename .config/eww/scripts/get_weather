@@ -1,0 +1,120 @@
+#!/bin/bash
+
+## User Weather Configs
+source $(dirname $0)/OpenWeatherAPIKey
+CITY_NAME="Dhaka"
+UNIT="metric"
+
+##############################################################################################################
+## Weather Cache Location
+weather_cache_dir="/tmp/eww/weather_cache"
+## Make cache dir
+if [[ ! -d "$weather_cache_dir" ]]; then
+    mkdir -p ${weather_cache_dir}
+fi
+
+cache_weather_icon=${weather_cache_dir}/current_weather_icon
+cache_weather_stat=${weather_cache_dir}/current_weather_stat
+cache_weather_temperature=${weather_cache_dir}/current_weather_temperature
+cache_weather_hex=${weather_cache_dir}/current_weather_hex
+
+## Fetch data
+fetch_weather_data() {
+    weather=$(curl -sf "api.openweathermap.org/data/2.5/weather?q=$CITY_NAME&appid=$API_KEY&units=$UNIT")
+    echo $weather
+
+    if [ ! -z "$weather" ]; then
+        weather_temp=$(echo "$weather" | jq ".main.temp" | awk '{print ($0-int($0)<0.499)?int($0):int($0)+1}')
+        weather_icon_code=$(echo "$weather" | jq -r ".weather[].icon" | head -1)
+        weather_description=$(echo "$weather" | jq -r ".weather[].description" | head -1 | sed -e "s/\b\(.\)/\u\1/g")
+
+        if [ "$weather_icon_code" == "50d"  ]; then
+            weather_icon=" "
+            weather_hex="#84afdb"
+        elif [ "$weather_icon_code" == "50n"  ]; then
+            weather_icon=" "
+            weather_hex="#84afdb"
+        elif [ "$weather_icon_code" == "01d"  ]; then
+            weather_icon=" "
+            weather_hex="#ffd86b"
+        elif [ "$weather_icon_code" == "01n"  ]; then
+            weather_icon=" "
+            weather_hex="#fcdcf6"
+        elif [ "$weather_icon_code" == "02d"  ]; then
+            weather_icon=" "
+            weather_hex="#adadff"
+        elif [ "$weather_icon_code" == "02n"  ]; then
+            weather_icon=" "
+            weather_hex="#adadff"
+        elif [ "$weather_icon_code" == "03d"  ]; then
+            weather_icon=" "
+            weather_hex="#adadff"
+        elif [ "$weather_icon_code" == "03n"  ]; then
+            weather_icon=" "
+            weather_hex="#adadff"
+        elif [ "$weather_icon_code" == "04d"  ]; then
+            weather_icon=" "
+            weather_hex="#adadff"
+        elif [ "$weather_icon_code" == "04n"  ]; then
+            weather_icon=" "
+            weather_hex="#adadff"
+        elif [ "$weather_icon_code" == "09d"  ]; then
+            weather_icon=" "
+            weather_hex="#6b95ff"
+        elif [ "$weather_icon_code" == "09n"  ]; then
+            weather_icon=" "
+            weather_hex="#6b95ff"
+        elif [ "$weather_icon_code" == "10d"  ]; then
+            weather_icon=" "
+            weather_hex="#6b95ff"
+        elif [ "$weather_icon_code" == "10n"  ]; then
+            weather_icon=" "
+            weather_hex="#6b95ff"
+        elif [ "$weather_icon_code" == "11d"  ]; then
+            weather_icon=""
+            weather_hex="#ffeb57"
+        elif [ "$weather_icon_code" == "11n"  ]; then
+            weather_icon=""
+            weather_hex="#ffeb57"
+        elif [ "$weather_icon_code" == "13d"  ]; then
+            weather_icon=" "
+            weather_hex="#e3e6fc"
+        elif [ "$weather_icon_code" == "13n"  ]; then
+            weather_icon=" "
+            weather_hex="#e3e6fc"
+        elif [ "$weather_icon_code" == "40d"  ]; then
+            weather_icon=" "
+            weather_hex="#84afdb"
+        elif [ "$weather_icon_code" == "40n"  ]; then
+            weather_icon=" "
+            weather_hex="#84afdb"
+        else
+            weather_icon=" "
+            weather_hex="#adadff"
+        fi
+    else
+        weather_description="Weather Unavailable"
+        weather_temp="-"
+        weather_icon=" "
+        weather_hex="#adadff"
+    fi
+    echo "$weather_icon" >  ${cache_weather_icon}
+    echo "$weather_description" > ${cache_weather_stat}
+    echo "$weather_temp""°C" > ${cache_weather_temperature}
+    echo "$weather_hex" > ${cache_weather_hex}
+}
+
+## Execute
+if [[ "$1" == "--fetchdata" ]]; then
+    fetch_weather_data
+elif [[ "$1" == "--icon" ]]; then
+    cat ${cache_weather_icon}
+elif [[ "$1" == "--temp" ]]; then
+    cat ${cache_weather_temperature}
+elif [[ "$1" == "--hex" ]]; then
+    cat ${cache_weather_hex}
+elif [[ "$1" == "--stat" ]]; then
+    cat ${cache_weather_stat}
+else
+    echo "Invalid command"
+fi

@@ -1,0 +1,30 @@
+window {
+    background-color: #071019;
+    border-radius: 15px;
+    opacity: 0.8;
+}
+
+.icon-weather {
+    font-family: Iosevka Nerd Font;
+    font-size : 80px;
+    font-weight : normal;
+    margin : 0px 200px 0px 40px;
+}
+
+.weather-info {
+    margin: 30px 0px 0px 0px;
+}
+
+.label-temperature {
+    color : #A6D1DD;
+    font-size : 40px;
+    font-weight : bold;
+    margin : 0px 0px 0px 0px;
+}
+
+.label-stat {
+    color : #BF616A;
+    font-size : 25px;
+    font-weight : bold;
+    margin : 0px -90px 0px -170px;
+}

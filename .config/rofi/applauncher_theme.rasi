@@ -8,7 +8,7 @@
  */
 
 configuration {
-	font:							"Ubuntu Mono Bold 10";
+	font:							"Iosevka Nerd Font Bold 10";
     show-icons:                     true;
 	icon-theme: 					"Papirus";
     display-drun: 					"";
@@ -24,6 +24,7 @@ configuration {
     background-bar:                 #f2f2f215;
     foreground:                     #f2f2f2EE;
     accent:			            	#3DAEE966;
+    transparent:                    #00000000;
 }
 
 window {
@@ -41,20 +42,20 @@ window {
 
 prompt {
     enabled: 						true;
-	padding: 						0.30% 1% 0% -0.5%;
-	background-color: 				@background-alt;
+	padding: 						0.0% 0.9% 0% -0.2%;
+	background-color: 				@transparent;
 	text-color: 					@foreground;
-	font:							"TerminessTTF Nerd Font 12";
+	font:							"Iosevka Nerd Font 10";
 }
 
 entry {
-    background-color:               @background-alt;
+    background-color:               @transparent;
     text-color:                     @foreground;
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0;
     placeholder:                    "Search";
-    padding:                        0.10% 0% 0% 0%;
+    padding:                        0.0% 0% 0% 0%;
     blink:                          true;
 }
 
@@ -67,7 +68,7 @@ inputbar {
     border-radius:                  12px;
 	border-color:					@accent;
     margin:                         0% 0% 0% 0%;
-    padding:                        1.5%;
+    padding:                        1%;
 }
 
 listview {

@@ -1,0 +1,63 @@
+<eww>
+    <variables>
+
+        <!--Weather vars-->
+        <script-var name="WEATHER_ICON">
+            $HOME/.config/eww/scripts/get_weather --icon
+        </script-var>
+
+        <script-var name="WEATHER_STAT">
+            $HOME/.config/eww/scripts/get_weather --stat
+        </script-var>
+
+        <script-var name="WEATHER_TEMP">
+            $HOME/.config/eww/scripts/get_weather --temp
+        </script-var>
+
+        <script-var name="WEATHER_ICON_HEX">
+            $HOME/.config/eww/scripts/get_weather --hex
+        </script-var>
+
+    </variables>
+
+    <definitions>
+
+        <!-- Weather -->
+        <def name="weather">
+            <box orientation="h" space-evenly="false">
+                <box class="icon-weather" style="color: {{WEATHER_ICON_HEX}}">
+                    {{WEATHER_ICON}}
+                </box>
+                <box class="weather-info" orientation="v" space-evenly="false">
+                    <label class="label-temperature" text="{{WEATHER_TEMP}}  "/>
+                    <label class="label-stat" text="{{WEATHER_STAT}}"/>
+                </box>
+            </box>
+        </def>
+
+        <!-- Blur fullscreen -->
+        <def name="blur_full">
+            <box orientation="v" space-evenly="true">
+            </box>
+        </def>
+
+    </definitions>
+
+    <windows>
+
+        <window name="weather" tacking="fg" focusable="false" screen="1">
+            <geometry x="1410" y="880" width="480" height="150"/>
+            <widget>
+                <weather/>
+            </widget>
+        </window>
+
+        <window name="blur_full">
+            <geometry x="0px" y="25px" width="100%" height="1033"/>
+            <widget>
+                <blur_full/>
+            </widget>
+        </window>
+
+    </windows>
+</eww>

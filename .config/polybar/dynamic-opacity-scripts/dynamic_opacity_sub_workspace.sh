@@ -5,9 +5,10 @@ transparent_str="bg_current = \${colors.bg_transparent}"
 # String to set for opacity
 opaque_str="bg_current = \${colors.bg_opaque}"
 # Config file location
-config_file="/home/guesswhatbbq/.config/polybar/config"
+config_file="$HOME/.config/polybar/config"
 
-let hidden=1
+tmpfile=$(mktemp)
+
 i3-msg -t subscribe -m '[ "workspace" ]' |
     while IFS= read -r event
     do
@@ -23,10 +24,10 @@ i3-msg -t subscribe -m '[ "workspace" ]' |
 
         if [ $window_count -ne 1 ] && [ $opaque -eq 1 ];
         then
-#           setting to transparent
-            tmpfile=$(mktemp)
-            sed "s/$opaque_str/$transparent_str/" "$config_file" > "${tmpfile}"
-            cat ${tmpfile} > "$config_file"
-            rm -f ${tmpfile}
+            (
+                flock --exclusive --nonblock 200 || exit
+                sed "s/$opaque_str/$transparent_str/" "$config_file" > "${tmpfile}"
+                cat ${tmpfile} > "$config_file"
+            ) 200>/tmp/polybarconfiglock
         fi
     done

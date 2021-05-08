@@ -1,12 +1,12 @@
 configuration {
 	modi: "drun";
 	combi-modi: "window,drun";
-	//lines: 1;
+/*	lines: 1;*/
 	font: "mono 15";
 	show-icons: true;
 	icon-theme: "Papirus-Dark";
 	fake-transparency: true;
-	theme: "blurry.rasi";
+	theme: "applauncher_theme.rasi";
 /*	width: 50;*/
 /*	columns: 1;*/
 /*	bw: 1;*/

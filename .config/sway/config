@@ -205,8 +205,9 @@ for_window [instance="Variety"] floating enable
 for_window [title="Copying"] floating enable
 for_window [title="Deleting"] floating enable
 for_window [title="Moving"] floating enable
-for_window [title="^Terminator Preferences$"] floating enable
-for_window [title="pulsemixer"] floating enable
+for_window [class="Alacritty" instance="floating-term"] floating enable
+for_window [class="Alacritty" instance="floating-term"] resize set 840 510
+for_window [class="Alacritty" instance="floating-term"] move position center
 for_window [title="zoom"] floating enable
 
 
@@ -238,7 +239,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 exec --no-startup-id nm-applet
 exec --no-startup-id dbus-launch dropbox start
-exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; variety"
+exec --no-startup-id "variety"
 
 ##### system applications ######
 
@@ -268,14 +269,13 @@ exec_always --no-startup-id xset -dpms
 ##### Terminals #####
 
 bindsym $mod+Return exec --no-startup-id alacritty
-bindsym control+mod1+Return exec --no-startup-id termite
 bindsym F12 exec --no-startup-id xfce4-terminal --drop-down
 
 #System monitor
 bindsym control+Shift+Escape exec --no-startup-id xfce4-taskmanager
 
 #pavucontrol
-bindsym $mod+m exec --no-startup-id "termite -e \\"pulsemixer\\""
+bindsym $mod+m exec --no-startup-id "alacritty --class=floating-term -e \\"pulsemixer\\""
 bindsym $mod+Shift+m exec --no-startup-id pavucontrol
 
 #xkill
@@ -325,14 +325,11 @@ bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5
 # start dmenu
 bindsym $mod+F12 exec --no-startup-id dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
 
-# gmrun
-bindsym mod1+F2 exec --no-startup-id gmrun
-
 # start xfce-appfinder
 bindsym mod1+F3 exec --no-startup-id xfce4-appfinder
 
-# start rofi small
-bindsym $mod+d exec --no-startup-id rofi -show drun -config $HOME/.config/rofi/config.rasi
+# start rofi
+bindsym $mod+d exec --no-startup-id rofi -show drun -config $HOME/.config/rofi/applauncher_config.rasi
 
 # ArcoLinux Logout
 bindsym $mod+Shift+e exec --no-startup-id arcolinux-logout
@@ -344,18 +341,11 @@ bindsym $mod+Shift+e exec --no-startup-id arcolinux-logout
 #####################################################################################################################
 
 
-#Variety keybindings mod1 = ALT
 # trash wallpaper
-#bindsym mod1+t exec --no-startup-id variety -t
+bindsym Control+$mod+Down exec --no-startup-id "variety --trash"
 # next wallpaper
-#bindsym mod1+n exec --no-startup-id variety -n
-#bindsym mod1+Right exec --no-startup-id variety -n
+bindsym Control+$mod+Right exec --no-startup-id "variety --next"
 # previous wallpaper
-#bindsym mod1+p exec --no-startup-id variety -p
-#bindsym mod1+Left exec --no-startup-id variety -p
-# favorite wallpaper
-#bindsym mod1+f exec --no-startup-id variety -f
+bindsym Control+$mod+Left exec --no-startup-id "variety --previous"
 # pause wallpaper
-#bindsym mod1+Up exec --no-startup-id variety --pause
-# resume wallpaper
-#bindsym mod1+Down exec --no-startup-id variety --resume
+bindsym Control+$mod+Up exec --no-startup-id "variety --toggle-pause"

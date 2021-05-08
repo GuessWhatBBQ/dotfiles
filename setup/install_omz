@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+
+yay -Syua --answerdiff None --answerclean All --noremovemake --noconfirm oh-my-zsh-git zsh-theme-powerlevel10k-git
+sudo pacman -Syu --noconfirm zsh-autosuggestions zsh-syntax-highlighting zsh-completions
+
+# Create zsh-completions plugin, would ideally be a package/seperate file but oh well
+zsh_base="/usr/share/zsh"
+plugin_name="zsh-completions"
+plugin_folder="$zsh_base"/plugins/"$plugin_name"
+sudo mkdir "$plugin_folder"
+sudo touch "$plugin_folder"/"$plugin_name".plugin.zsh
+echo fpath+=\("$zsh_base"/site-functions\) | sudo tee "$plugin_folder"/"$plugin_name".plugin.zsh
+
+
+sudo ln -s /usr/share/zsh/plugins/* /usr/share/oh-my-zsh/custom/plugins
+sudo ln -s /usr/share/zsh-theme-powerlevel10k /usr/share/oh-my-zsh/custom/themes/powerlevel10k
+
+chsh --shell=/bin/zsh

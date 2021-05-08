@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+
+if [ -z $(pidof eww) ]; then
+    $HOME/.config/eww/scripts/get_weather --fetchdata
+    eww daemon
+    sleep 1
+fi
+
+eww reload
+if [ $(eww windows | grep -v "^*" | wc -l) -gt "0" ]; then
+    eww open-many blur_full weather
+    dunstctl history-pop
+    dunstctl history-pop
+    dunstctl history-pop
+    dunstctl history-pop
+    dunstctl history-pop
+else
+    eww close-all
+    dunstctl close-all
+fi

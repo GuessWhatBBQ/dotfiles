@@ -7,6 +7,7 @@ set $mod Mod4
 default_orientation horizontal
 popup_during_fullscreen smart
 smart_borders on
+hide_edge_borders both
 
 ##### Workspace Setup #####
 
@@ -89,12 +90,12 @@ mode "$mode_gaps_outer" {
 ##### Aesthetics ######
 
 ##### Font
-font pango:Noto Mono Regular 13
+font pango:Noto Thin 10
 
 ##### Border
 
-default_border pixel 2
-default_floating_border pixel 2
+default_border pixel 1
+default_floating_border pixel 1
 
 ##### Gaps
 gaps top 25
@@ -131,7 +132,7 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+Shift+a focus parent
 # focus the child container
-bindsym $mod+Shift+d focus child
+bindsym $mod+Shift+s focus child
 
 ##### Change position
 bindsym $mod+Shift+Left move left
@@ -151,16 +152,9 @@ bindsym $mod+s layout stacking
 bindsym $mod+z layout tabbed
 bindsym $mod+e layout toggle split
 
-##### border control ######
+##### changing border style
+bindsym $mod+t border toggle
 
-hide_edge_borders both
-bindsym $mod+shift+b exec --no-startup-id i3-msg border toggle
-
-#changing border style
-
-bindsym $mod+t border normal
-bindsym $mod+y border 1pixel
-bindsym $mod+u border none
 
 
 ####################################
@@ -173,29 +167,13 @@ bindsym $mod+u border none
 for_window [class="Arcolinux-welcome-app.py"] floating enable
 #for_window [class="Arcolinux-tweak-tool.py"] floating enable
 for_window [class="Bleachbit"] floating disable
-for_window [class="Blueberry.py"] floating enable
-for_window [class="Brasero"] floating disable
-for_window [class="Galculator"] floating enable
-for_window [class="Gnome-disks"] floating disable
-for_window [class="^Gnome-font-viewer$"] floating enable
-for_window [class="^Gpick$"] floating enable
-for_window [class="Hexchat"] floating disable
-for_window [class="Imagewriter"] floating enable
 for_window [class="Font-manager"] floating enable
 #for_window [class="qt5ct|Lxappearance] floating enable
-for_window [class="Nitrogen"] floating disable
 for_window [class="Pavucontrol"] floating enable
-for_window [class="Peek"] floating enable
 for_window [class="^Skype$"] floating enable
 for_window [class="^Spotify$"] floating disable
 for_window [class="System-config-printer.py"] floating enable
-for_window [class="Unetbootin.elf"] floating enable
-for_window [class="Usb-creator-gtk"] floating enable
-for_window [class="^Vlc$"] floating disable
 for_window [class="Wine"] floating disable
-for_window [class="Xfburn"] floating disable
-for_window [class="Xfce4-appfinder"] floating enable
-for_window [class="Xfce4-settings-manager"] floating disable
 for_window [class="Xfce4-taskmanager"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
 for_window [instance="script-fu"] border normal
@@ -205,12 +183,15 @@ for_window [instance="Variety"] floating enable
 for_window [title="Copying"] floating enable
 for_window [title="Deleting"] floating enable
 for_window [title="Moving"] floating enable
-for_window [title="^Terminator Preferences$"] floating enable
-for_window [title="pulsemixer"] floating enable
-for_window [title="zoom"] floating enable
+for_window [class="Alacritty" instance="floating-term"] floating enable
+for_window [class="Alacritty" instance="floating-term"] resize set 840 510
+for_window [class="Alacritty" instance="floating-term"] move position center
+for_window [class="firefox" title="Messenger Call — Mozilla Firefox"] floating enable
+for_window [title="Zoom Meeting" class="zoom"] floating disable
+for_window [title="zoom" class="zoom"] floating enable
+for_window [title="Zoom - Free Account" class="zoom"] floating enable
 
 
-#for_window [window_role="^gimp-toolbox-color-dialog$"] floating enable
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="^Preferences$"] floating enable
 for_window [window_role="setup"] floating enable
@@ -223,6 +204,7 @@ for_window [class="Spotify"] move to workspace 5
 assign [class="discord"] workspace 6
 assign [title="qBittorrent v4.3.3"] workspace 7
 assign [class="zoom"] workspace 10
+assign [class="firefox"] workspace 3
 
 
 #####################
@@ -238,17 +220,17 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 exec --no-startup-id nm-applet
 exec --no-startup-id dbus-launch dropbox start
-exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; variety"
+exec --no-startup-id "variety"
 
 ##### system applications ######
 
 exec_always --no-startup-id autotiling
 exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; battery_charge_notifier"
-exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; dunst -config .config/dunst/dunstrc"
 exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; xss-lock -l -- lockscreen"
-exec --no-startup-id unclutter --ignore-scrolling --fork --timeout 2
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh &
-exec_always --no-startup-id systemctl --user start picom.service
+exec --no-startup-id "unclutter --ignore-scrolling --fork --timeout 2"
+exec_always --no-startup-id "$HOME/.config/polybar/launch.sh"
+exec_always --no-startup-id "systemctl restart --user dunst.service"
+exec_always --no-startup-id "systemctl restart --user picom.service"
 
 ################################
 ##### System Configuration #####
@@ -268,25 +250,27 @@ exec_always --no-startup-id xset -dpms
 ##### Terminals #####
 
 bindsym $mod+Return exec --no-startup-id alacritty
-bindsym control+mod1+Return exec --no-startup-id termite
+bindsym $mod+Control+Shift+Return exec --no-startup-id "alacritty --class=floating-term"
 bindsym F12 exec --no-startup-id xfce4-terminal --drop-down
 
-#System monitor
+#System Monitor
 bindsym control+Shift+Escape exec --no-startup-id xfce4-taskmanager
 
-#pavucontrol
-bindsym $mod+m exec --no-startup-id "termite -e \\"pulsemixer\\""
+#Audio Mixer
+bindsym $mod+m exec --no-startup-id "alacritty --class=floating-term -e \\"pulsemixer\\""
 bindsym $mod+Shift+m exec --no-startup-id pavucontrol
 
 #xkill
 bindsym --release $mod+X exec xkill
+#xprop
+bindsym --release $mod+i exec xprop | tee -a /tmp/windowinfo
 
 ##### Specific Applications #####
 
-#Browser
+#Web Browser
 bindsym $mod+w exec --no-startup-id exo-open --launch webbrowser
 
-#File browser Thunar
+#File Browser
 bindsym $mod+Shift+Return exec --no-startup-id thunar
 
 ##### screenshots #####
@@ -323,20 +307,16 @@ bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5
 
 
 # start dmenu
-bindsym $mod+F12 exec --no-startup-id dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
+bindsym $mod+F2 exec --no-startup-id dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
 
-# gmrun
-bindsym mod1+F2 exec --no-startup-id gmrun
-
-# start xfce-appfinder
-bindsym mod1+F3 exec --no-startup-id xfce4-appfinder
-
-# start rofi small
-bindsym $mod+d exec --no-startup-id rofi -show drun -config $HOME/.config/rofi/config.rasi
+# start rofi
+bindsym $mod+d exec --no-startup-id rofi -show drun -config $HOME/.config/rofi/applauncher_config.rasi
 
 # ArcoLinux Logout
 bindsym $mod+Shift+e exec --no-startup-id arcolinux-logout
 
+# Launch eww dashboard
+bindsym $mod+Shift+d exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; eww-dashboard"
 
 
 #####################################################################################################################
@@ -345,10 +325,10 @@ bindsym $mod+Shift+e exec --no-startup-id arcolinux-logout
 
 
 # trash wallpaper
-bindsym Control+$mod+Down exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; variety -t"
+bindsym Control+$mod+Down exec --no-startup-id "variety --trash"
 # next wallpaper
-bindsym Control+$mod+Right exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; variety -n"
+bindsym Control+$mod+Right exec --no-startup-id "variety --next"
 # previous wallpaper
-bindsym Control+$mod+Left exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; variety -p"
+bindsym Control+$mod+Left exec --no-startup-id "variety --previous"
 # pause wallpaper
-bindsym Control+$mod+Up exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; variety --toggle-pause"
+bindsym Control+$mod+Up exec --no-startup-id "variety --toggle-pause"

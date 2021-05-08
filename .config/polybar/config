@@ -14,24 +14,9 @@ shade8 = #CE93D8
 
 modulefg = #ffffff
 
-[bar/bottombar]
-
-include-file = /home/guesswhatbbq/.config/polybar/bars/bottombar
-
-monitor =
-
-font-0 = "Iosevka Nerd Font:size=10;3"
-
-background = ${colors.bg_current}
-foreground = ${colors.modulefg}
-
-modules-left = i3 title
-modules-center =
-modules-right = memory cpu temp battery
-
 [bar/topbar]
 
-include-file = /home/guesswhatbbq/.config/polybar/bars/topbar
+include-file = $HOME/.config/polybar/bars/topbar
 
 monitor =
 
@@ -46,8 +31,24 @@ modules-center = date
 modules-right = player-mpris-tail pulseaudio volume_settings
 
 
+[bar/bottombar]
+
+include-file = $HOME/.config/polybar/bars/bottombar
+
+monitor =
+
+font-0 = "Iosevka Nerd Font:size=10;3"
+
+background = ${colors.bg_current}
+foreground = ${colors.modulefg}
+
+modules-left = i3 title
+modules-center =
+modules-right = memory cpu temp battery
+
+
 [bar/notif_bar]
-include-file = /home/guesswhatbbq/.config/polybar/bars/notif_bar
+include-file = $HOME/.config/polybar/bars/notif_bar
 
 background = ${colors.shade1}
 foreground = ${colors.modulefg}
@@ -60,7 +61,7 @@ content = " "
 
 [module/player-mpris-tail]
 type = custom/script
-exec = "export PATH=$HOME/.local/bin/polybar-scripts:$PATH; player-mpris-tail --icon-playing "" --icon-paused "" -f 'ﱘ  {:artist:t40:{artist}:}{:artist: - :}{:t40:{title}:}%{A1:player-mpris-tail previous:}   %{A}%{A1:player-mpris-tail play-pause:}{icon-reversed}%{A}%{A1:player-mpris-tail next:}  %{A}'"
+exec = "$HOME/.local/bin/polybar-scripts/player-mpris-tail --icon-playing "" --icon-paused "" -f 'ﱘ  {:artist:t40:{artist}:}{:artist: - :}{:t40:{title}:}%{A1:$HOME/.local/bin/polybar-scripts/player-mpris-tail previous:}   %{A}%{A1:$HOME/.local/bin/polybar-scripts/player-mpris-tail play-pause:}{icon-reversed}%{A}%{A1:$HOME/.local/bin/polybar-scripts/player-mpris-tail next:}  %{A}'"
 tail = true
 format-foreground = ${colors.shade7}
 

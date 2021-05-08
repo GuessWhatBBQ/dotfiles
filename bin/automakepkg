@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+
+if [ -z "$1" ]; then
+    target_directory=./
+else
+    if [ -d "$1" ]; then
+        target_directory="$1"
+    else
+        echo "Not a valid directory"
+        exit
+    fi
+fi
+for folder in $target_directory/*; do
+    if [ -d $folder ]; then
+        cd $folder
+        if [ -f "PKGBUILD" ]; then
+            makepkg --syncdeps --noconfirm --needed --install
+        fi
+        cd ..
+    fi
+done
