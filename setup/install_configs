@@ -1,29 +1,21 @@
 #!/usr/bin/bash
 
-backup_dir="$HOME/.config/config.bak"
-exclude=("bin" "usr" ".gitignore" ".git" "install" "setup" "builds")
+BACKUP_DIR="$HOME/.config/config.bak"
+USER_CONFIG_FILES=(".config" ".zshrc" ".p10k.zsh")
 
 # Ensuring the script is always run relative to the correct directory
 cd $(dirname $0)/..
 
-# Setting up globs
-shopt -s extglob dotglob
-GLOBIGNORE=".:.."
-
-# Checking whether the backup_dir exists and creating it if it doesn't
-if [ ! -d "$backup_dir" ]
+# Checking whether the BACKUP_DIR exists and creating it if it doesn't
+if [ ! -d "$BACKUP_DIR" ]
 then
-    mkdir $backup_dir
+    mkdir $BACKUP_DIR
 fi
 
-# Creating string patterns for the cp command to ignore
-for string in ${exclude[@]}; do
-    exclude_string="$exclude_string|$string"
-done
-exclude_string=$(echo $exclude_string | cut -c2-)
-
 # Cleaning up old config files
-find .config -mindepth 1 -maxdepth 1 -type d -exec cp -far $HOME/{} $backup_dir \; -exec rm -rf $HOME/{} \;
+find .config -mindepth 1 -maxdepth 1 -type d -exec cp -far $HOME/{} $BACKUP_DIR \; -exec rm -rf $HOME/{} \;
 
 # Copying .config/* files and .rc files
-cp -flav ./!($exclude_string) $HOME/
+for string in ${USER_CONFIG_FILES[@]}; do
+    cp -flav $string $HOME/
+done
