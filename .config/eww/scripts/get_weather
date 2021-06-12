@@ -15,6 +15,7 @@ fi
 
 cache_weather_icon=${weather_cache_dir}/current_weather_icon
 cache_weather_stat=${weather_cache_dir}/current_weather_stat
+cache_weather_stat_margin=${weather_cache_dir}/current_weather_stat_margin
 cache_weather_temperature=${weather_cache_dir}/current_weather_temperature
 cache_weather_hex=${weather_cache_dir}/current_weather_hex
 
@@ -100,6 +101,7 @@ fetch_weather_data() {
     fi
     echo "$weather_icon" >  ${cache_weather_icon}
     echo "$weather_description" > ${cache_weather_stat}
+    echo "$((130 - 15*${#weather_description}))" > ${cache_weather_stat_margin}
     echo "$weather_temp""°C" > ${cache_weather_temperature}
     echo "$weather_hex" > ${cache_weather_hex}
 }
@@ -115,6 +117,8 @@ elif [[ "$1" == "--hex" ]]; then
     cat ${cache_weather_hex}
 elif [[ "$1" == "--stat" ]]; then
     cat ${cache_weather_stat}
+elif [[ "$1" == "--stat_margin" ]]; then
+    cat ${cache_weather_stat_margin}
 else
     echo "Invalid command"
 fi

@@ -10,6 +10,10 @@
             $HOME/.config/eww/scripts/get_weather --stat
         </script-var>
 
+        <script-var name="WEATHER_STAT_STRLEN">
+            $HOME/.config/eww/scripts/get_weather --stat_margin
+        </script-var>
+
         <script-var name="WEATHER_TEMP">
             $HOME/.config/eww/scripts/get_weather --temp
         </script-var>
@@ -30,7 +34,7 @@
                 </box>
                 <box class="weather-info" orientation="v" space-evenly="false">
                     <label class="label-temperature" text="{{WEATHER_TEMP}}  "/>
-                    <label class="label-stat" text="{{WEATHER_STAT}}"/>
+                    <label class="label-stat" style="margin : 0px 0px 0px {{WEATHER_STAT_STRLEN}}px;" text="{{WEATHER_STAT}}"/>
                 </box>
             </box>
         </def>

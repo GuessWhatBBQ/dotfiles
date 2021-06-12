@@ -264,6 +264,8 @@ bindsym $mod+Shift+m exec --no-startup-id pavucontrol
 bindsym --release $mod+X exec xkill
 #xprop
 bindsym --release $mod+i exec xprop | tee -a /tmp/windowinfo
+#Context Menu (Right Click)
+bindsym --release $mod+Shift+F10 exec "xdotool key 135"
 
 ##### Specific Applications #####
 

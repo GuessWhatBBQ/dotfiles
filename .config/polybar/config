@@ -1,5 +1,5 @@
 [colors]
-bg_transparent = "#bb1f141f"
+bg_transparent = "#991f141f"
 bg_opaque = "#1f141f"
 bg_current = ${colors.bg_opaque}
 

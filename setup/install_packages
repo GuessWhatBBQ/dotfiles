@@ -14,7 +14,7 @@ fi
 
 cd $(dirname $0)/..
 
-sudo pacman -Syu --noconfirm --needed alacritty aria2 atom audacity base-devel bat cronie darktable exa ffmpeg firefox gimp git gparted htop i3-gaps jq kdeconnect libreoffice-still light lxappearance-gtk3 mpv nano neovim nethogs nomacs p7zip papirus-icon-theme playerctl polybar pulseaudio pulsemixer qbittorrent ranger rofi thunar unclutter unrar xclip xss-lock youtube-dl zathura zathura-pdf-poppler
+sudo pacman -Syu --noconfirm --needed alacritty aria2 atom audacity base-devel bat cronie darktable exa ffmpeg firefox gimp git gparted htop i3-gaps jq kdeconnect libreoffice-still light lxappearance-gtk3 mpv nano neovim nethogs nomacs p7zip papirus-icon-theme playerctl polybar pulseaudio pulsemixer qbittorrent ranger rofi thunar unclutter unrar xclip xdotool xss-lock youtube-dl zathura zathura-pdf-poppler
 
 yay -Syua --answerdiff None --answerclean All --noremovemake --noconfirm --needed autotiling discord-canary dropbox dunst-git git-secret i3lock-color i3-swallow nerd-fonts-complete picom-git spotify spotify-adblock-git windscribe-cli yay zoom
 
