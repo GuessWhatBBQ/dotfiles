@@ -295,6 +295,8 @@ bindsym $mod+bracketleft exec --no-startup-id playerctl -p spotify previous
 bindsym $mod+bracketright exec --no-startup-id playerctl -p spotify next
 #All
 bindsym $mod+Shift+p exec --no-startup-id playerctl --all-players pause
+bindsym $mod+Shift+bracketleft exec --no-startup-id playerctl previous
+bindsym $mod+Shift+bracketright exec --no-startup-id playerctl next
 
 ##### BackLight #####
 

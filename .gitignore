@@ -2,4 +2,4 @@
 .gitsecret/keys/random_seed
 !*.secret
 builds/variety/UnsplashAPIKey
-.config/eww/scripts/OpenWeatherAPIKey
+.config/eww/scripts/OpenWeatherAPIConfig

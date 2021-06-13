@@ -1,20 +1,30 @@
 #!/usr/bin/bash
 
+dashboard_widgets=("blur_full" "weather")
+
 if [ -z $(pidof eww) ]; then
     $HOME/.config/eww/scripts/get_weather --fetchdata
     eww daemon
-    sleep 1
+    sleep 0.3
 fi
 
-eww reload
-dunstctl close-all
+# Debug code (not required for daily operations)
+# eww reload
+
+# Ensure notifications are on top of blur overlay
+if [ "$(dunstctl count displayed)" -gt "0" ]; then
+    dunstctl close-all
+fi
+
 if [ $(eww windows | grep -v "^*" | wc -l) -gt "0" ]; then
-    eww open-many blur_full weather
-    dunstctl history-pop
-    dunstctl history-pop
-    dunstctl history-pop
-    dunstctl history-pop
-    dunstctl history-pop
+    for widget in ${dashboard_widgets[@]}; do
+        eww open $widget
+    done
+    for i in {1..5}; do
+        dunstctl history-pop
+    done
 else
-    eww close-all
+    for widget in ${dashboard_widgets[@]}; do
+        eww close $widget
+    done
 fi

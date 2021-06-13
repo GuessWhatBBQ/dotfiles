@@ -1,9 +1,7 @@
 #!/bin/bash
 
 ## User Weather Configs
-source $(dirname $0)/OpenWeatherAPIKey
-CITY_NAME="Dhaka"
-UNIT="metric"
+source $(dirname $0)/OpenWeatherAPIConfig
 
 ##############################################################################################################
 ## Weather Cache Location
@@ -21,7 +19,7 @@ cache_weather_hex=${weather_cache_dir}/current_weather_hex
 
 ## Fetch data
 fetch_weather_data() {
-    weather=$(curl -sf "api.openweathermap.org/data/2.5/weather?q=$CITY_NAME&appid=$API_KEY&units=$UNIT")
+    weather=$(curl -sf "https://api.openweathermap.org/data/2.5/weather?id=$CITY_ID&appid=$API_KEY&units=$UNIT")
     echo $weather
 
     if [ ! -z "$weather" ]; then

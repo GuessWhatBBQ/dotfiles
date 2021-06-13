@@ -22,6 +22,7 @@ monitor =
 
 font-0 = "Iosevka Nerd Font:size=10;2"
 font-1 = "Iosevka Nerd Font:size=11;2"
+font-2 = "Material Design Icons:size=10;2"
 
 background = ${colors.bg_current}
 foreground = ${colors.modulefg}
@@ -123,7 +124,7 @@ format-charging-background = ${colors.shade2}
 
 format-full = "<label-full> "
 format-full-prefix = "  "
-label-full =  Fully Charged
+label-full =  100%
 format-full-background = ${colors.shade2}
 
 time-format = %H:%M
@@ -152,9 +153,17 @@ ramp-6 = " "
 type = internal/network
 interface = wlo1
 interval = 5
-label-connected = " 直  %essid%"
-label-disconnected = "  睊  Wifi Disconnected "
+format-connected = "<ramp-signal> <label-connected>"
+label-connected = "%essid%"
+label-disconnected = " 󰤮 Wifi Disconnected"
 content-padding = 0
+
+ramp-signal-0 = " 󰤟"
+ramp-signal-1 = " 󰤟"
+ramp-signal-2 = " 󰤢"
+ramp-signal-3 = " 󰤢"
+ramp-signal-4 = " 󰤥"
+ramp-signal-5 = " 󰤨"
 
 [module/eth]
 type = internal/network
