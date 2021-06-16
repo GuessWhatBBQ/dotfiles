@@ -1,0 +1,112 @@
+/*
+ *
+ * Author  : Aditya Shakya
+ * Mail    : adi1090x@gmail.com
+ * Github  : @adi1090x
+ * Twitter : @adi1090x
+ *
+ */
+
+configuration {
+	font:							"Iosevka Nerd Font Bold 10";
+    disable-history:                false;
+    fullscreen:                     false;
+	hide-scrollbar: 				true;
+}
+
+* {
+    background:                     #7B1FA255;
+    background-alt:              	#7B1FA255;
+    background-bar:                 #f2f2f215;
+    foreground:                     #f2f2f2EE;
+    accent:			            	#3DAEE966;
+    transparent:                    #00000000;
+}
+
+window {
+    transparency:                   "real";
+    background-color:               @background;
+    text-color:                     @foreground;
+	border:							0px;
+	border-color:					@border;
+    border-radius:                  16px;
+	width:							40%;
+    location:                       center;
+    x-offset:                       0;
+    y-offset:                       0;
+}
+
+prompt {
+    enabled: 						true;
+	padding: 						0% 0.9% 0.4% -0.2%;
+	background-color: 				@transparent;
+	text-color: 					@foreground;
+	font:							"Iosevka Nerd Font 12";
+}
+
+entry {
+    background-color:               @transparent;
+    text-color:                     @foreground;
+    placeholder-color:              @foreground;
+    expand:                         true;
+    horizontal-align:               0;
+    placeholder:                    "Search Unicode Characters";
+    padding:                        0.0% 0% 0% 0%;
+    blink:                          true;
+}
+
+inputbar {
+	children: 						[ prompt, entry ];
+    background-color:               @background-bar;
+    text-color:                     @foreground;
+    expand:                         false;
+	border:							0% 0% 0% 0%;
+    border-radius:                  12px;
+	border-color:					@accent;
+    margin:                         0% 0% 0% 0%;
+    padding:                        1%;
+}
+
+listview {
+    background-color:               @background-alt;
+    columns:                        1;
+    lines:                          10;
+    spacing:                        0%;
+    cycle:                          false;
+    dynamic:                        true;
+    layout:                         vertical;
+    border-radius:                  12px;
+}
+
+mainbox {
+    background-color:               @background-alt;
+	border:							0% 0% 0% 0%;
+    border-radius:                  0% 0% 0% 0%;
+	border-color:					@accent;
+    children:                       [ inputbar, listview ];
+    spacing:                       	2%;
+    padding:                        2% 1% 2% 1%;
+}
+
+element {
+    background-color:               @background-alt;
+    text-color:                     @foreground;
+    orientation:                    vertical;
+    border-radius:                  0%;
+    padding:                        1% 0% 1% 0%;
+}
+
+element-text {
+    expand:                         true;
+    horizontal-align:               0.2;
+    vertical-align:                 0.2;
+    margin:                         0.5% 0.5% 0.5% 0.5%;
+}
+
+element selected {
+    background-color:               @background-bar;
+    text-color:                     @foreground;
+	border:							0% 0% 0% 0%;
+    border-radius:                  0px;
+    border-color:                  	@accent;
+}

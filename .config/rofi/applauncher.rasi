@@ -8,9 +8,11 @@
  */
 
 configuration {
+    modi:                           "drun";
+    combi-modi:                     "window,drun";
 	font:							"Iosevka Nerd Font Bold 10";
     show-icons:                     true;
-	icon-theme: 					"Papirus";
+	icon-theme: 					"Papirus-Dark";
     display-drun: 					"";
     drun-display-format:            "{name}";
     disable-history:                false;
