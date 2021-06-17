@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-BACKUP_DIR="$HOME/.config/config.bak"
-USER_CONFIG_FILES=(".config" ".zshrc" ".p10k.zsh")
+BACKUP_DIR="$HOME/.cache/config.bak"
+USER_CONFIG_FILES=(".config" ".zshrc" ".p10k.zsh" "unicode")
 
 # Ensuring the script is always run relative to the correct directory
 cd $(dirname $0)/..
@@ -13,9 +13,15 @@ then
 fi
 
 # Cleaning up old config files
-find .config -mindepth 1 -maxdepth 1 -type d -exec cp -far $HOME/{} $BACKUP_DIR \; -exec rm -rf $HOME/{} \;
+for file in ${USER_CONFIG_FILES[@]}; do
+    if [ -d "$file" ]; then
+        find $file -mindepth 1 -maxdepth 1 -exec cp -far $HOME/{} $BACKUP_DIR \; -exec rm -rf $HOME/{} \;
+    else
+        find $file -exec cp -far $HOME/{} $BACKUP_DIR \; -exec rm -rf $HOME/{} \;
+    fi
+done
 
-# Copying .config/* files and .rc files
-for string in ${USER_CONFIG_FILES[@]}; do
-    cp -flav $string $HOME/
+# Copying .config/* files and .rc files and friends
+for file in ${USER_CONFIG_FILES[@]}; do
+    cp -flav $file $HOME/
 done
