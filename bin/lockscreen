@@ -17,6 +17,9 @@ convert "$4" -resize 1920x1080^ -gravity center -extent 1920x1080 -brightness-co
 convert "$HOME/.config/i3/i3-lock/lock_icon.png" -scale 18% "$icon"
 convert "$tmpbg" "$icon" -gravity center -composite "$tmpbg"
 
+dunstctl set-paused true
+amixer --quiet set Master mute
+
 # lock the screen with the blurred image
 i3lock \
     --nofork                            \
@@ -61,4 +64,7 @@ i3lock \
     --verif-text=""                     \
     --wrong-text=""                     \
     --noinput-text=""                   \
-    --no-modkey-text                    \
+    --no-modkey-text
+
+dunstctl set-paused false
+amixer --quiet set Master unmute

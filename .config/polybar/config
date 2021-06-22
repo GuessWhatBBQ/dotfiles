@@ -132,7 +132,7 @@ time-format = %H:%M
 [module/temp]
 type = internal/temperature
 interval = 1
-thermal-zone = 6
+thermal-zone = 0
 
 format = "<ramp> <label> "
 format-background = ${colors.shade2}

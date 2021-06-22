@@ -33,7 +33,7 @@
                     {{WEATHER_ICON}}
                 </box>
                 <box class="weather-info" orientation="v" space-evenly="false">
-                    <label class="label-temperature" text="{{WEATHER_TEMP}}  "/>
+                    <label class="label-temperature" text="{{WEATHER_TEMP}} "/>
                     <label class="label-stat" style="margin : 0px 0px 0px {{WEATHER_STAT_STRLEN}}px;" text="{{WEATHER_STAT}}"/>
                 </box>
             </box>
