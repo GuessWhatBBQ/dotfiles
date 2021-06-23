@@ -1,8 +1,7 @@
 [colors]
 bg_transparent = "#991f141f"
 bg_opaque = "#1f141f"
-bg_current = ${colors.bg_opaque}
-
+bg_current = ${colors.bg_transparent}
 shade1 = #4A148C
 shade2 = #6A1B9A
 shade3 = #7B1FA2
@@ -11,243 +10,24 @@ shade5 = #9C27B0
 shade6 = #AB47BC
 shade7 = #BA68C8
 shade8 = #CE93D8
-
 modulefg = #ffffff
 
 [bar/topbar]
 
 include-file = $HOME/.config/polybar/bars/topbar
-
-monitor =
-
-font-0 = "Iosevka Nerd Font:size=10;2"
-font-1 = "Iosevka Nerd Font:size=11;2"
-font-2 = "Material Design Icons:size=10;2"
-
 background = ${colors.bg_current}
 foreground = ${colors.modulefg}
-
-modules-left = wlan eth speed
-modules-center = date
-modules-right = player-mpris-tail pulseaudio volume_settings
-
 
 [bar/bottombar]
 
 include-file = $HOME/.config/polybar/bars/bottombar
-
-monitor =
-
-font-0 = "Iosevka Nerd Font:size=10;3"
-
 background = ${colors.bg_current}
 foreground = ${colors.modulefg}
 
-modules-left = i3 title
-modules-center =
-modules-right = memory cpu temp battery
-
-
 [bar/notif_bar]
-include-file = $HOME/.config/polybar/bars/notif_bar
 
+include-file = $HOME/.config/polybar/bars/notif_bar
 background = ${colors.shade1}
 foreground = ${colors.modulefg}
 
-modules-left = dummymodule
-
-[module/dummymodule]
-type = custom/text
-content = " "
-
-[module/player-mpris-tail]
-type = custom/script
-exec = "$HOME/.local/bin/polybar-scripts/player-mpris-tail --icon-playing "" --icon-paused "" -f 'ﱘ  {:artist:t40:{artist}:}{:artist: - :}{:t40:{title}:}%{A1:$HOME/.local/bin/polybar-scripts/player-mpris-tail previous:}   %{A}%{A1:$HOME/.local/bin/polybar-scripts/player-mpris-tail play-pause:}{icon-reversed}%{A}%{A1:$HOME/.local/bin/polybar-scripts/player-mpris-tail next:}  %{A}'"
-tail = true
-format-foreground = ${colors.shade7}
-
-[module/io]
-type = custom/script
-exec = "export PATH=$HOME/.local/bin:$PATH; iostatf"
-tail = true
-interval = 1
-format-background = ${colors.shade4}
-
-
-[module/volume_settings]
-type = custom/text
-content = "   "
-click-left = pavucontrol
-
-[module/memory]
-type = internal/memory
-internal = 5
-format = "<label> "
-format-background = ${colors.shade4}
-format-prefix = "  "
-label = "%mb_used:6%"
-
-[module/cpu]
-type = internal/cpu
-internal = 1
-
-format = "<label>% "
-format-prefix = " ﬙ "
-format-background = ${colors.shade4}
-
-label =  %percentage:2%
-
-[module/date]
-type = internal/date
-interval = 1
-date = %a %d %b
-time = %l:%M:%S %p
-label = %date% %time%
-format-font = 2
-format-padding = 0
-
-[module/battery]
-type = internal/battery
-battery = BAT0
-adapter = ACAD
-poll-interval = 2
-
-format-discharging = "<label-discharging> "
-format-discharging-prefix = "  "
-label-discharging = %percentage%% (%time%)
-format-discharging-background = ${colors.shade2}
-
-format-charging = "<label-charging> "
-format-charging-prefix = "  "
-label-charging = %percentage%% (%time%)
-format-charging-background = ${colors.shade2}
-
-format-full = "<label-full> "
-format-full-prefix = "  "
-label-full =  100%
-format-full-background = ${colors.shade2}
-
-time-format = %H:%M
-
-[module/temp]
-type = internal/temperature
-interval = 1
-thermal-zone = 0
-
-format = "<ramp> <label> "
-format-background = ${colors.shade2}
-label = %temperature-c%
-
-base-temperature = 30
-warn-temperature = 90
-
-ramp-0 = " "
-ramp-1 = " "
-ramp-2 = " "
-ramp-3 = " "
-ramp-4 = " "
-ramp-5 = " "
-ramp-6 = " "
-
-[module/wlan]
-type = internal/network
-interface = wlo1
-interval = 5
-format-connected = "<ramp-signal> <label-connected>"
-label-connected = "%essid%"
-label-disconnected = " 󰤮 Wifi Disconnected"
-content-padding = 0
-
-ramp-signal-0 = " 󰤟"
-ramp-signal-1 = " 󰤟"
-ramp-signal-2 = " 󰤢"
-ramp-signal-3 = " 󰤢"
-ramp-signal-4 = " 󰤥"
-ramp-signal-5 = " 󰤨"
-
-[module/eth]
-type = internal/network
-interface = enp0s20f0u1
-interval = 5
-
-format-connected = <label-connected>
-format-connected-prefix = "  "
-label-connected = "Ethernet Connected"
-
-format-disconnected-prefix = "  "
-format-disconnected = <label-disconnected>
-label-disconnected = Ethernet Disconnected
-
-[module/speed]
-type = internal/network
-interface = wlo1
-interval = 1
-accumulate-stats = true
-label-connected = "  %downspeed:10%  %upspeed:10%"
-label-disconnected = "  %downspeed:10%  %upspeed:10%"
-format-padding = 0
-
-[module/pulseaudio]
-type = internal/pulseaudio
-sink = alsa_output.pci-0000_00_1b.0.analog-stereo
-interval = 5
-format-volume = "<ramp-volume>  <label-volume>"
-format-muted = "  婢  Muted"
-ramp-volume-0 = "  "
-ramp-volume-1 = "  墳"
-ramp-volume-2 ="  "
-
-[module/title]
-type = internal/xwindow
-format = <label>
-label = " %title:0:80:...% "
-label-foreground = ${colors.modulefg}
-label-background = ${colors.shade2}
-
-label-empty-foreground = ${colors.shade1}
-
-[module/i3]
-type = internal/i3
-pin-workspace = false
-index-sort = true
-enable-click = true
-enable-scroll = true
-wrapping-scroll = false
-reverse-scroll = true
-
-format = <label-state> <label-mode>
-
-label-focused ="%name%:%icon% "
-label-focused-padding = 1
-label-focused-foreground = ${colors.modulefg}
-label-focused-background = ${colors.shade2}
-
-label-unfocused ="%name%:%icon% "
-label-unfocused-padding = 1
-label-unfocused-foreground = ${colors.modulefg}
-label-unfocused-background = ${colors.shade1}
-
-
-label-visible ="%name%:%icon% "
-label-visible-padding = 1
-label-visible-foreground = ${colors.modulefg}
-label-visible-background = ${colors.shade5}
-
-label-mode = %mode%
-label-mode-padding = 1
-label-mode-foreground = ${colors.modulefg}
-label-mode-background = ${colors.shade5}
-
-label-urgent ="%name%:%icon% "
-label-urgent-padding = 1
-label-urgent-foreground = ${colors.modulefg}
-label-urgent-background = ${colors.shade5}
-
-ws-icon-0 = "1;"
-ws-icon-1 = "2;"
-ws-icon-2 = "3;"
-ws-icon-3 = "4;"
-ws-icon-4 = "5;阮"
-ws-icon-5 = "6;ﭮ"
-ws-icon-6 = "10;"
-ws-icon-default = ""
+include-directory = $HOME/GithubRepos/dotfiles/.config/polybar/modules

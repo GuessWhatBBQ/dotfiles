@@ -1,0 +1,41 @@
+[module/memory]
+type = internal/memory
+internal = 5
+format = "<label> "
+format-background = ${colors.shade4}
+format-prefix = "  "
+label = "%mb_used:6%"
+
+[module/cpu]
+type = internal/cpu
+internal = 1
+format = "<label>% "
+format-prefix = " ﬙ "
+format-background = ${colors.shade4}
+label =  %percentage:2%
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ACAD
+poll-interval = 2
+format-discharging = "<label-discharging> "
+format-discharging-prefix = "  "
+label-discharging = %percentage%% (%time%)
+format-discharging-background = ${colors.shade2}
+format-charging = "<label-charging> "
+format-charging-prefix = "  "
+label-charging = %percentage%% (%time%)
+format-charging-background = ${colors.shade2}
+format-full = "<label-full> "
+format-full-prefix = "  "
+label-full =  100%
+format-full-background = ${colors.shade2}
+time-format = %H:%M
+
+[module/io]
+type = custom/script
+exec = "export PATH=$HOME/.local/bin:$PATH; iostatf"
+tail = true
+interval = 1
+format-background = ${colors.shade4}

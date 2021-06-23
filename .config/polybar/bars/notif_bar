@@ -18,3 +18,5 @@ module-margin-right      = 1
 tray-position = right
 tray-padding = 2
 tray-detached = true
+
+modules-left = dummymodule

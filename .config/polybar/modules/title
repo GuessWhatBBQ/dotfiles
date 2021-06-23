@@ -1,0 +1,7 @@
+[module/title]
+type = internal/xwindow
+format = <label>
+label = " %title:0:80:...% "
+label-foreground = ${colors.modulefg}
+label-background = ${colors.shade2}
+label-empty-foreground = ${colors.shade1}

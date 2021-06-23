@@ -8,3 +8,9 @@ wm-restack = i3
 
 enable-ipc = true
 screenchange-reload      = true
+
+font-0 = "Iosevka Nerd Font:size=10;3"
+
+modules-left = i3 title
+modules-center =
+modules-right = memory cpu temp battery
