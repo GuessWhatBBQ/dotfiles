@@ -14,9 +14,12 @@ fi
 
 cd $(dirname $0)/..
 
-sudo pacman -Syu --noconfirm --needed alacritty aria2 atom audacity base-devel bat cronie darktable exa ffmpeg firefox gimp git gparted htop i3-gaps jq kdeconnect libreoffice-still light lxappearance-gtk3 mpv nano ncdu neovim nethogs nomacs okular p7zip papirus-icon-theme playerctl polybar pulseaudio pulsemixer qbittorrent ranger rofi sysstat thunar unclutter unrar xclip xdotool xss-lock youtube-dl zathura zathura-pdf-poppler
+sudo pacman -Syu --noconfirm --needed alacritty aria2 atom audacity base-devel bat cronie darktable exa feh ffmpeg firefox gimp git gparted htop i3-gaps jq kdeconnect libreoffice-still light lxappearance-gtk3 mpv nano ncdu neovim nethogs nomacs okular p7zip papirus-icon-theme playerctl polybar pulseaudio pulsemixer qbittorrent ranger rofi sysstat thunar unclutter unrar xclip xdotool xss-lock youtube-dl zathura zathura-pdf-poppler
 
 yay -Syua --answerdiff None --answerclean All --noremovemake --noconfirm --needed autotiling discord-canary dropbox dunst-git git-secret i3lock-color i3-swallow joplin-desktop nerd-fonts-complete picom-git spotify spotify-adblock-git ttf-material-design-icons-git windscribe-cli yay zoom
+
+# Reveal encrypted files
+git-secret reveal -f
 
 # Setup personal PKGBUILDs
 if [ ! -d "$pkgbuild_folder_base" ]
@@ -25,9 +28,6 @@ then
 fi
 
 cp -flav builds/* $pkgbuild_folder_base
-
-# Reveal encrypted files
-git-secret reveal -f
 
 # Install personal PKGBUILDs
 bash bin/automakepkg $pkgbuild_folder_base

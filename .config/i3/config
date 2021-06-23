@@ -164,8 +164,6 @@ bindsym $mod+t border toggle
 
 ##### Application Anchor #####
 
-for_window [class="Arcolinux-welcome-app.py"] floating enable
-#for_window [class="Arcolinux-tweak-tool.py"] floating enable
 for_window [class="Bleachbit"] floating disable
 for_window [class="Font-manager"] floating enable
 #for_window [class="qt5ct|Lxappearance] floating enable
@@ -277,7 +275,7 @@ bindsym $mod+Shift+Return exec --no-startup-id thunar
 
 ##### screenshots #####
 
-bindsym Print exec --no-startup-id scrot 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'
+bindsym Print exec --no-startup-id scrot 'Screenshot-%Y-%m-%d-%s_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'
 bindsym Control+Print exec --no-startup-id xfce4-screenshooter
 bindsym Control+Shift+Print exec --no-startup-id gnome-screenshot -i
 
@@ -318,7 +316,7 @@ bindsym $mod+d exec --no-startup-id rofi -show drun -theme $HOME/.config/rofi/ap
 bindsym $mod+u exec --no-startup-id rofi -dmenu -p "" -lines 10 -theme $HOME/.config/rofi/unicode_characters.rasi -input ~/unicode -matching regex | cut -d' ' -f1 -z | xclip -selection c
 
 # ArcoLinux Logout
-bindsym $mod+Shift+e exec --no-startup-id arcolinux-logout
+bindsym $mod+Shift+e exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; powermenu"
 
 # Launch eww dashboard
 bindsym $mod+Shift+d exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; eww-dashboard"

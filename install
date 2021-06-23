@@ -12,7 +12,7 @@ setup/install_omz
 setup/install_configs
 
 # Installing systemd service files
-setup/install_servicefiles
+setup/install_systemconfigfiles
 
 # Installing user bin files locally
 cp -flav bin $HOME/.local
