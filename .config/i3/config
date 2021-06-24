@@ -166,13 +166,12 @@ bindsym $mod+t border toggle
 
 for_window [class="Bleachbit"] floating disable
 for_window [class="Font-manager"] floating enable
-#for_window [class="qt5ct|Lxappearance] floating enable
+for_window [class="qt5ct|Lxappearance|Kvantum Manager"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="^Skype$"] floating enable
 for_window [class="^Spotify$"] floating disable
 for_window [class="System-config-printer.py"] floating enable
 for_window [class="Wine"] floating disable
-for_window [class="Xfce4-taskmanager"] floating enable
 for_window [class="Qalculate-gtk"] floating enable
 for_window [instance="script-fu"] border normal
 for_window [instance="Variety"] floating enable
@@ -214,7 +213,7 @@ assign [class="firefox"] workspace 3
 #exec --no-startup-id $HOME/.config/i3/startup/startup.sh &
 
 #Authentication dialog
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1 &
 
 exec --no-startup-id nm-applet
 exec --no-startup-id dbus-launch dropbox start
@@ -249,10 +248,6 @@ exec_always --no-startup-id xset -dpms
 
 bindsym $mod+Return exec --no-startup-id alacritty
 bindsym $mod+Control+Shift+Return exec --no-startup-id "alacritty --class=floating-term"
-bindsym F12 exec --no-startup-id xfce4-terminal --drop-down
-
-#System Monitor
-bindsym control+Shift+Escape exec --no-startup-id xfce4-taskmanager
 
 #Audio Mixer
 bindsym $mod+m exec --no-startup-id "alacritty --class=floating-term -e \\"pulsemixer\\""
@@ -275,9 +270,9 @@ bindsym $mod+Shift+Return exec --no-startup-id thunar
 
 ##### screenshots #####
 
-bindsym Print exec --no-startup-id scrot 'Screenshot-%Y-%m-%d-%s_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'
-bindsym Control+Print exec --no-startup-id xfce4-screenshooter
-bindsym Control+Shift+Print exec --no-startup-id gnome-screenshot -i
+bindsym Print exec --no-startup-id flameshot gui --path $HOME/Pictures/Screenshots
+bindsym Control+Print exec --no-startup-id flameshot full --path $HOME/Pictures/Screenshots
+bindsym Control+Shift+Print exec --no-startup-id xfce4-screenshooter
 
 ##### Audio Settings #####
 

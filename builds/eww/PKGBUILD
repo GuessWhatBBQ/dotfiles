@@ -1,6 +1,6 @@
 pkgname=eww-git
 _pkgname=eww
-pkgver=r225.9e81c7d
+pkgver=r226.10d3d93
 pkgrel=1
 pkgdesc="ElKowar's wacky widgets"
 arch=('any')
