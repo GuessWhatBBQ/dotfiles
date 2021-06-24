@@ -5,7 +5,7 @@ PICOM_CONFIG_LOCATION="$HOME/.config/picom/picom.conf"
 cd $(dirname $0)/..
 
 # Installing user service file(s)
-sudo cp -fav usr /
+sudo cp -fv usr /
 
 # Evaluating variable to produce actualy string
 sudo sed -i -e "s|\$PICOM_CONFIG_LOCATION|$PICOM_CONFIG_LOCATION|g" "/usr/lib/systemd/user/picom.service"

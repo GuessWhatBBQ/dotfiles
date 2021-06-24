@@ -18,4 +18,4 @@ setup/install_systemconfigfiles
 cp -flav bin $HOME/.local
 
 # Installing system level configs
-sudo cp -fav etc /
+sudo cp -fv etc /
