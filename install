@@ -14,8 +14,8 @@ setup/install_configs
 # Installing systemd service files
 setup/install_systemconfigfiles
 
+# Install meslo fonts
+setup/install_fonts
+
 # Installing user bin files locally
 cp -flav bin $HOME/.local
-
-# Installing system level configs
-sudo cp -fv etc /

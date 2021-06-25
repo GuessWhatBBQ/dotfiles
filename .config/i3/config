@@ -222,7 +222,7 @@ exec --no-startup-id "variety"
 ##### system applications ######
 
 exec_always --no-startup-id autotiling
-exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; battery_charge_notifier"
+exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; batterychargenotifier"
 exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; xss-lock -l -- lockscreen"
 exec --no-startup-id "unclutter --ignore-scrolling --fork --timeout 2"
 exec_always --no-startup-id "$HOME/.config/polybar/launch.sh"
