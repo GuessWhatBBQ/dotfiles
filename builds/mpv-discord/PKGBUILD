@@ -1,6 +1,6 @@
 pkgname=mpv-discord-git
 _pkgname=mpv-discord
-pkgver=v1.6.0.r1.g6a8a93a
+pkgver=v1.6.0.r4.g6667a4a
 pkgrel=1
 pkgdesc="A cross-platform Discord Rich Presence integration for MPV with no external dependencies."
 arch=('any')
@@ -16,6 +16,7 @@ md5sums=('SKIP')
 prepare() {
     cd "${pkgname}"
     sed -i "s|binary_path=|binary_path=/usr/local/bin/mpv-discord|" script-opts/discord.conf
+    sed -i "s|active=yes|active=no|" script-opts/discord.conf
     sed -i "s|opts.read_options(options, \"discord\")|opts.read_options(options, \"mpv-discord\")|" scripts/discord.lua
 }
 

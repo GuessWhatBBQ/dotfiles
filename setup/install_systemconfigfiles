@@ -12,3 +12,6 @@ sudo cp -frv etc /
 
 # Evaluating variable to produce actualy string
 sudo sed -i -e "s|\$PICOM_CONFIG_LOCATION|$PICOM_CONFIG_LOCATION|g" "/usr/lib/systemd/user/picom.service"
+
+sudo systemctl enable cronie.service
+sudo systemctl start cronie.service
