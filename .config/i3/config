@@ -22,6 +22,16 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+bindsym $mod+Control+1 workspace 11
+bindsym $mod+Control+2 workspace 12
+bindsym $mod+Control+3 workspace 13
+bindsym $mod+Control+4 workspace 14
+bindsym $mod+Control+5 workspace 15
+bindsym $mod+Control+6 workspace 16
+bindsym $mod+Control+7 workspace 17
+bindsym $mod+Control+8 workspace 18
+bindsym $mod+Control+9 workspace 19
+bindsym $mod+Control+0 workspace 20
 
 ##### Workspace Shifting for Applications
 bindsym $mod+Shift+1 move container to workspace 1
@@ -34,6 +44,16 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Control+Shift+1 move container to workspace 11
+bindsym $mod+Control+Shift+2 move container to workspace 12
+bindsym $mod+Control+Shift+3 move container to workspace 13
+bindsym $mod+Control+Shift+4 move container to workspace 14
+bindsym $mod+Control+Shift+5 move container to workspace 15
+bindsym $mod+Control+Shift+6 move container to workspace 16
+bindsym $mod+Control+Shift+7 move container to workspace 17
+bindsym $mod+Control+Shift+8 move container to workspace 18
+bindsym $mod+Control+Shift+9 move container to workspace 19
+bindsym $mod+Control+Shift+0 move container to workspace 20
 
 bindsym $mod+r mode "resize"
 bindsym $mod+Shift+g mode "$mode_gaps"
@@ -189,6 +209,8 @@ for_window [title="Zoom Meeting" class="zoom"] floating disable
 for_window [title="zoom" class="zoom"] floating enable
 for_window [title="Zoom - Free Account" class="zoom"] floating enable
 
+## Temporary for project
+for_window [title="TicTacToe - Game"] floating enable
 
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="^Preferences$"] floating enable
@@ -196,14 +218,14 @@ for_window [window_role="setup"] floating enable
 
 ##### Applications Workspaces Assignment ######
 
+assign [class="firefox"] workspace 3
 assign [class="atom|Atom"] workspace 4
 assign [class="Spotify|spotify"] workspace 5
 for_window [class="Spotify"] move to workspace 5
 assign [class="discord"] workspace 6
 assign [title="^qBittorrent v.*"] workspace 7
 assign [class="zoom"] workspace 10
-assign [class="firefox"] workspace 3
-
+for_window [class="VirtualBox Machine"] move to workspace 20
 
 #####################
 ##### autostart #####
@@ -213,11 +235,12 @@ assign [class="firefox"] workspace 3
 # USER APPLICATIONS TO START AT BOOT
 #exec --no-startup-id $HOME/.config/i3/startup/startup.sh &
 
-#Authentication dialog
+#Authentication
 exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1 &
+exec --no-startup-id /usr/lib/pam_kwallet_init
 
 exec --no-startup-id nm-applet
-exec --no-startup-id dbus-launch dropbox start
+exec --no-startup-id $HOME/.local/bin/maestral_qt
 exec --no-startup-id "variety"
 
 ##### system applications ######
@@ -298,6 +321,10 @@ bindsym $mod+Shift+bracketright exec --no-startup-id playerctl next
 bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5
 bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5
 
+##### Dunst #####
+bindsym $mod+Control+space exec dunstctl close
+bindsym $mod+Control+Shift+space exec dunstctl close-all
+bindsym $mod+Control+grave exec dunstctl history-pop
 
 #################
 ##### Menus #####

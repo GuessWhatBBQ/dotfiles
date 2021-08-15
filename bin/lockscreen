@@ -24,7 +24,6 @@ amixer --quiet -D pulse set Master mute
 i3lock \
     --nofork                            \
     --ignore-empty-password             \
-    --redraw-thread                     \
     \
     --color=00000000                    \
     --image="$tmpbg"                    \

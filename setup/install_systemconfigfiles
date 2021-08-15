@@ -15,3 +15,6 @@ sudo sed -i -e "s|\$PICOM_CONFIG_LOCATION|$PICOM_CONFIG_LOCATION|g" "/usr/lib/sy
 
 sudo systemctl enable cronie.service
 sudo systemctl start cronie.service
+
+# Required for udev rules of the light program
+sudo usermod -a -G video $(whoami)

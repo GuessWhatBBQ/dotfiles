@@ -1,3 +1,4 @@
+# See dunst(5) for all configuration options
 [global]
     ### Display ###
 
@@ -31,7 +32,8 @@
     # screen width minus the width defined in within the geometry option.
     geometry = "480x80-30+20"
 
-    # Turn on the progess bar
+    # Turn on the progess bar. It appears when a progress hint is passed with
+    # for example dunstify -h int:value:12
     progress_bar = true
 
     # Set the progress bar height. This includes the frame, so make sure
@@ -57,7 +59,7 @@
 
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing window manager is
-    # present (e.g. xcompmgr, compiz, etc.).
+    # present (e.g. xcompmgr, compiz, etc.). (X11 only)
     transparency = 40
 
     # The height of the entire notification.  If the height is smaller
@@ -277,10 +279,14 @@
     # Defines list of actions for each mouse event
     # Possible values are:
     # * none: Don't do anything.
-    # * do_action: If the notification has exactly one action, or one is marked as default,
-    #              invoke it. If there are multiple and no default, open the context menu.
+    # * do_action: Invoke the action determined by the action_name rule. If there is no
+    #              such action, open the context menu.
+    # * open_url: If the notification has exactly one url, open it. If there are multiple
+    #             ones, open the context menu.
     # * close_current: Close current notification.
     # * close_all: Close all notifications.
+    # * context: Open context menu for the notification.
+    # * context_all: Open context menu for all notifications.
     # These values can be strung together for each mouse event, and
     # will be executed in sequence.
     mouse_left_click = close_current
@@ -296,33 +302,6 @@
     # using the resolution and physical size. This might be useful in setups
     # where there are multiple screens with very different dpi values.
     per_monitor_dpi = false
-
-# The internal keyboard shortcut support in dunst is now considered deprecated
-# and should be replaced by dunstctl calls. You can use the configuration of your
-# WM or DE to bind these to shortcuts of your choice.
-# Check the dunstctl manual page for more info.
-[shortcuts]
-
-    # Shortcuts are specified as [modifier+][modifier+]...key
-    # Available modifiers are "ctrl", "mod1" (the alt-key), "mod2",
-    # "mod3" and "mod4" (windows-key).
-    # Xev might be helpful to find names for keys.
-
-    # Close notification. Equivalent dunstctl command:
-    # dunstctl close
-    close = ctrl+space
-
-    # Close all notifications. Equivalent dunstctl command:
-    # dunstctl close-all
-    close_all = ctrl+shift+space
-
-    # Redisplay last message(s). Equivalent dunstctl command:
-    # dunstctl history-pop
-    history = ctrl+grave
-
-    # Context menu. Equivalent dunstctl command:
-    # dunstctl context
-    context = ctrl+shift+period
 
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
@@ -373,6 +352,7 @@
 #    set_transient
 #    timeout
 #    urgency
+#    action_name
 #
 # Shell-like globbing will get expanded.
 #
@@ -410,8 +390,10 @@
 #        If the notification is already drawn, it won't get undrawn.
 # pushback: same as delay, but when switching into fullscreen, the notification will get
 #           withdrawn from screen again and will get delayed like a new notification
-[fullscreen_delay_everything]
-    fullscreen = delay
+
+[fullscreen_pushback_everything]
+    fullscreen = pushback
+
 [fullscreen_show_critical]
     msg_urgency = critical
     fullscreen = show

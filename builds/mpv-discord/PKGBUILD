@@ -1,6 +1,6 @@
 pkgname=mpv-discord-git
 _pkgname=mpv-discord
-pkgver=v1.6.0.r4.g6667a4a
+pkgver=v1.6.0.r5.g94cdf14
 pkgrel=1
 pkgdesc="A cross-platform Discord Rich Presence integration for MPV with no external dependencies."
 arch=('any')
