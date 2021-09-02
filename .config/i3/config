@@ -223,8 +223,9 @@ assign [class="atom|Atom"] workspace 4
 assign [class="Spotify|spotify"] workspace 5
 for_window [class="Spotify"] move to workspace 5
 assign [class="discord"] workspace 6
-assign [title="^qBittorrent v.*"] workspace 7
+assign [title="^qBittorrent v.*"] workspace 19
 assign [class="zoom"] workspace 10
+assign [class="VirtualBox Machine"] workspace 20
 for_window [class="VirtualBox Machine"] move to workspace 20
 
 #####################
@@ -336,7 +337,7 @@ bindsym $mod+F2 exec --no-startup-id dmenu_run -i -nb '#191919' -nf '#fea63c' -s
 
 # start rofi
 bindsym $mod+d exec --no-startup-id rofi -show drun -theme $HOME/.config/rofi/applauncher.rasi
-bindsym $mod+u exec --no-startup-id rofi -dmenu -p "" -lines 10 -theme $HOME/.config/rofi/unicode_characters.rasi -input ~/unicode -matching regex | cut -d' ' -f1 -z | xclip -selection c
+bindsym $mod+u exec --no-startup-id rofi -dmenu -p "" -theme $HOME/.config/rofi/unicode_characters.rasi -input ~/unicode -matching regex | cut -d' ' -f1 -z | xclip -selection c
 
 # ArcoLinux Logout
 bindsym $mod+Shift+e exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; powermenu"

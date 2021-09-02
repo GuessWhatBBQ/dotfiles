@@ -1,0 +1,53 @@
+;; Weather vars
+(defpoll WEATHER_ICON :interval "10m" "$HOME/.config/eww/scripts/get_weather --icon")
+(defpoll WEATHER_STAT :interval "10m" "$HOME/.config/eww/scripts/get_weather --stat")
+(defpoll WEATHER_STAT_STRLEN :interval "10m" "$HOME/.config/eww/scripts/get_weather --stat_margin")
+(defpoll WEATHER_TEMP :interval "10m" "$HOME/.config/eww/scripts/get_weather --temp")
+(defpoll WEATHER_ICON_HEX :interval "10m" "$HOME/.config/eww/scripts/get_weather --hex")
+
+;; Weather
+(defwidget weather []
+    (box
+            :orientation "h"
+            :space-evenly "false"
+        (box
+            :class "icon-weather"
+            (label
+                :style "color: ${WEATHER_ICON_HEX}"
+                :text "${WEATHER_ICON}"))
+        (box
+            :class "weather-info"
+            :orientation "v"
+            :space-evenly "false"
+            (label
+                :class "label-temperature"
+                :text "${WEATHER_TEMP} ")
+            (label
+                :class "label-stat"
+                :style "margin : 0px 0px 0px ${WEATHER_STAT_STRLEN}px;"
+                :text "${WEATHER_STAT}"
+            )
+        )
+    )
+)
+
+;; Blur fullscreen
+(defwidget blur_full []
+    (box
+        :orientation "v"
+        :space-evenly "true"
+    )
+)
+
+(defwindow weather
+    :stacking "fg"
+    :focusable "false"
+    :screen 1
+    :geometry (geometry :x 1410 :y 880 :width 480 :height 150)
+    (weather)
+)
+
+(defwindow blur_full
+    :geometry (geometry :x "0px" :y "25px" :width "100%" :height 1033)
+    (blur_full)
+)
