@@ -1,22 +1,21 @@
+[colors]
+include-file = $HOME/.config/polybar/colors
+
+[bar/notif_bar]
+
+background = ${colors.shade1}
+foreground = ${colors.modulefg}
+
 width                    = 8%
 height                   = 22
 bottom                   = true
-
 override-redirect = true
-wm-restack = i3
-
 enable-ipc = true
+wm-restack = i3
 offset-x = 92%
-;offset-y = 5
-screenchange-reload      = true
-
-padding-left             = 0
-padding-right            = 0
-module-margin-left       = 1
-module-margin-right      = 1
 
 tray-position = right
-tray-padding = 2
-tray-detached = true
 
 modules-left = dummymodule
+
+include-directory = $HOME/GithubRepos/dotfiles/.config/polybar/modules

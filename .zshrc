@@ -11,9 +11,11 @@ HISTFILE=~/.zsh_history
 
 export ZSH=/usr/share/oh-my-zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(enhancd extract git man sudo zsh-autosuggestions zsh-completions zsh-syntax-highlighting history-substring-search)
+plugins=(extract git man sudo zsh-autosuggestions zsh-completions zsh-syntax-highlighting history-substring-search)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=yellow,bold,underline"
 
+eval "$(fasd --init auto)"
+[[ ! -f /usr/share/fzf/key-bindings.zsh ]] || source /usr/share/fzf/key-bindings.zsh
 [[ ! -f $ZSH/oh-my-zsh.sh ]] || source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 

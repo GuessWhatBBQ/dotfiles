@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+application_name=""
+delay=0
+volume_change=+5
+steps=5
+master=false
+
+while getopts 'd:s:a:v:m' PARAMS; do
+    case "${PARAMS}" in
+        d)
+            delay=${OPTARG}
+            ;;
+        s)
+            steps=${OPTARG}
+            ;;
+        a)
+            application_name=${OPTARG}
+            if ! pactl list sink-inputs | grep -q "application.name = \"$application_name\""; then
+                echo Not such player is active
+                exit
+            fi
+            ;;
+        v)
+            volume_change=${OPTARG}
+            ;;
+        m)
+            master=true
+            ;;
+        ?)
+            exit
+            ;;
+    esac
+done
+
+if $master; then
+    volume_command="pactl set-sink-volume"
+    sink_index=0
+else
+    volume_command="pactl set-sink-input-volume"
+    sink_index=$(pactl list sink-inputs | sed "/application.name = \"$application_name\"/q" | grep "Sink Input" | tail -n1 | awk '{print substr($3,2)}')
+fi
+
+direction=$(echo ${volume_change:0:1})
+volume_change_per_step=$(echo "${volume_change:1}/$steps" | bc)
+
+for step in $(seq 1 $steps); do
+    $volume_command $sink_index $direction$volume_change_per_step%
+    sleep $delay
+done

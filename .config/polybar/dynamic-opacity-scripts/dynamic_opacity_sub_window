@@ -4,15 +4,15 @@
 transparent_str="bg_current = \${colors.bg_transparent}"
 # String to set for opacity
 opaque_str="bg_current = \${colors.bg_opaque}"
-# Config file location
-config_file="$HOME/.config/polybar/config"
+# Config file locations
+config_files=( "$HOME/.config/polybar/bars/bottombar" "$HOME/.config/polybar/bars/topbar" )
 
 tmpfile=$(mktemp)
 
 i3-msg -t subscribe -m '[ "window" ]' |
     while IFS= read -r event
     do
-        if $(grep -Fxc "$opaque_str" "$config_file" > /dev/null 2<&1)
+        if $(grep -Fxc "$opaque_str" "${config_files[0]}" > /dev/null 2<&1)
         then
             let opaque=1
         else
@@ -26,14 +26,18 @@ i3-msg -t subscribe -m '[ "window" ]' |
         if [ $window_count -eq 1 ] && [ $opaque -eq 0 ]; then
             (
                 flock --exclusive --nonblock 200 || exit
-                sed "s/$transparent_str/$opaque_str/" "$config_file" > "${tmpfile}"
-                cat ${tmpfile} > "$config_file"
+                for config_file in "${config_files[@]}"; do
+                    sed "s/$transparent_str/$opaque_str/" "$config_file" > "${tmpfile}"
+                    cat ${tmpfile} > "$config_file"
+                done
             ) 200>/tmp/polybarconfiglock
         elif [ $window_count -ne 1 ] && [ $opaque -eq 1 ]; then
             (
                 flock --exclusive --nonblock 200 || exit
-                sed "s/$opaque_str/$transparent_str/" "$config_file" > "${tmpfile}"
-                cat ${tmpfile} > "$config_file"
+                for config_file in "${config_files[@]}"; do
+                    sed "s/$opaque_str/$transparent_str/" "$config_file" > "${tmpfile}"
+                    cat ${tmpfile} > "$config_file"
+                done
             ) 200>/tmp/polybarconfiglock
         fi
 

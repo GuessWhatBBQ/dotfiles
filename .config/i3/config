@@ -296,17 +296,27 @@ bindsym $mod+Shift+Return exec --no-startup-id thunar
 ##### screenshots #####
 
 bindsym Print exec --no-startup-id flameshot gui --path $HOME/Pictures/Screenshots
-bindsym Control+Print exec --no-startup-id flameshot full --path $HOME/Pictures/Screenshots
-bindsym Control+Shift+Print exec --no-startup-id xfce4-screenshooter
+bindsym $mod+Print exec --no-startup-id flameshot full --path $HOME/Pictures/Screenshots
 
 ##### Audio Settings #####
 
 ###Volume Control
-bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pulse sset Master '5%+'"
-bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse sset Master '5%-'"
+bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/.local/bin/volumecontrol -s 5 -v -5 -m
+bindsym XF86AudioRaiseVolume exec --no-startup-id $HOME/.local/bin/volumecontrol -s 5 -v +5 -m
 bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle"
 
+###Player Volume (Last added player)
+
+#Spotify
+bindsym $mod+minus exec --no-startup-id $HOME/.local/bin/volumecontrol -d 0.1 -s 5 -a Spotify -v -5
+bindsym $mod+equal exec --no-startup-id $HOME/.local/bin/volumecontrol -d 0.1 -s 5 -a Spotify -v +5
+
+#Any
+bindsym $mod+Shift+minus exec --no-startup-id $HOME/.local/bin/volumecontrol -d 0.1 -s 5 -v -5
+bindsym $mod+Shift+equal exec --no-startup-id $HOME/.local/bin/volumecontrol -d 0.1 -s 5 -v +5
+
 ###Player Control (playerctl)
+
 #Spotify
 bindsym $mod+p exec --no-startup-id playerctl -p spotify play-pause
 bindsym $mod+bracketleft exec --no-startup-id playerctl -p spotify previous
@@ -323,9 +333,10 @@ bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5
 bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5
 
 ##### Dunst #####
-bindsym $mod+Control+space exec dunstctl close
-bindsym $mod+Control+Shift+space exec dunstctl close-all
-bindsym $mod+Control+grave exec dunstctl history-pop
+bindsym $mod+Shift+colon exec dunstctl set-paused toggle
+bindsym $mod+semicolon exec dunstctl history-pop
+bindsym $mod+apostrophe exec dunstctl close
+bindsym $mod+Shift+quotedbl exec dunstctl close-all
 
 #################
 ##### Menus #####
@@ -352,10 +363,10 @@ bindsym $mod+Shift+d exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; e
 
 
 # trash wallpaper
-bindsym Control+$mod+Down exec --no-startup-id "variety --trash"
+bindsym $mod+Shift+slash exec --no-startup-id "variety --trash"
 # next wallpaper
-bindsym Control+$mod+Right exec --no-startup-id "variety --next"
+bindsym $mod+period exec --no-startup-id "variety --next"
 # previous wallpaper
-bindsym Control+$mod+Left exec --no-startup-id "variety --previous"
+bindsym $mod+comma exec --no-startup-id "variety --previous"
 # pause wallpaper
-bindsym Control+$mod+Up exec --no-startup-id "variety --toggle-pause"
+bindsym $mod+slash exec --no-startup-id "variety --toggle-pause"

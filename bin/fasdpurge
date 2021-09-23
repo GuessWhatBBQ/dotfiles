@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+fasdpurged=$(mktemp)
+
+while read -r line; do
+    path=$(echo $line | awk -F'|' '{print $1};')
+    if [ -f "$path" ] || [ -d "$path" ]; then
+        echo "$path"\|$(echo $line | awk -F'|' '{print $2"|"$3};') >> $fasdpurged
+    fi
+done < $HOME/.fasd
+
+cat $fasdpurged > $HOME/.fasd

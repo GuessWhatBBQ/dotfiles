@@ -1,3 +1,3 @@
 #!/usr/bin/bash
 # 
-iostat -dmy --dec=2 1 | awk 'BEGIN {ORS=" "; print "\r"}; NR>=4 && !/Device/ {if (NF!=0) print $1  " R: "$3 "mB/s W: "$4"mB/s"; else print "\r"} END {printf("\n")}'
+iostat -dmy --dec=2 1 | awk 'BEGIN {ORS=" "; print "\r"}; NR>=4 && !/Device/ {if (NF!=0) print " " $1  " R: "$3 "mB/s W: "$4"mB/s"; else print "\r"} END {printf("\r\n")}'

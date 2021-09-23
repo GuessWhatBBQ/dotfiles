@@ -1,21 +1,42 @@
 #!/usr/bin/bash
 
-if [ -z "$1" ]; then
-    target_directory=./
+target_directory=./
+clean=false
+
+if [ -d "$1" ]; then
+    target_directory="$1"
+elif [[ "$1" =~ --clean  ]] && [ -d "$2" ]; then
+    target_directory="$2"
+    clean=true
 else
-    if [ -d "$1" ]; then
-        target_directory="$1"
-    else
-        echo "Not a valid directory"
-        exit
-    fi
+    echo "Not a valid directory"
+    exit
 fi
-for folder in $target_directory/*; do
+
+cd $target_directory
+
+function installpkg {
+    if [ -f "PKGBUILD" ]; then
+        makepkg --syncdeps --noconfirm --needed --install
+    fi
+}
+
+function cleanpkg {
+    find . -maxdepth $1 -mindepth $1 -name "*.pkg.tar.zst" -exec echo {} \; -exec rm {} \;
+}
+
+if $clean; then
+    cleanpkg 1
+    cleanpkg 2
+    exit
+fi
+
+installpkg
+
+for folder in *; do
     if [ -d $folder ]; then
         cd $folder
-        if [ -f "PKGBUILD" ]; then
-            makepkg --syncdeps --noconfirm --needed --install
-        fi
+        installpkg
         cd ..
     fi
 done
