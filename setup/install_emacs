@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+git clone -b develop https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
+
+# Create seperate file for emacs-custom-settings
+mkdir $HOME/.emacs.d/.cache
+touch $HOME/.emacs.d/.cache/.dotspacemacs-custom-settings
