@@ -274,6 +274,8 @@ exec_always --no-startup-id xset -dpms
 
 bindsym $mod+Return exec --no-startup-id alacritty
 bindsym $mod+Control+Shift+Return exec --no-startup-id "alacritty --class=floating-term"
+bindsym $mod+q [class="Alacritty" instance="floating-term"] move scratchpad
+bindsym $mod+a [class="Alacritty" instance="floating-term"] scratchpad show
 
 #Audio Mixer
 bindsym $mod+m exec --no-startup-id "alacritty --class=floating-term -e \\"pulsemixer\\""
@@ -290,6 +292,9 @@ bindsym --release $mod+Shift+F10 exec "xdotool key 135"
 
 #Web Browser
 bindsym $mod+w exec --no-startup-id exo-open --launch webbrowser
+
+#Calculator
+bindsym $mod+c exec --no-startup-id qalculate-gtk
 
 #File Browser
 bindsym $mod+Shift+Return exec --no-startup-id thunar

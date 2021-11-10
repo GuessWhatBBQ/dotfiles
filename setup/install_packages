@@ -2,7 +2,7 @@
 
 pkgbuild_folder_base=$HOME/.local/builds
 
-sudo reflector --verbose --country Hong\ Kong,Bangladesh,Japan,China --sort age --fastest 3 --score 3 --save /etc/pacman.d/mirrorlist
+sudo reflector --verbose --country Hong\ Kong,Bangladesh,Japan,China --sort age --fastest 6 --score 15 --save /etc/pacman.d/mirrorlist
 
 # Ensuring yay is installed
 if ! command -v yay &> /dev/null
@@ -16,7 +16,7 @@ cd $(dirname $0)/..
 
 sudo pacman -Syu --noconfirm --needed alacritty arc-gtk-theme aria2 atom audacity base-devel bat bc cronie darktable exa fasd feh ffmpeg firefox flameshot gimp git gparted htop i3-gaps jq kdeconnect kvantum-qt5 libreoffice-still light lxappearance-gtk3 mpv nano ncdu neovim nethogs nomacs okular p7zip papirus-icon-theme playerctl polybar pulseaudio pulsemixer qbittorrent qt5ct ranger rofi scrot sysstat thunar unclutter unrar xclip xdotool xss-lock youtube-dl zathura zathura-pdf-poppler
 
-yay -Syua --answerdiff None --answerclean None --noremovemake --noconfirm --needed autotiling bibata-cursor-theme discord-canary dropbox dunst-git git-secret i3lock-color i3-swallow joplin-desktop nerd-fonts-complete picom-git spotify spotify-adblock-git ttf-material-design-icons-git windscribe-cli yay zoom
+yay -Syua --answerdiff None --answerclean None --noremovemake --noconfirm --needed autotiling bibata-cursor-theme discord-canary dropbox dunst-git git-secret i3lock-color i3-swallow-git joplin-desktop nerd-fonts-complete picom-git spotify spotify-adblock-git ttf-material-design-icons-git windscribe-cli yay zoom
 
 # Reveal encrypted files
 git-secret reveal -f

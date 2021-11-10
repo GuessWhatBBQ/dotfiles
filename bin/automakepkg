@@ -22,7 +22,7 @@ function installpkg {
 }
 
 function cleanpkg {
-    find . -maxdepth $1 -mindepth $1 -name "*.pkg.tar.zst" -exec echo {} \; -exec rm {} \;
+    find . -maxdepth $1 -mindepth $1 -name "*.pkg.tar.zst" -exec sh -c 'echo -en "Removing "; basename {}' \; -exec rm {} \;
 }
 
 if $clean; then
