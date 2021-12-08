@@ -4,7 +4,7 @@
 
 _gitname=variety
 pkgname=${_gitname}-git
-pkgver=0.8.5.r7.g98a5a0a
+pkgver=0.8.5.r9.gde671b7
 pkgrel=1
 pkgdesc="Variety wallpaper changer (git version)"
 arch=('any')

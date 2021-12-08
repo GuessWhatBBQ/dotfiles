@@ -37,7 +37,7 @@ alias exal="exa -la"
 alias get="aria2c -x16 -s64 -j64 -k2M"
 alias hogs="sudo nethogs"
 
-alias full="i3-swallow"
+alias full="swallow"
 alias routine="full zathura $HOME/Dropbox/routine.pdf"
 alias pdf="full zathura"
 alias play="full mpv"

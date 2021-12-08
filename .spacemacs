@@ -32,7 +32,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(sql
+   '(yaml
+     sql
      javascript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -47,7 +48,7 @@ This function should only modify configuration layer settings."
      lsp
      ;; markdown
      multiple-cursors
-     ;; org
+     org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -55,8 +56,10 @@ This function should only modify configuration layer settings."
      syntax-checking
      version-control
      tern
-     treemacs
-     (unicode-fonts :variables unicode-fonts-enable-ligatures t))
+     (treemacs :variables
+               treemacs-use-git-mode 'deferred)
+     (unicode-fonts :variables
+                    unicode-fonts-enable-ligatures t))
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -234,7 +237,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(spacemacs :separator arrow :separator-scale 2)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -357,12 +360,12 @@ It should only modify the values of Spacemacs settings."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 90
+   dotspacemacs-active-transparency 95
 
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 90
+   dotspacemacs-inactive-transparency 95
 
    ;; If non-nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
@@ -546,7 +549,12 @@ dump.")
 This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
-before packages are loaded.")
+before packages are loaded."
+
+  "Spacemacs transparency default"
+  (spacemacs/toggle-transparency)
+
+  (add-hook 'treemacs-select-hook 'treemacs-peek-mode))
 
 
 ;; Do not write anything past this comment. This is where Emacs will

@@ -243,8 +243,8 @@ exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1 &
 exec --no-startup-id /usr/lib/pam_kwallet_init
 
 exec --no-startup-id nm-applet
-exec --no-startup-id $HOME/.local/bin/maestral_qt
-exec --no-startup-id "variety"
+exec --no-startup-id maestral gui
+exec --no-startup-id variety
 
 ##### system applications ######
 
@@ -283,11 +283,11 @@ bindsym $mod+m exec --no-startup-id "alacritty --class=floating-term -e \\"pulse
 bindsym $mod+Shift+m exec --no-startup-id pavucontrol
 
 #xkill
-bindsym --release $mod+X exec xkill
+bindsym --release $mod+X exec --no-startup-id xkill
 #xprop
-bindsym --release $mod+i exec xprop | tee -a /tmp/windowinfo
+bindsym --release $mod+i exec --no-startup-id xprop | tee -a /tmp/windowinfo
 #Context Menu (Right Click)
-bindsym --release $mod+Shift+F10 exec "xdotool key 135"
+bindsym --release $mod+Shift+F10 exec --no-startup-id "xdotool key 135"
 
 ##### Specific Applications #####
 
@@ -338,12 +338,16 @@ bindsym $mod+Shift+bracketright exec --no-startup-id playerctl next
 #Adjust Screen Brightness
 bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5
 bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5
+bindsym $mod+F7 exec --no-startup-id $HOME/.local/bin/blankscreen
 
 ##### Dunst #####
-bindsym $mod+Shift+colon exec dunstctl set-paused toggle
-bindsym $mod+semicolon exec dunstctl history-pop
-bindsym $mod+apostrophe exec dunstctl close
-bindsym $mod+Shift+quotedbl exec dunstctl close-all
+bindsym $mod+Shift+colon exec --no-startup-id dunstctl set-paused toggle
+bindsym $mod+semicolon exec --no-startup-id dunstctl history-pop
+bindsym $mod+apostrophe exec --no-startup-id dunstctl close
+bindsym $mod+Shift+quotedbl exec --no-startup-id dunstctl close-all
+
+##### Touchpad #####
+bindsym $mod+Shift+F7 exec --no-startup-id $HOME/.local/bin/touchpadtoggle 
 
 #################
 ##### Menus #####
@@ -357,7 +361,7 @@ bindsym $mod+F2 exec --no-startup-id dmenu_run -i -nb '#191919' -nf '#fea63c' -s
 bindsym $mod+d exec --no-startup-id rofi -show drun -theme $HOME/.config/rofi/applauncher.rasi
 bindsym $mod+u exec --no-startup-id rofi -dmenu -p "" -theme $HOME/.config/rofi/unicode_characters.rasi -input ~/unicode -matching regex | cut -d' ' -f1 -z | xclip -selection c
 
-# ArcoLinux Logout
+# Rofi Logout Menu
 bindsym $mod+Shift+e exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; powermenu"
 
 # Launch eww dashboard
