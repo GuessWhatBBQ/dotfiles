@@ -21,11 +21,15 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
 if [ -d "$HOME/.local/bin" ] ;
-  then PATH="$HOME/.local/bin:$PATH"
+  then export PATH="$HOME/.local/bin:$PATH"
 fi
 
 if [ -d "$HOME/.npm-global/bin" ] ;
-  then PATH="$HOME/.npm-global/bin:$PATH"
+  then export PATH="$HOME/.npm-global/bin:$PATH"
+fi
+
+if command -v nvim &> /dev/null; then
+  export EDITOR=nvim
 fi
 
 alias exa="exa --icons"

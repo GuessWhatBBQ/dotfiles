@@ -32,34 +32,38 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(yaml
-     sql
-     javascript
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
-     ;; `M-m f e R' (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-     auto-completion
+   '((auto-completion :variables
+                      auto-completion-enable-snippets-in-popup t)
      better-defaults
      emacs-lisp
      git
      helm
+     html
+     (javascript :variables
+                 javascript-backend 'lsp
+                 javascript-fmt-tool 'prettier)
      lsp
      ;; markdown
      multiple-cursors
      org
+     prettier
+     python
+     react
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      spell-checking
+     sql
      syntax-checking
      version-control
-     tern
+     tide
      (treemacs :variables
                treemacs-use-git-mode 'deferred)
+     (typescript :variables
+                 typescript-backend 'tide)
      (unicode-fonts :variables
-                    unicode-fonts-enable-ligatures t))
+                    unicode-fonts-enable-ligatures t)
+     yaml)
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -237,7 +241,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator arrow :separator-scale 2)
+   dotspacemacs-mode-line-theme '(spacemacs :separator arrow :separator-scale 1.9)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -247,7 +251,7 @@ It should only modify the values of Spacemacs settings."
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
    dotspacemacs-default-font '("FiraCode Nerd Font Mono"
-                               :size 14.0
+                               :size 13.0
                                :weight normal
                                :width normal)
 
@@ -405,7 +409,7 @@ It should only modify the values of Spacemacs settings."
    ;;   :size-limit-kb 1000)
    ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers 'relative
 
    ;; Code folding method. Possible values are `evil', `origami' and `vimish'.
    ;; (default 'evil)
@@ -554,6 +558,13 @@ before packages are loaded."
   "Spacemacs transparency default"
   (spacemacs/toggle-transparency)
 
+  "Display current function name in mode-line"
+  (which-function-mode)
+  (setq which-func-unknown "n/a")
+
+  (global-visual-line-mode)
+  (global-company-mode)
+  (global-set-key (kbd "C-SPC") 'yas-expand)
   (add-hook 'treemacs-select-hook 'treemacs-peek-mode))
 
 

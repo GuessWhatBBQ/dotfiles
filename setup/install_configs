@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 BACKUP_DIR="$HOME/.cache/config.bak"
-USER_CONFIG_FILES=(".config" ".zshrc" ".p10k.zsh" "unicode" ".icons" ".spacemacs")
+USER_CONFIG_FILES=(".config" ".zshrc" ".p10k.zsh" "unicode" ".icons" ".spacemacs" ".npmrc")
 
 # Ensuring the script is always run relative to the correct directory
 cd $(dirname $0)/..
@@ -28,3 +28,6 @@ done
 
 # Create flameshot folder
 mkdir $HOME/Pictures/Screenshots
+
+# Create npm-global folder
+mkdir $HOME/.npm-global
