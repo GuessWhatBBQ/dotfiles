@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+xmodmapConfig="$HOME/.Xmodmap"
+
+xmodmap "$xmodmapConfig"
+while ! xmodmap -pke | grep --quiet --fixed-strings --line-regexp --file="$xmodmapConfig"; do
+    sleep 1
+    xmodmap "$xmodmapConfig"
+done

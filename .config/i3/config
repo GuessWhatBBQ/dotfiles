@@ -265,6 +265,7 @@ exec_always --no-startup-id numlockx on
 exec_always --no-startup-id xset s off
 exec_always --no-startup-id xset -dpms
 
+exec_always --no-startup-id "export PATH=$HOME/.local/bin:$PATH; modkeyboardmap"
 
 ################################
 ##### Application KeyBinds #####
