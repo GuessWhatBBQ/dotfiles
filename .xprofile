@@ -1,0 +1,6 @@
+# i3-sensible-terminal
+export TERMINAL="alacritty"
+
+# User defined keyboard remapping
+usermodmap=$HOME/.Xmodmap
+[[ -f "$usermodmap" ]] && xmodmap "$usermodmap"
