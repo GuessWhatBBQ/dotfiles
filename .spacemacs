@@ -35,6 +35,7 @@ This function should only modify configuration layer settings."
    '((auto-completion :variables
                       auto-completion-enable-snippets-in-popup t)
      better-defaults
+     c-c++
      emacs-lisp
      git
      helm
