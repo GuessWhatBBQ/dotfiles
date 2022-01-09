@@ -41,7 +41,6 @@ This function should only modify configuration layer settings."
      helm
      html
      (javascript :variables
-                 javascript-backend 'lsp
                  javascript-fmt-tool 'prettier)
      lsp
      ;; markdown
@@ -60,8 +59,7 @@ This function should only modify configuration layer settings."
      tide
      (treemacs :variables
                treemacs-use-git-mode 'deferred)
-     (typescript :variables
-                 typescript-backend 'tide)
+     typescript
      (unicode-fonts :variables
                     unicode-fonts-enable-ligatures t)
      yaml)

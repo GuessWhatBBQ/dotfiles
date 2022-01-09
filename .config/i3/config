@@ -298,7 +298,7 @@ bindsym $mod+w exec --no-startup-id exo-open --launch webbrowser
 bindsym $mod+c exec --no-startup-id qalculate-gtk
 
 #File Browser
-bindsym $mod+Shift+Return exec --no-startup-id thunar
+bindsym $mod+Shift+Return exec --no-startup-id ranger
 
 ##### screenshots #####
 
