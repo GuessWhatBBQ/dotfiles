@@ -33,13 +33,16 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '((auto-completion :variables
-                      auto-completion-enable-snippets-in-popup t)
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t)
      better-defaults
      c-c++
      emacs-lisp
      git
+     haskell
      helm
-     html
+     (html :variables
+           css-enable-lsp t)
      (javascript :variables
                  javascript-fmt-tool 'prettier)
      lsp
@@ -49,9 +52,10 @@ This function should only modify configuration layer settings."
      prettier
      python
      react
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
+     shell-scripts
      spell-checking
      sql
      syntax-checking
@@ -73,7 +77,9 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      eterm-256color
+                                      )
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -528,7 +534,8 @@ This function defines the environment variables for your Emacs session. By
 default it calls `spacemacs/load-spacemacs-env' which loads the environment
 variables declared in `~/.spacemacs.env' or `~/.spacemacs.d/.spacemacs.env'.
 See the header of this file for more information."
-  (spacemacs/load-spacemacs-env))
+  (spacemacs/load-spacemacs-env)
+)
 
 (defun dotspacemacs/user-init ()
   "Initialization for user code:
@@ -537,14 +544,16 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (setq custom-file "~/.emacs.d/.cache/.dotspacemacs-custom-settings")
-  (load custom-file))
+  (load custom-file)
+)
 
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
-dump.")
+dump."
+)
 
 
 (defun dotspacemacs/user-config ()
@@ -564,7 +573,11 @@ before packages are loaded."
   (global-visual-line-mode)
   (global-company-mode)
   (global-set-key (kbd "C-SPC") 'yas-expand)
-  (add-hook 'treemacs-select-hook 'treemacs-peek-mode))
+  (spacemacs/toggle-indent-guide-globally-on)
+  (add-hook 'term-mode-hook #'eterm-256color-mode)
+  ;; (add-hook 'treemacs-select-hook 'treemacs-peek-mode)
+  ;; (add-hook 'treemacs-mode-hook)
+)
 
 
 ;; Do not write anything past this comment. This is where Emacs will
