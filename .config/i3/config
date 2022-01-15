@@ -253,7 +253,7 @@ exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; batterychargenotifier"
 exec --no-startup-id "export PATH=$HOME/.local/bin:$PATH; xss-lock -l -- lockscreen"
 exec --no-startup-id "unclutter --ignore-scrolling --fork --timeout 2"
 exec_always --no-startup-id "$HOME/.config/polybar/launch.sh"
-exec_always --no-startup-id "systemctl restart --user dunst.service"
+exec --no-startup-id "systemctl restart --user dunst.service"
 exec_always --no-startup-id "systemctl restart --user picom.service"
 
 ################################
@@ -298,7 +298,7 @@ bindsym $mod+w exec --no-startup-id exo-open --launch webbrowser
 bindsym $mod+c exec --no-startup-id qalculate-gtk
 
 #File Browser
-bindsym $mod+Shift+Return exec --no-startup-id ranger
+bindsym $mod+Shift+Return exec --no-startup-id alacritty -e ranger
 
 ##### screenshots #####
 
@@ -345,6 +345,11 @@ bindsym $mod+Shift+colon exec --no-startup-id dunstctl set-paused toggle
 bindsym $mod+semicolon exec --no-startup-id dunstctl history-pop
 bindsym $mod+apostrophe exec --no-startup-id dunstctl close
 bindsym $mod+Shift+quotedbl exec --no-startup-id dunstctl close-all
+##### Deadd Notification Center #####
+# bindsym $mod+apostrophe exec --no-startup-id $HOME/.local/bin/notify-send.py a --hint boolean:deadd-notification-center:true string:type:clearPopups
+# bindsym $mod+Shift+quotedbl exec --no-startup-id $HOME/.local/bin/notify-send.py a --hint boolean:deadd-notification-center:true string:type:pausePopups
+# bindsym $mod+Shift+colon exec --no-startup-id $HOME/.local/bin/notify-send.py a --hint boolean:deadd-notification-center:true string:type:unpausePopups
+# bindsym $mod+semicolon exec --no-startup-id kill -s USR1 $(pidof deadd-notification-center)
 
 ##### Touchpad #####
 bindsym $mod+Shift+F7 exec --no-startup-id $HOME/.local/bin/touchpadtoggle 

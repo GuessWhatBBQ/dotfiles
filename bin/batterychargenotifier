@@ -1,26 +1,36 @@
 #!/usr/bin/bash
 
-battery_device_path=$(upower -e | grep 'battery_BAT0')
+notif_id="998877"
 
 function battery_info {
-    battery_info=$(upower -i $battery_device_path)
-    battery_info_output=$(echo "$battery_info" | grep "$1")
-    battery_percentage=$(echo "$battery_info" | grep 'percentage' | awk '{print $NF}')
-    battery_percentage=${battery_percentage:0:-1}
+    time_to_empty=$(upower -i $(upower -e | grep 'BAT') | grep "$1")
+    delimiter=' '
+    s=$time_to_empty$delimiter
+    array=()
+    while [[ $s ]]; do
+        array+=( "${s%%"$delimiter"*}" )
+        s=${s#*"$delimiter"}
+    done
 }
 
-battery_info 'time to empty'
-
-if [ "$(echo $battery_info_output | awk '{print $NF}')" = "minutes" ] && [ "$(echo "$(echo $battery_info_output | awk '{print $4}') <= 10" | bc )" = "1" ]; then
-    while true; do
-        if [ "$(echo $battery_info_output | awk '{print $NF}')" = "charging" ]; then
-            notify-send.py "Low Battery" "Please connect the device to a charger" -a "Battery Status" -u critical -t 1 --replaces-process batterychargenotifier -i battery-100 --hint string:image-path:battery-010 &
-            break
-        else
-            notify-send.py "Low Battery" "Please connect the device to a charger" -a "Battery Status" -u critical -t 0 --replaces-process batterychargenotifier -i battery-100 --hint string:image-path:battery-010 int:value:$battery_percentage &
+while true; do
+    battery_info "time to empty"
+    # echo "$(date): Time to empty battery is ${array[(${#array[@]}-2)]} ${array[(${#array[@]}-1)]}" >> $HOME/.config/i3/battery_stats/low_batter.log
+    if [ "${array[(${#array[@]}-1)]}" == "minutes" ]; then
+        is_less=$(echo "${array[(${#array[@]}-2)]} <= 10" | bc)
+        if [ "$is_less" -eq "1" ]; then
+            dunstify -a "Battery Status" -u critical -r $notif_id -i battery-010 "Low Battery" "Please connect the device to a charger"
+            while true; do
+                sleep 1
+                # echo "$(date): Waiting to be plugged in" >> $HOME/.config/i3/battery_stats/low_batter.log
+                dbus-send --print-reply --system --dest=org.freedesktop.UPower "/org/freedesktop/UPower/devices/battery_BAT0" "org.freedesktop.UPower.Device.Refresh"
+                battery_info "state"
+                if [ "${array[(${#array[@]}-1)]}" == "charging" ]; then
+                    dunstify --close $notif_id
+                    break
+                fi
+            done
         fi
-        sleep 1
-        dbus-send --print-reply --system --dest=org.freedesktop.UPower $battery_device_path "org.freedesktop.UPower.Device.Refresh"
-        battery_info 'state'
-    done
-fi
+    fi
+    sleep 120
+done
