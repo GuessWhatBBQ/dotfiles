@@ -11,7 +11,7 @@ HISTFILE=~/.zsh_history
 
 export ZSH=/usr/share/oh-my-zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(copybuffer extract fasd fzf git man safe-paste sudo zsh-autosuggestions zsh-completions zsh-syntax-highlighting history-substring-search)
+plugins=(copybuffer extract fasd fzf git magic-enter man safe-paste sudo zsh-autosuggestions zsh-completions zsh-syntax-highlighting history-substring-search)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=yellow,bold,underline"
 
 [[ ! -f $ZSH/oh-my-zsh.sh ]] || source $ZSH/oh-my-zsh.sh
@@ -39,7 +39,7 @@ alias exal="exa -la"
 
 
 alias get="aria2c -x16 -s64 -j64 -k2M"
-alias hogs="sudo nethogs"
+alias hogs="sudo nethogs -C"
 
 alias full="swallow"
 alias routine="full zathura $HOME/Dropbox/routine.pdf"
@@ -64,6 +64,6 @@ fzf-file-cd () {
         cd $(dirname $folder)
     fi
 }
-alias ff="fzf-file-cd"
+alias zz="fzf-file-cd"
 
 sleep 0.05; clear

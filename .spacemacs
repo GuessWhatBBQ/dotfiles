@@ -37,6 +37,7 @@ This function should only modify configuration layer settings."
                       auto-completion-enable-sort-by-usage t)
      better-defaults
      c-c++
+     colors
      emacs-lisp
      git
      haskell
@@ -46,11 +47,13 @@ This function should only modify configuration layer settings."
      (javascript :variables
                  javascript-fmt-tool 'prettier)
      lsp
-     ;; markdown
+     markdown
      multiple-cursors
      org
      prettier
      python
+     (ranger :variables
+             ranger-show-hidden t)
      react
      (shell :variables
             shell-default-height 30
@@ -61,11 +64,13 @@ This function should only modify configuration layer settings."
      syntax-checking
      version-control
      tide
+     templates
      (treemacs :variables
                treemacs-use-git-mode 'deferred)
      typescript
      (unicode-fonts :variables
                     unicode-fonts-enable-ligatures t)
+     web-beautify
      yaml)
 
 
@@ -79,6 +84,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
                                       eterm-256color
+                                      sublimity
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -104,9 +110,13 @@ It should only modify the values of Spacemacs settings."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
-   ;; If non-nil then enable support for the portable dumper. You'll need
-   ;; to compile Emacs 27 from source following the instructions in file
+   ;; If non-nil then enable support for the portable dumper. You'll need to
+   ;; compile Emacs 27 from source following the instructions in file
    ;; EXPERIMENTAL.org at to root of the git repository.
+   ;;
+   ;; WARNING: pdumper does not work with Native Compilation, so it's disabled
+   ;; regardless of the following setting when native compilation is in effect.
+   ;;
    ;; (default nil)
    dotspacemacs-enable-emacs-pdumper nil
 
@@ -213,6 +223,11 @@ It should only modify the values of Spacemacs settings."
    ;; The minimum delay in seconds between number key presses. (default 0.4)
    dotspacemacs-startup-buffer-multi-digit-delay 0.4
 
+   ;; If non-nil, show file icons for entries and headings on Spacemacs home buffer.
+   ;; This has no effect in terminal or if "all-the-icons" package or the font
+   ;; is not installed. (default nil)
+   dotspacemacs-startup-buffer-show-icons t
+
    ;; Default major mode for a new empty buffer. Possible values are mode
    ;; names such as `text-mode'; and `nil' to use Fundamental mode.
    ;; (default `text-mode')
@@ -246,7 +261,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator arrow :separator-scale 1.9)
+   dotspacemacs-mode-line-theme '(all-the-icons :separator arrow :separator-scale 1.9)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -324,7 +339,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil, the paste transient-state is enabled. While enabled, after you
    ;; paste something, pressing `C-j' and `C-k' several times cycles through the
    ;; elements in the `kill-ring'. (default nil)
-   dotspacemacs-enable-paste-transient-state nil
+   dotspacemacs-enable-paste-transient-state t
 
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
@@ -359,7 +374,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
    ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
@@ -441,7 +456,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, start an Emacs server if one is not already running.
    ;; (default nil)
-   dotspacemacs-enable-server nil
+   dotspacemacs-enable-server t
 
    ;; Set the emacs server socket location.
    ;; If nil, uses whatever the Emacs default is, otherwise a directory path
@@ -566,17 +581,17 @@ before packages are loaded."
   "Spacemacs transparency default"
   (spacemacs/toggle-transparency)
 
-  "Display current function name in mode-line"
-  (which-function-mode)
-  (setq which-func-unknown "n/a")
-
   (global-visual-line-mode)
   (global-company-mode)
   (global-set-key (kbd "C-SPC") 'yas-expand)
   (spacemacs/toggle-indent-guide-globally-on)
   (add-hook 'term-mode-hook #'eterm-256color-mode)
-  ;; (add-hook 'treemacs-select-hook 'treemacs-peek-mode)
-  ;; (add-hook 'treemacs-mode-hook)
+  (require 'sublimity)
+  (require 'sublimity-scroll)
+  (sublimity-mode 1)
+  (setq sublimity-scroll-weight 5
+        sublimity-scroll-drift-length 10)
+  (setq sublimity-scroll-vertical-frame-delay 0.01)
 )
 
 
