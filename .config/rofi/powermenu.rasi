@@ -29,7 +29,7 @@ configuration {
 
 window {
     transparency:                   "real";
-    border-radius:                  12px;
+    border-radius:                  0px;
     location:                       southeast;
     width:                          480px;
     x-offset:                       -30px;

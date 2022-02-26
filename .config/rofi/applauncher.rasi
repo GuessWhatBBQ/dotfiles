@@ -31,7 +31,7 @@ configuration {
 window {
     transparency:                   "real";
     background-color:               @background;
-    border-radius:                  16px;
+    border-radius:                  0px;
     width:                          40%;
     location:                       center;
 }
