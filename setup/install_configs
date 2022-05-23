@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 BACKUP_DIR="$HOME/.cache/config.bak"
-USER_CONFIG_FILES=(".config" ".zshrc" ".p10k.zsh" "unicode" ".icons" ".spacemacs" ".npmrc" ".Xmodmap" ".xprofile")
+USER_CONFIG_FILES=(".config" ".zshrc" ".p10k.zsh" "unicode" ".icons" ".spacemacs" ".npmrc" ".Xmodmap" ".xprofile" ".SpaceVim.d")
 
 # Ensuring the script is always run relative to the correct directory
 cd $(dirname $0)/..
