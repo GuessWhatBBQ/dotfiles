@@ -304,6 +304,9 @@ bindsym $mod+Shift+Return exec --no-startup-id alacritty -e ranger
 bindsym Print exec --no-startup-id flameshot gui --path $HOME/Pictures/Screenshots
 bindsym $mod+Print exec --no-startup-id flameshot full --path $HOME/Pictures/Screenshots
 
+#Network Test
+bindsym $mod+n exec --no-startup-id "$HOME/.local/bin/netconnectnotifier"
+
 ##### Audio Settings #####
 
 ###Volume Control

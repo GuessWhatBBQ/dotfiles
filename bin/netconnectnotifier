@@ -1,0 +1,66 @@
+#!/usr/bin/bash
+
+ICON_PATH="/usr/share/icons/Papirus/48x48/categories/org.kde.netspeedWidget.svg"
+APPLICATION_NAME="Network Connectivity"
+
+packetcount=4
+timeout=0.5
+hostip="8.8.8.8"
+summary="Pinging ${hostip} with ${packetcount} packets"
+
+function dunst-message {
+    dunstify -a "$APPLICATION_NAME" -h string:x-dunst-stack-tag:netcon -i "$ICON_PATH" "$APPLICATION_NAME" "$1"
+}
+
+# TODO: Fix nasty shell injection bug
+awkfilter=$(dirname "${BASH_SOURCE[0]}")/netconnectnotifier.awk
+
+pinganim=$(mktemp)
+pingout=$(mktemp)
+pingres=$(mktemp)
+
+dunst-message "${summary}"
+sleep 1
+
+ping -c "$packetcount" -W "$timeout" -O "$hostip" 2>&1 | awk -v packets="$packetcount" -v pingres="$pingres" -f "$awkfilter" > $pingout &
+pingproc=$!
+
+export dot=1
+export dots=6
+while true; do
+    status="Running test$(printf "%0.s." $(seq $dot))"
+    echo "$status" >> $pinganim
+    ((dot++))
+    if [[ $dot -ge $dots ]]; then dot=1; fi
+    sleep 0.1
+done &
+statusproc=$!
+
+inotifywait -q -m -e modify $pingout $pinganim |
+    while read -r filename event; do
+        status="$(tail -n1 $pinganim)"
+        status="$status\n""$(tail -n1 $pingout)"
+        dunst-message "$status"
+    done &
+inotifproc=$!
+
+wait $pingproc
+pingexit=$?
+kill $statusproc
+if [ "$pingexit" -ne 0 ]; then
+    echo "$summary failed as: " > $pinganim
+else
+    echo "$summary completed with:" > $pinganim
+fi
+if [ -s $pingres ]; then
+    status="$(tail -n1 $pingres)\n$(tail -n1 $pingout)"
+    echo "$status" > $pingout
+else
+    echo $(tail -n1 $pingout) > $pingout
+fi
+sleep 0.1
+kill $inotifproc
+
+rm $pingres
+rm $pingout
+rm $pinganim
