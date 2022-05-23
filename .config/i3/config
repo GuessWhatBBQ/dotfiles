@@ -110,26 +110,24 @@ mode "$mode_gaps_outer" {
 ##### Aesthetics ######
 
 ##### Font
-font pango:Noto Thin 10
+font pango:MesloLGS NF, Bold 14px
 
 ##### Border
 
-default_border pixel 1
-default_floating_border pixel 1
+default_border pixel 2
+default_floating_border pixel 2
 
 ##### Gaps
 gaps top 25
 gaps bottom 22
 
-##### Theme name : ArcoLinux Default
-
-    # class                 border  backgr. text    indicator
-    client.placeholder      #242424 #242424 #242424
-    client.background       #242424 #242424 #242424
-    client.focused          #6790EB #6790EB #e5e5e5 #6790EB
-    client.unfocused        #222222 #222222 #aaaaaa #222222
-    client.focused_inactive #222222 #222222 #a9a9a9 #222222
-    client.urgent           #d42121 #d42121 #f7f7f7 #d42121
+# <colorclass>          <border> <background> <text>  <indicator> <child_border> 
+client.focused          #BF36EE  #BF36EE      #00093b #BF36EE #BF36EE
+client.focused_inactive #BF36EE  #070015      #BF36EE #222222 #222222
+client.unfocused        #222222  #222222      #BF36EE #222222 #222222
+client.urgent           #2F343A  #00FF9F      #00B7B6 #FFFFFF
+client.placeholder      #222222  #070015      #00B7B6 #FFFFFF
+client.background       #BF36EE
 
 ##### KeyBinds #####
 
