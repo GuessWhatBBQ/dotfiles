@@ -11,6 +11,7 @@ HISTFILE=~/.zsh_history
 
 export ZSH=/usr/share/oh-my-zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
+MAGIC_ENTER_OTHER_COMMAND='clear'
 plugins=(copybuffer extract fasd fzf git magic-enter man safe-paste sudo zsh-autosuggestions zsh-completions zsh-syntax-highlighting history-substring-search)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=yellow,bold,underline"
 
@@ -32,7 +33,6 @@ alias exa="exa --icons"
 alias exat="exa -Tla"
 alias exaa="exa -a"
 alias exal="exa -la"
-
 
 alias get="aria2c -x16 -s64 -j64 -k2M"
 alias hogs="sudo nethogs -C"
