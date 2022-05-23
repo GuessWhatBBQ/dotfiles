@@ -3,3 +3,7 @@
 !*.secret
 builds/variety/UnsplashAPIKey
 .config/eww/scripts/OpenWeatherAPIConfig
+
+*~undo-tree~
+.#*
+.dir-locals.el

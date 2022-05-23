@@ -41,16 +41,25 @@ This function should only modify configuration layer settings."
      emacs-lisp
      git
      haskell
-     helm
+     ;; helm
      (html :variables
            css-enable-lsp t)
+     (ivy :variables
+          ivy-enable-icons t
+          ivy-enable-advanced-buffer-information t)
      (javascript :variables
-                 javascript-fmt-tool 'prettier)
+                 javascript-fmt-tool 'prettier
+                 lsp-clients-typescript-log-verbosity "off"
+                 lsp-clients-typescript-max-ts-server-memory 8192)
+     (latex :variables
+            latex-view-pdf-in-split-window t
+            latex-refresh-preview t)
      lsp
      markdown
      multiple-cursors
      org
      prettier
+     pdf
      python
      (ranger :variables
              ranger-show-hidden t)
@@ -63,10 +72,11 @@ This function should only modify configuration layer settings."
      sql
      syntax-checking
      version-control
-     tide
      templates
      (treemacs :variables
-               treemacs-use-git-mode 'deferred)
+               treemacs-use-git-mode 'extended
+               treemacs-use-filewatch-mode t
+               treemacs-use-follow-mode t)
      typescript
      (unicode-fonts :variables
                     unicode-fonts-enable-ligatures t)
@@ -84,7 +94,6 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
                                       eterm-256color
-                                      sublimity
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -261,7 +270,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(all-the-icons :separator arrow :separator-scale 1.9)
+   dotspacemacs-mode-line-theme '(all-the-icons :separator arrow :separator-scale 2.3 :tight t)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -578,20 +587,12 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
-  "Spacemacs transparency default"
   (spacemacs/toggle-transparency)
-
   (global-visual-line-mode)
   (global-company-mode)
   (global-set-key (kbd "C-SPC") 'yas-expand)
   (spacemacs/toggle-indent-guide-globally-on)
   (add-hook 'term-mode-hook #'eterm-256color-mode)
-  (require 'sublimity)
-  (require 'sublimity-scroll)
-  (sublimity-mode 1)
-  (setq sublimity-scroll-weight 5
-        sublimity-scroll-drift-length 10)
-  (setq sublimity-scroll-vertical-frame-delay 0.01)
 )
 
 
