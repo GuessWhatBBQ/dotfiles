@@ -33,5 +33,4 @@ sleep 0.1
 
 echo "Polybar launched..."
 
-$HOME/.config/polybar/dynamic-opacity-scripts/dynamic_opacity_sub_workspace &
 $HOME/.config/polybar/dynamic-opacity-scripts/dynamic_opacity_sub_window &
