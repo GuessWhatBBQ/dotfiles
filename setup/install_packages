@@ -14,9 +14,9 @@ fi
 
 cd $(dirname $0)/..
 
-sudo pacman -Syu --noconfirm --needed alacritty arc-gtk-theme aria2 atom audacity base-devel bat bc cronie cpupower darktable discord-canary emacs exa emoji-font fasd feh ffmpeg firefox flameshot fzf gimp git gparted htop i3-gaps jq kdeconnect kvantum-qt5 libreoffice-still light lxappearance-gtk3 mpv nano ncdu neovim nethogs network-manager-applet nomacs okular p7zip papirus-icon-theme playerctl polybar pulseaudio pulsemixer qbittorrent qalculate-gtk qt5ct ranger rofi rofimoji scrot sysstat thunar unclutter unrar xclip xdotool xss-lock youtube-dl zathura zathura-pdf-poppler
+sudo pacman -Syu --noconfirm --needed alacritty arc-gtk-theme aria2 atom audacity base-devel bat bc cronie cpupower darktable discord-canary exa emoji-font fasd feh ffmpeg firefox flameshot fzf gimp git gparted htop i3-gaps jq kdeconnect kvantum-qt5 libreoffice-still light lxappearance-gtk3 mpv moreutils nano ncdu neovim nethogs network-manager-applet nomacs okular p7zip papirus-icon-theme playerctl polybar pulseaudio pulsemixer qbittorrent qalculate-gtk qt5ct qt6ct ranger rofi rofimoji sysstat thunar unclutter unrar xclip xdotool xss-lock youtube-dl zathura zathura-pdf-poppler
 
-yay -Syua --answerdiff None --answerclean None --noremovemake --noconfirm --needed autotiling bibata-cursor-theme dropbox dunst-git eww-git git-secret i3lock-color i3-swallow-git joplin-desktop maestral-qt nerd-fonts-complete picom-git spotify spotify-adblock-git ttf-material-design-icons-git ttf-meslo-nerd-font-powerlevel10k windscribe-cli yay zoom
+yay -Syua --answerdiff None --answerclean None --noremovemake --noconfirm --needed autotiling bibata-cursor-theme dunst-git emacs-git eww-git git-secret i3lock-color i3-swallow-git joplin-appimage maestral-qt nerd-fonts-complete picom-git spotify spotify-adblock-git ttf-material-design-icons-git ttf-meslo-nerd-font-powerlevel10k windscribe-cli yay zoom
 
 # Reveal encrypted files
 git-secret reveal -f
