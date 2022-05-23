@@ -1,0 +1,14 @@
+#!/usr/bin/bash
+
+start () {
+    if ([ -n "$PROCESS_NAME" ] && [ -z "$(pidof $PROCESS_NAME)" ]) || ([ -z "$(pidof $@)" ] && [ -z "$PROCESS_NAME" ]); then
+        nohup $@ > /dev/null &
+    fi
+}
+
+start firefox
+start emacs
+start env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify
+PROCESS_NAME="DiscordCanary" start discord-canary
+# i3-msg workspace 2; PROCESS_NAME="alacritty_default" start alacritty
+# sleep 0.3
