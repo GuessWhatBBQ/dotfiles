@@ -225,6 +225,7 @@ for_window [class="Spotify"] move to workspace 5
 assign [class="discord"] workspace 6
 assign [title="^qBittorrent v.*"] workspace 19
 assign [class="zoom"] workspace 10
+for_window [class="Microsoft Teams" instance="microsoft teams" window_role="browser-window"] move workspace 10
 assign [class="VirtualBox Machine"] workspace 20
 for_window [class="VirtualBox Machine"] move to workspace 20
 

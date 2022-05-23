@@ -48,6 +48,8 @@ alias updatelocalpkgs="automakepkg ~/.local/builds"
 alias sysup="update;updateaur;updatelocalpkgs"
 alias mirror="sudo reflector --verbose --country \"Hong Kong\",Bangladesh,Japan,China --sort age --fastest 6 --score 15 --save /etc/pacman.d/mirrorlist"
 
+alias clockin="source ~/.workrc"
+
 exist () {
   nohup $@ > /dev/null &
 }
