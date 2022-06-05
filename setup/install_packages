@@ -8,7 +8,7 @@ sudo reflector --verbose --country Hong\ Kong,Bangladesh,Japan,China --sort age 
 if ! command -v yay &> /dev/null
 then
   git clone https://aur.archlinux.org/yay.git /tmp/yay
-  cd /tmp/yay
+  cd /tmp/yay || exit
   makepkg --syncdeps --noconfirm --install
 fi
 
