@@ -4,3 +4,4 @@ export TERMINAL="alacritty"
 # User defined keyboard remapping
 usermodmap=$HOME/.Xmodmap
 [[ -f "$usermodmap" ]] && xmodmap "$usermodmap"
+xcape -e 'Mode_switch=Escape'
