@@ -94,6 +94,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
                                       eterm-256color
+                                      highlight-indent-guides
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -579,6 +580,15 @@ This function is called only while dumping Spacemacs configuration. You can
 dump."
 )
 
+(defun user-setup-highlight-indent-guides ()
+  "Used to set up the configs for the highlight-indent-guides package"
+  (setq-default highlight-indent-guides-auto-character-face-perc 30)
+  (setq-default highlight-indent-guides-auto-top-character-face-perc 100)
+  (setq-default highlight-indent-guides-method 'bitmap)
+  (setq-default highlight-indent-guides-responsive 'top)
+  (setq-default highlight-indent-guides-delay 0)
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+)
 
 (defun dotspacemacs/user-config ()
   "Configuration for user code:
@@ -591,8 +601,8 @@ before packages are loaded."
   (global-visual-line-mode)
   (global-company-mode)
   (global-set-key (kbd "C-SPC") 'yas-expand)
-  (spacemacs/toggle-indent-guide-globally-on)
   (add-hook 'term-mode-hook #'eterm-256color-mode)
+  (user-setup-highlight-indent-guides)
 )
 
 
