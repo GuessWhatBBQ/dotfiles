@@ -74,7 +74,7 @@ This function should only modify configuration layer settings."
      version-control
      templates
      (treemacs :variables
-               treemacs-use-git-mode 'extended
+               treemacs-use-git-mode 'deferred
                treemacs-use-filewatch-mode t
                treemacs-use-follow-mode t)
      typescript
@@ -570,6 +570,7 @@ It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (setq custom-file "~/.emacs.d/.cache/.dotspacemacs-custom-settings")
   (load custom-file)
+  (setq-default warning-minimum-level :error)
 )
 
 
@@ -597,7 +598,6 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
-  (spacemacs/toggle-transparency)
   (global-visual-line-mode)
   (global-company-mode)
   (global-set-key (kbd "C-SPC") 'yas-expand)
