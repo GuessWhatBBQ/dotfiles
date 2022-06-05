@@ -216,7 +216,7 @@ for_window [title="Zoom - Free Account" class="zoom"] floating enable
 for_window [title="Zoom Cloud Meetings" class="zoom"] floating enable
 for_window [class="PacketTracer"] floating enable
 for_window [title="Cisco Packet Tracer -" class="PacketTracer"] floating disable
-
+for_window [title="calcurse"] move absolute position 540 px 23 px border none
 
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="^Preferences$"] floating enable
@@ -298,6 +298,9 @@ bindsym --release $mod+Shift+F10 exec --no-startup-id "xdotool key 135"
 
 #Calculator
 bindsym $mod+c exec --no-startup-id qalculate-gtk
+
+#Calendar
+bindsym $mod+z exec --no-startup-id "alacritty --class=floating-term --title=calcurse -e \\"calcurse\\""
 
 #File Browser
 bindsym $mod+Shift+Return exec --no-startup-id alacritty -e ranger
