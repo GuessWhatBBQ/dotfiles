@@ -3,12 +3,12 @@
 declare -a commands=(
 "nmcli networking off"
 "sudo systemctl stop NetworkManager"
-"sudo ip link set wlo1 down"
+"sudo ip link set wlan0 down"
 "sudo modprobe -r ath10k_pci"
 "sleep 1"
 "sudo modprobe ath10k_pci"
 "sleep 1"
-"sudo ip link set wlo1 up"
+"sudo ip link set wlan0 up"
 "sudo systemctl start NetworkManager"
 "nmcli networking on")
 
