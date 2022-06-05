@@ -50,8 +50,8 @@ alias mirror="sudo reflector --verbose --country \"Hong Kong\",Bangladesh,Japan,
 
 alias clockin="source ~/.workrc"
 
-exist () {
-  nohup $@ > /dev/null &
+e () {
+  $@ > /dev/null 2&>1 &!
 }
 
 fzf-file-cd () {
