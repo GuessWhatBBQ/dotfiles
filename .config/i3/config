@@ -209,7 +209,7 @@ for_window [class="Gpick"] floating enable
 for_window [class="Alacritty" instance="floating-term"] floating enable
 for_window [class="Alacritty" instance="floating-term"] resize set 840 510
 for_window [class="Alacritty" instance="floating-term"] move position center
-for_window [class="firefox" title="Messenger Call — Mozilla Firefox"] floating enable
+for_window [class="firefox" title="Messenger call — Mozilla Firefox"] floating enable
 for_window [title="Zoom Meeting" class="zoom"] floating disable
 for_window [title="zoom" class="zoom"] floating enable
 for_window [title="Zoom - Free Account" class="zoom"] floating enable
