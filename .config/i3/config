@@ -174,11 +174,11 @@ bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+f fullscreen toggle
 
 bindsym $mod+s layout stacking
-bindsym $mod+z layout tabbed
+bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
 ##### changing border style
-bindsym $mod+t border toggle
+bindsym $mod+b border toggle
 
 
 
