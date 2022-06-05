@@ -113,9 +113,11 @@ mode "$mode_gaps_outer" {
 font pango:MesloLGS NF, Bold 14px
 
 ##### Border
+default_border pixel 1
+default_floating_border pixel 1
 
-default_border pixel 2
-default_floating_border pixel 2
+##### Title Bar Icon
+for_window [all] title_window_icon on
 
 ##### Gaps
 gaps top 25
