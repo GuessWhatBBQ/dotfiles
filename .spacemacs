@@ -53,9 +53,9 @@ This function should only modify configuration layer settings."
      (latex :variables
             latex-view-pdf-in-split-window t
             latex-refresh-preview t)
-     (lsp :variables
+     lsp
+     (lua :variables
           lua-lsp-server 'lua-language-server)
-     lua
      markdown
      multiple-cursors
      org
