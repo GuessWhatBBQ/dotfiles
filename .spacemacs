@@ -41,7 +41,6 @@ This function should only modify configuration layer settings."
      emacs-lisp
      git
      haskell
-     ;; helm
      (html :variables
            css-enable-lsp t)
      (ivy :variables
@@ -54,7 +53,9 @@ This function should only modify configuration layer settings."
      (latex :variables
             latex-view-pdf-in-split-window t
             latex-refresh-preview t)
-     lsp
+     (lsp :variables
+          lua-lsp-server 'lua-language-server)
+     lua
      markdown
      multiple-cursors
      org
@@ -62,7 +63,10 @@ This function should only modify configuration layer settings."
      pdf
      python
      (ranger :variables
-             ranger-show-hidden t)
+             ranger-show-preview t
+             ranger-show-hidden t
+             ranger-cleanup-eagerly t
+             ranger-cleanup-on-disable t)
      react
      (shell :variables
             shell-default-height 30
@@ -72,6 +76,8 @@ This function should only modify configuration layer settings."
      sql
      syntax-checking
      version-control
+     (tabs :variables
+           tabs-selected-tab-bar 'under)
      templates
      (treemacs :variables
                treemacs-use-git-mode 'deferred
@@ -94,6 +100,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
                                       eterm-256color
+                                      format-all
                                       highlight-indent-guides
                                       )
 
@@ -209,7 +216,14 @@ It should only modify the values of Spacemacs settings."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner 'random
+
+   ;; Scale factor controls the scaling (size) of the startup banner. Default
+   ;; value is `auto' for scaling the logo automatically to fit all buffer
+   ;; contents, to a maximum of the full image height and a minimum of 3 line
+   ;; heights. If set to a number (int or float) it is used as a constant
+   ;; scaling factor for the default logo size.
+   dotspacemacs-startup-banner-scale 'auto
 
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
@@ -221,8 +235,9 @@ It should only modify the values of Spacemacs settings."
    ;; pair of numbers, e.g. `(recents-by-project . (7 .  5))', where the first
    ;; number is the project limit and the second the limit on the recent files
    ;; within a project.
-   dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+   dotspacemacs-startup-lists '((recents-by-project . (7 .  5))
+                                (bookmarks . 7)
+                                (recents . 5))
 
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
@@ -248,11 +263,11 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, *scratch* buffer will be persistent. Things you write down in
    ;; *scratch* buffer will be saved and restored automatically.
-   dotspacemacs-scratch-buffer-persistent nil
+   dotspacemacs-scratch-buffer-persistent t
 
    ;; If non-nil, `kill-buffer' on *scratch* buffer
    ;; will bury it instead of killing.
-   dotspacemacs-scratch-buffer-unkillable nil
+   dotspacemacs-scratch-buffer-unkillable t
 
    ;; Initial message in the scratch buffer, such as "Welcome to Spacemacs!"
    ;; (default nil)
@@ -271,7 +286,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(all-the-icons :separator arrow :separator-scale 2.3 :tight t)
+   dotspacemacs-mode-line-theme '(all-the-icons :separator arrow :separator-scale 2.0 :tight t)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -457,7 +472,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc...
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
-   dotspacemacs-smart-closing-parenthesis nil
+   dotspacemacs-smart-closing-parenthesis t
 
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
@@ -528,7 +543,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-use-clean-aindent-mode t
 
    ;; Accept SPC as y for prompts if non-nil. (default nil)
-   dotspacemacs-use-SPC-as-y nil
+   dotspacemacs-use-SPC-as-y t
 
    ;; If non-nil shift your number row to match the entered keyboard layout
    ;; (only in insert state). Currently supported keyboard layouts are:
@@ -591,6 +606,11 @@ dump."
   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 )
 
+(defun user-setup-centaur-tabs ()
+  "Used to set up the configs for the centaur package"
+  (setq centaur-tabs-set-bar 'under)
+)
+
 (defun dotspacemacs/user-config ()
   "Configuration for user code:
 This function is called at the very end of Spacemacs startup, after layer
@@ -603,6 +623,7 @@ before packages are loaded."
   (global-set-key (kbd "C-SPC") 'yas-expand)
   (add-hook 'term-mode-hook #'eterm-256color-mode)
   (user-setup-highlight-indent-guides)
+  (user-setup-centaur-tabs)
 )
 
 
