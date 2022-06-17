@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 application_name=""
-delay=0
+delay=0.05
 volume_change=+5
 steps=5
 master=false
@@ -44,7 +44,10 @@ fi
 direction=$(echo ${volume_change:0:1})
 volume_change_per_step=$(echo "${volume_change:1}/$steps" | bc)
 
-for step in $(seq 1 $steps); do
-    $volume_command $sink_index $direction$volume_change_per_step%
-    sleep $delay
-done
+(
+    flock --exclusive 200
+    for step in $(seq 1 $steps); do
+        $volume_command $sink_index $direction$volume_change_per_step%
+        sleep $delay
+    done
+) 200>/tmp/volumecontrollock
