@@ -34,7 +34,9 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layers
    '((auto-completion :variables
                       auto-completion-enable-snippets-in-popup t
-                      auto-completion-enable-sort-by-usage t)
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-idle-delay 0.0
+                      auto-completion-minimum-prefix-length 1)
      better-defaults
      c-c++
      colors
@@ -624,6 +626,11 @@ before packages are loaded."
   (add-hook 'term-mode-hook #'eterm-256color-mode)
   (user-setup-highlight-indent-guides)
   (user-setup-centaur-tabs)
+  (add-to-list 'auto-mode-alist '("\\.yuck\\'" . emacs-lisp-mode))
+  (setq-default ivy-initial-inputs-alist ())
+  (set-face-attribute 'evil-ex-lazy-highlight nil
+                      :foreground "coral"
+                      :background "gray15")
 )
 
 
