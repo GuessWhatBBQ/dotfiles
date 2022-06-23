@@ -35,9 +35,7 @@ end)
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-naughty.notify({text=gears.filesystem.get_themes_dir()})
--- beautiful.init("/home/guesswhatbbq/.config/awesome/themes/default/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "/themes/default/theme.lua")
 beautiful.useless_gap = 5
 beautiful.gap_single_client = false
 
@@ -599,3 +597,11 @@ end)
 client.connect_signal("mouse::enter", function(c)
   c:activate({ context = "mouse_enter", raise = false })
 end)
+
+-- Autostart ------------------------------------------------------------------
+
+--- {{{ System
+
+awful.spawn("systemctl restart --user picom.service")
+
+--- }}}
