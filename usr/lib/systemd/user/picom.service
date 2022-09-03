@@ -11,7 +11,7 @@ StartLimitBurst=5
 Restart=on-failure
 RestartSec=5s
 
-ExecStart=/usr/bin/picom --config=$PICOM_CONFIG_LOCATION --experimental-backends
+ExecStart=/usr/bin/picom --config=$PICOM_CONFIG_LOCATION
 
 [Install]
 WantedBy=multi-user.target
