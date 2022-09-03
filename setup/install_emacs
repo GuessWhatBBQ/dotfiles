@@ -1,7 +1,20 @@
 #!/usr/bin/bash
 
-git clone -b develop https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
+# git clone -b develop https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
+git clone --depth 1 https://github.com/doomemacs/doomemacs "${HOME}"/.emacs.d
+"${HOME}"/.emacs.d/bin/doom install &
 
 # Create seperate file for emacs-custom-settings
-mkdir $HOME/.emacs.d/.cache
-touch $HOME/.emacs.d/.cache/.dotspacemacs-custom-settings
+# mkdir $HOME/.emacs.d/.cache
+# touch $HOME/.emacs.d/.cache/.dotspacemacs-custom-settings
+
+# Need to ensure symlinks are created so that lsp-mode can detect it where it's defaults ask it to look
+# For example vscode-json-languageserver -> vscode-json-language-server
+sudo pacman -Syu bash-language-server lua-language-server pyright typescript-language-server vscode-css-languageserver vscode-html-languageserver vscode-json-languageserver
+yay -Syu jdtls
+
+sudo ln --symbolic --force /usr/bin/vscode-html-languageserver /usr/bin/vscode-html-language-server
+sudo ln --symbolic --force /usr/bin/vscode-css-languageserver /usr/bin/vscode-css-language-server
+sudo ln --symbolic --force /usr/bin/vscode-json-languageserver /usr/bin/vscode-json-language-server
+mkdir --parents "${HOME}"/.emacs.d/.local/etc/lsp
+ln -s /usr/share/java/jdtls /home/guesswhatbbq/.emacs.d/.local/etc/lsp/eclipse.jdt.ls
