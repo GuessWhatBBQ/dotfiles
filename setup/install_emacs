@@ -10,7 +10,7 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs "${HOME}"/.emacs.d
 
 # Need to ensure symlinks are created so that lsp-mode can detect it where it's defaults ask it to look
 # For example vscode-json-languageserver -> vscode-json-language-server
-sudo pacman -Syu bash-language-server lua-language-server pyright typescript-language-server vscode-css-languageserver vscode-html-languageserver vscode-json-languageserver
+sudo pacman -Syu bash-language-server clang lua-language-server pyright typescript-language-server vscode-css-languageserver vscode-html-languageserver vscode-json-languageserver
 yay -Syu jdtls
 
 sudo ln --symbolic --force /usr/bin/vscode-html-languageserver /usr/bin/vscode-html-language-server
