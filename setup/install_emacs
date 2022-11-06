@@ -17,4 +17,4 @@ sudo ln --symbolic --force /usr/bin/vscode-html-languageserver /usr/bin/vscode-h
 sudo ln --symbolic --force /usr/bin/vscode-css-languageserver /usr/bin/vscode-css-language-server
 sudo ln --symbolic --force /usr/bin/vscode-json-languageserver /usr/bin/vscode-json-language-server
 mkdir --parents "${HOME}"/.emacs.d/.local/etc/lsp
-ln -s /usr/share/java/jdtls /home/guesswhatbbq/.emacs.d/.local/etc/lsp/eclipse.jdt.ls
+cp --recursive --symbolic-link /usr/share/java/jdtls ~/.emacs.d/.local/etc/lsp/eclipse.jdt.ls

@@ -179,14 +179,14 @@ font:
   #use_thin_strokes: true
 
 # If `true`, bold text is drawn using the bright color variants.
-#draw_bold_text_with_bright_colors: false
+draw_bold_text_with_bright_colors: true
 
 # Colors (Tomorrow Night)
 colors:
   # Default colors
   primary:
-    background: '#000b1e'
-    foreground: '#0abdc6'
+    background: '0x000b1e'
+    foreground: '0x0abdc6'
 
     # Bright and dim foreground colors
     #
@@ -205,7 +205,7 @@ colors:
   # affected cell, or hexadecimal colors like #ff00ff.
   cursor:
   #  text: CellBackground
-   cursor: '#d300c4'
+    cursor: '#d300c4'
 
   # Vi mode cursor colors
   #
@@ -274,39 +274,39 @@ colors:
 
   # Normal colors
   normal:
-    black:   '#123e7c'
-    red:     '#ff0000'
-    green:   '#d300c4'
-    yellow:  '#f57800'
-    blue:    '#009a00'
-    magenta: '#711c91'
-    cyan:    '#0abdc6'
-    white:   '#d7d7d5'
+    black:   '0x123e7c'
+    red:     '0xff0000'
+    green:   '0xd300c4'
+    yellow:  '0xf57800'
+    blue:    '0x123e7c'
+    magenta: '0x711c91'
+    cyan:    '0x0abdc6'
+    white:   '0xd7d7d5'
 
   # Bright colors
   bright:
-    black:   '#1c61c2'
-    red:     '#ff0000'
-    green:   '#d300c4'
-    yellow:  '#f57800'
-    blue:    '#123e7c'
-    magenta: '#711c91'
-    cyan:    '#0abdc6'
-    white:   '#d7d7d5'
+    black:   '0x1c61c2'
+    red:     '0xff0000'
+    green:   '0xd300c4'
+    yellow:  '0xf57800'
+    blue:    '0x00ff00'
+    magenta: '0x711c91'
+    cyan:    '0x0abdc6'
+    white:   '0xd7d7d5'
 
   # Dim colors
   #
   # If the dim colors are not set, they will be calculated automatically based
   # on the `normal` colors.
-  #dim:
-  #  black:   '#131415'
-  #  red:     '#864343'
-  #  green:   '#777c44'
-  #  yellow:  '#9e824c'
-  #  blue:    '#556a7d'
-  #  magenta: '#75617b'
-  #  cyan:    '#5b7d78'
-  #  white:   '#828482'
+  dim:
+    black:   '0x1c61c2'
+    red:     '0xff0000'
+    green:   '0xd300c4'
+    yellow:  '0xf57800'
+    blue:    '0x123e7c'
+    magenta: '0x711c91'
+    cyan:    '0x0abdc6'
+    white:   '0xd7d7d5'
 
   # Indexed Colors
   #

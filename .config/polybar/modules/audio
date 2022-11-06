@@ -15,6 +15,6 @@ click-left = pavucontrol
 
 [module/player-mpris-tail]
 type = custom/script
-exec = "$HOME/.config/polybar/info-scripts/player-mpris-tail --icon-playing "" --icon-paused "" -f 'ﱘ  {:artist:t40:{artist}:}{:artist: - :}{:t40:{title}:}%{A1:$HOME/.config/polybar/info-scripts/player-mpris-tail previous:}   %{A}%{A1:$HOME/.config/polybar/info-scripts/player-mpris-tail play-pause:}{icon-reversed}%{A}%{A1:$HOME/.config/polybar/info-scripts/player-mpris-tail next:}  %{A}'"
+exec = "playerctl --follow --format 'ﱘ  {{title}} - {{artist}}' metadata"
 tail = true
 format-foreground = ${colors.shade7}

@@ -81,6 +81,12 @@
 ;; Disabling the LSP formatter for specific modes
 (setq-hook! 'rjsx-mode-hook +format-with-lsp nil)
 ;;
+;; Disable prettify-symbols-mode on javascript to deal with firacode conflict?
+(after! js
+  (setq-default js--prettify-symbols-alist '()))
+;; (add-hook! rjsx-mode
+;;   (print prettify-symbols-alist))
+;;
 ;; Setting up personal packages
 (use-package! evil-textobj-line
   :after (evil))
@@ -111,7 +117,6 @@
        :desc "Prettified yank"
        "l" #'kill-with-linenum))
 ;;
-;; Setup dap mode
-(require 'dap-node)
-(dap-node-setup)
 (setq evil-goggles-enable-paste nil)
+
+(global-visual-line-mode t)
