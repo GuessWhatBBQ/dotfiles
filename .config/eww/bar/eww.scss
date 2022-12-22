@@ -1,0 +1,48 @@
+* {
+  font-family: InconsolataGo Nerd Font;
+  font-size: 16px;
+}
+
+window {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+label {
+  color: rgb(184, 193, 236);
+}
+
+.material-icon {
+  font-family: Material Design Icons;
+}
+
+.bar-content > * {
+  margin: 0 6px 0 6px;
+}
+
+.network-info > * {
+  margin: 0 2px 0 0;
+}
+
+.revealed-text {
+  padding-left: 5px;
+}
+
+.intensity-1 {
+  color: #efbbff;
+}
+
+.intensity-2 {
+  color: #d896ff;
+}
+
+.intensity-3 {
+  color: #be29ec;
+}
+
+.intensity-4 {
+  color: #800080;
+}
+
+.intensity-5 {
+  color: #660066;
+}

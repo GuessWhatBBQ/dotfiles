@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#Sound cache location
+sound_cache_dir=$($(dirname $0)/init_cache_dir "sound")
+
+sound_cache_file=$sound_cache_dir/sound
+
+function get_sound_json {
+    pactl list sinks | awk '/^\s*Volume/{ split(substr($0, 10), volumes, ","); for (channel in volumes) { sub(/^[ \t]+/, "", volumes[channel]); printf "%s ", substr(volumes[channel], match(volumes[channel],/^.*:/), RLENGTH); printf "%s, ", substr(volumes[channel], match(volumes[channel],/(\/).*?(%)/) + 2, RLENGTH - 2) }; print "" }' | jq --raw-input --slurp --compact-output '. |= .[:-1] | split("\n") | map(. |= .[:-2] | split(", ") | map(. | split(": ") | { (.[0]): .[1] }) | add)'
+}
+
+get_sound_json > $sound_cache_file
+pactl subscribe | grep --line-buffered "sink" | while read -r; do
+    get_sound_json > $sound_cache_file
+done &
+
+pipepid=$!
+trap "kill $pipepid; exit" HUP INT TERM PIPE EXIT
+wait $pipepid
