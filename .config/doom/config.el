@@ -22,7 +22,7 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "Fira Code" :size 15)
-      doom-unicode-font (font-spec :family "MesloLGS NF":size 15))
+      doom-unicode-font (font-spec :family "FiraCode Nerd Font":size 15))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to

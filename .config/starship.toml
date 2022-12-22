@@ -1,0 +1,96 @@
+format = """
+[ $directory ](bg:053)[](fg:053)\
+([\b](fg:053 bg:018 )[ $git_branch$git_commit $git_status ](bg:018)[](fg:018))\
+$fill\
+([ $cmd_duration ]())\
+$status\
+([](fg:053)[ $c$haskell$java$nodejs$python$rust ](bg:053))\
+$username
+$character
+"""
+
+add_newline = false
+
+continuation_prompt = "[ ](fg:012)"
+
+[username]
+show_always = false
+style_user = "bg:#9A348E"
+style_root = "bg:#9A348E"
+format = '[$user]($style)'
+
+[character]
+success_symbol = "[](fg:012)"
+error_symbol = "[](fg:red)"
+
+[directory]
+style = "bg:053"
+format = "[$path]($style)"
+truncation_length = 6
+truncation_symbol = "…/"
+home_symbol = ""
+
+[directory.substitutions]
+"Documents" = ""
+"Downloads" = ""
+"Music" = ""
+"Pictures" = ""
+"DATA" = ""
+"Dropbox" = ""
+"GithubRepos" = ""
+
+[c]
+symbol = ""
+style = "bg:053"
+format = '[$symbol ($version)]($style)'
+
+[cmd_duration]
+format = "[$duration](bold yellow)"
+
+[fill]
+style = "fg:236"
+symbol = ""
+
+[git_branch]
+symbol = ""
+style = "bg:018"
+format = '[$symbol $branch]($style)'
+
+[git_status]
+style = "bg:018"
+format = '[$all_status$ahead_behind]($style)'
+
+[git_commit]
+style = "bg:018"
+format = "[$hash$tag]($style)"
+
+[haskell]
+symbol = ""
+style = "bg:053"
+format = '[$symbol ($version)]($style)'
+
+[java]
+symbol = ""
+style = "bg:053"
+format = '[$symbol ($version)]($style)'
+
+[line_break]
+disabled = false
+
+[nodejs]
+symbol = ""
+style = "bg:053"
+format = '[$symbol ($version)]($style)'
+
+[python]
+symbol = ""
+style = "bg:053"
+format = '[$symbol ($version)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:053"
+format = '[$symbol ($version)]($style)'
+
+[status]
+disabled = false

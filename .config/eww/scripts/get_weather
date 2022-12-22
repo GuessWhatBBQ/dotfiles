@@ -5,11 +5,7 @@ source $(dirname $0)/OpenWeatherAPIConfig
 
 ##############################################################################################################
 ## Weather Cache Location
-weather_cache_dir="/tmp/eww/weather_cache"
-## Make cache dir
-if [[ ! -d "$weather_cache_dir" ]]; then
-    mkdir -p ${weather_cache_dir}
-fi
+weather_cache_dir=$($(dirname $0)/init_cache_dir "weather")
 
 cache_weather_icon=${weather_cache_dir}/current_weather_icon
 cache_weather_stat=${weather_cache_dir}/current_weather_stat

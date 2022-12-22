@@ -1,22 +1,12 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 setopt autocd correct extendedglob globdots histignorespace nocorrectall nomatch notify
 bindkey -e
 HISTFILE=~/.zsh_history
 
 export ZSH=/usr/share/oh-my-zsh
-ZSH_THEME="powerlevel10k/powerlevel10k"
-MAGIC_ENTER_OTHER_COMMAND='clear'
-plugins=(copybuffer extract fasd fzf git magic-enter man safe-paste sudo zsh-autosuggestions zsh-completions zsh-syntax-highlighting history-substring-search)
+plugins=(bgnotify colored-man-pages command-not-found copybuffer copyfile copypath cp extract fasd fzf git man safe-paste sudo zsh-autosuggestions zsh-completions zsh-interactive-cd zsh-syntax-highlighting history-substring-search)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=yellow,bold,underline"
 
 [[ ! -f $ZSH/oh-my-zsh.sh ]] || source $ZSH/oh-my-zsh.sh
-[[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -34,7 +24,7 @@ alias exat="exa -Tla"
 alias exaa="exa -a"
 alias exal="exa -la"
 
-alias get="aria2c -x16 -s64 -j64 -k2M"
+alias get="aria2c --continue=true --max-connection-per-server=16 --split=64 --max-concurrent-downloads=64 --min-split-size=2M"
 alias hogs="sudo nethogs -C"
 
 alias full="swallow"
@@ -51,7 +41,18 @@ alias mirror="sudo reflector --verbose --country \"Hong Kong\",Bangladesh,Japan,
 alias clockin="source ~/.workrc"
 
 e () {
-  $@ > /dev/null 2&>1 &!
+  (
+    unsetopt multios
+    $@ &>! /dev/null &!
+  )
+}
+
+rscp () {
+  cpv --no-progress --info=progress2 "$@"
+}
+
+rsmv () {
+  rscp --remove-source-files "$@"
 }
 
 fzf-file-cd () {
@@ -64,4 +65,6 @@ fzf-file-cd () {
 }
 alias zz="fzf-file-cd"
 
-sleep 0.05; clear
+alias convertpdf="libreoffice --headless --invisible --convert-to pdf"
+
+eval "$(starship init zsh)"
