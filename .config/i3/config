@@ -58,6 +58,7 @@ bindsym $mod+Control+Shift+0 move container to workspace 20
 
 bindsym $mod+r mode "resize"
 bindsym $mod+Shift+g mode "$mode_gaps"
+bindsym $mod+F12 mode "Passthrough Mode - Press Win+F12 to exit"
 
 set $mode_gaps Gaps: (o) outer, (i) inner
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
@@ -72,6 +73,10 @@ mode "resize" {
         bindsym j        resize grow height 10 px or 10 ppt
         bindsym k        resize shrink height 10 px or 10 ppt
         bindsym l        resize grow width 10 px or 10 ppt
+        bindsym Shift+h  resize shrink width 1 px or 1 ppt
+        bindsym Shift+j  resize grow height 1 px or 1 ppt
+        bindsym Shift+k  resize shrink height 1 px or 1 ppt
+        bindsym Shift+l  resize grow width 1 px or 1 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -106,6 +111,9 @@ mode "$mode_gaps_outer" {
 
         bindsym Return mode "default"
         bindsym Escape mode "default"
+}
+mode  "Passthrough Mode - Press Win+F12 to exit" {
+        bindsym $mod+F12 mode "default"
 }
 
 ##### Aesthetics ######
@@ -224,7 +232,7 @@ for_window [title="Zoom - Free Account" class="zoom"] floating enable
 for_window [title="Zoom Cloud Meetings" class="zoom"] floating enable
 for_window [class="PacketTracer"] floating enable
 for_window [title="Cisco Packet Tracer -" class="PacketTracer"] floating disable
-for_window [title="calcurse"] move absolute position 540 px 23 px border none
+for_window [title="calcurse"] move absolute position 540 px 40 px border none
 
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="^Preferences$"] floating enable
@@ -290,8 +298,8 @@ bindsym $mod+w exec --no-startup-id $HOME/.config/i3/startup/startup.sh &
 
 ##### Terminals #####
 
-bindsym $mod+Return exec --no-startup-id alacritty
-bindsym $mod+Control+Shift+Return exec --no-startup-id "alacritty --class=floating-term"
+bindsym $mod+Return exec --no-startup-id kitty
+bindsym $mod+Control+Shift+Return exec --no-startup-id "kitty --class=floating-term"
 bindsym $mod+q [class="floating-term" instance="floating-term"] move scratchpad
 bindsym $mod+a [class="floating-term" instance="floating-term"] scratchpad show
 
@@ -308,18 +316,19 @@ bindsym --release $mod+Shift+F10 exec --no-startup-id "xdotool key 135"
 bindsym $mod+c exec --no-startup-id qalculate-gtk
 
 #Calendar
-bindsym $mod+z exec --no-startup-id "alacritty --class=floating-term --title=calcurse -e \\"calcurse\\""
+bindsym $mod+z exec --no-startup-id "kitty --class=floating-term --title=calcurse -e \\"calcurse\\""
 
 #File Browser
-bindsym $mod+Shift+Return exec --no-startup-id alacritty -e ranger
+bindsym $mod+Shift+Return exec --no-startup-id kitty -e ranger
 
 ##### screenshots #####
 
 bindsym Print exec --no-startup-id flameshot gui
 bindsym $mod+Print exec --no-startup-id flameshot full --path $HOME/Pictures/Screenshots
+bindsym $mod+Shift+Print exec --no-startup-id flameshot full --clipboard
 
 #Audio Mixer
-bindsym $mod+m exec --no-startup-id "alacritty --class=floating-term -e \\"pulsemixer\\""
+bindsym $mod+m exec --no-startup-id "kitty --class=floating-term pulsemixer"
 bindsym $mod+Shift+m exec --no-startup-id pavucontrol
 
 #Network Test

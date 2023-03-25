@@ -14,9 +14,9 @@ fi
 
 cd $(dirname $0)/..
 
-sudo pacman -Syu --noconfirm --needed alacritty android-file-transfer arc-gtk-theme aria2 atom audacity base-devel bat bc btop cronie cpupower darktable discord-canary emacs-nativecomp exa emoji-font fasd fd feh ffmpeg firefox flameshot foliate fzf gimp git gparted hunspell hunspell-en_us i3-gaps jq kdeconnect kvantum-qt5 libreoffice-still light lxappearance-gtk3 mpv moreutils nano ncdu neovim nethogs network-manager-applet nomacs okular p7zip papirus-icon-theme playerctl polybar progress pulseaudio pulsemixer qbittorrent qalculate-gtk qt5ct qt6ct ranger ripgrep rofi rofimoji starship sysstat thunar ttf-nerd-fonts-symbols-2048-em unclutter unrar wmctrl xcape xclip xdotool xss-lock youtube-dl zathura zathura-pdf-poppler
+sudo pacman -Syu --noconfirm --needed alacritty android-file-transfer arc-gtk-theme aria2 atom audacity base-devel bat bc btop cronie cpupower darktable discord-canary emacs-nativecomp exa emoji-font fasd fd feh ffmpeg firefox flameshot foliate fzf gimp git gparted hunspell hunspell-en_us i3-gaps jq kdeconnect kvantum-qt5 libreoffice-still light lxappearance-gtk3 mpv moreutils nano ncdu neovim nethogs network-manager-applet nomacs okular otf-firamono-nerd p7zip papirus-icon-theme playerctl polybar progress pulseaudio pulsemixer qbittorrent qalculate-gtk qt5ct qt6ct ranger ripgrep rofi rofimoji starship sysstat thunar ttf-inconsolata-go-nerd ttf-iosevka-nerd unclutter unrar wmctrl xcape xclip xdotool xss-lock youtube-dl zathura zathura-pdf-poppler
 
-yay -Syua --answerdiff None --answerclean None --noremovemake --noconfirm --needed autotiling bibata-cursor-theme dunst-git eww-git git-secret i3lock-color i3-swallow-git joplin-appimage maestral-qt nerd-fonts-fira-code picom-git spotify spotify-adblock-git spicetify-cli spicetify-themes-git ttf-material-design-icons-git ttf-meslo-nerd-font-powerlevel10k windscribe-cli yay zoom
+yay -Syua --answerdiff None --answerclean None --noremovemake --noconfirm --needed autotiling bibata-cursor-theme dunst-git eww-git git-secret i3lock-color i3-swallow-git joplin-appimage maestral-qt picom-git spotify spotify-adblock-git spicetify-cli spicetify-themes-git ttf-material-design-icons-git ttf-meslo-nerd-font-powerlevel10k windscribe-cli yay zoom
 
 # Reveal encrypted files
 git-secret reveal -f

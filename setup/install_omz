@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-yay -Syua --answerdiff None --answerclean All --noremovemake --noconfirm oh-my-zsh-git zsh-theme-powerlevel10k-git
+yay -Syua --answerdiff None --answerclean All --noremovemake --noconfirm oh-my-zsh-git zsh-theme-powerlevel10k-git zsh-hist-git
 sudo pacman -Syu --noconfirm zsh-autosuggestions zsh-syntax-highlighting zsh-completions
 
 # Create zsh-completions plugin, would ideally be a package/seperate file but oh well

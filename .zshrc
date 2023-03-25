@@ -3,7 +3,7 @@ bindkey -e
 HISTFILE=~/.zsh_history
 
 export ZSH=/usr/share/oh-my-zsh
-plugins=(bgnotify colored-man-pages command-not-found copybuffer copyfile copypath cp extract fasd fzf git man safe-paste sudo zsh-autosuggestions zsh-completions zsh-interactive-cd zsh-syntax-highlighting history-substring-search)
+plugins=(bgnotify colored-man-pages command-not-found copybuffer copyfile copypath cp extract fasd fzf git man safe-paste sudo zsh-autosuggestions zsh-completions zsh-hist zsh-interactive-cd zsh-syntax-highlighting history-substring-search)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=yellow,bold,underline"
 
 [[ ! -f $ZSH/oh-my-zsh.sh ]] || source $ZSH/oh-my-zsh.sh

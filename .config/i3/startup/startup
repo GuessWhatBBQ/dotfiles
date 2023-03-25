@@ -9,6 +9,6 @@ start () {
 start firefox
 start emacs
 start env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify
-PROCESS_NAME="DiscordCanary" start discord-canary
+PROCESS_NAME="Discord" start discord
 # i3-msg workspace 2; PROCESS_NAME="alacritty_default" start alacritty
 # sleep 0.3
