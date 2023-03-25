@@ -22,7 +22,7 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "Fira Code" :size 15)
-      doom-unicode-font (font-spec :family "FiraCode Nerd Font":size 15))
+      doom-unicode-font (font-spec :family "FuraMono Nerd Font":size 15))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -84,6 +84,26 @@
 ;; Disable prettify-symbols-mode on javascript to deal with firacode conflict?
 (after! js
   (setq-default js--prettify-symbols-alist '()))
+(use-package! vundo
+  :defer t
+  :init
+  (defconst +vundo-unicode-symbols
+    '((selected-node   . ?●)
+      (node            . ?○)
+      (vertical-stem   . ?│)
+      (branch          . ?├)
+      (last-branch     . ?╰)
+      (horizontal-stem . ?─)))
+  (map! :leader
+        (:prefix ("o")
+         :desc "vundo" "v" #'vundo))
+  (setq-hook! 'vundo-mode-hook evil-emacs-state-cursor nil)
+  (setq-hook! 'vundo-mode-hook evil-normal-state-cursor nil)
+
+  :config
+  (setq vundo-glyph-alist +vundo-unicode-symbols
+        vundo-compact-display t
+        vundo-window-max-height 6))
 ;; (add-hook! rjsx-mode
 ;;   (print prettify-symbols-alist))
 ;;
@@ -102,12 +122,12 @@
     (setq end (point))
     (let* ((chunk (buffer-substring beg end))
            (chunk (concat
-                   (format "╭──────── #%-d ─ %s ──\n│ "
+                   (format "╭──────── Starting from line #%-d in %s ──\n│ "
                            (line-number-at-pos beg)
                            (file-relative-name buffer-file-name (projectile-project-root))
                            )
                    (replace-regexp-in-string "\n" "\n│ " chunk)
-                   (format "\n╰──────── #%-d ─"
+                   (format "\n╰──────── Ending at line #%-d ───────────────────"
                            (line-number-at-pos end)))))
       (kill-new chunk)))
   (deactivate-mark))

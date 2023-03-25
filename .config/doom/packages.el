@@ -55,3 +55,8 @@
   (:host github
    :repo "pashky/restclient.el"
    :files ("restclient-jq.el")))
+
+(package! impatient-mode)
+
+(package! vundo)
+
