@@ -60,3 +60,4 @@
 
 (package! vundo)
 
+(package! htmlize)
