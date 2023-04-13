@@ -1,11 +1,10 @@
 #!/usr/bin/bash
 
-# git clone -b develop https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
 git clone --depth 1 https://github.com/doomemacs/doomemacs "${HOME}"/.emacs.d
 "${HOME}"/.emacs.d/bin/doom install &
 
-# Need to ensure symlinks are created so that lsp-mode can detect it where it's defaults ask it to look
-# For example vscode-json-languageserver -> vscode-json-language-server
+curl -sLf https://spacevim.org/install.sh | bash -s -- --install neovim
+
 sudo pacman -Syu bash-language-server clang lua-language-server pyright rust-analyzer typescript-language-server vscode-css-languageserver vscode-html-languageserver vscode-json-languageserver
 yay -Syu jdtls
 

@@ -8,8 +8,8 @@ setup/install_packages
 # Installing and configuring oh-my-zsh and friends
 setup/install_omz
 
-# Installing and configuring spacemacs
-setup/install_emacs
+# Installing and configuring editors
+setup/install_editors
 
 # Installing user configs
 setup/install_configs
