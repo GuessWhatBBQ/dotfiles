@@ -2,11 +2,10 @@
 
 pkgbuild_folder_base=$HOME/.local/builds
 
-sudo reflector --verbose --country Hong\ Kong,Bangladesh,Japan,China --sort age --fastest 6 --score 15 --save /etc/pacman.d/mirrorlist
+# sudo reflector --verbose --country Hong\ Kong,Bangladesh,Japan,China --sort age --fastest 6 --score 15 --save /etc/pacman.d/mirrorlist
 
 # Ensuring yay is installed
-if ! command -v yay &> /dev/null
-then
+if ! command -v yay &>/dev/null; then
   git clone https://aur.archlinux.org/yay.git /tmp/yay
   cd /tmp/yay || exit
   makepkg --syncdeps --noconfirm --install
@@ -14,17 +13,20 @@ fi
 
 cd $(dirname $0)/..
 
-sudo pacman -Syu --noconfirm --needed alacritty android-file-transfer arc-gtk-theme aria2 atom audacity base-devel bat bc btop cronie cpupower darktable discord-canary emacs-nativecomp exa emoji-font fasd fd feh ffmpeg firefox flameshot foliate fzf gimp git gparted hunspell hunspell-en_us i3-gaps jq kdeconnect kvantum-qt5 libreoffice-still light lxappearance-gtk3 miniserve mpv moreutils nano ncdu neovim nethogs network-manager-applet nomacs okular otf-firamono-nerd p7zip papirus-icon-theme playerctl polybar progress pulseaudio pulsemixer qbittorrent qalculate-gtk qt5ct qt6ct ranger ripgrep rofi rofimoji starship sysstat thunar ttf-inconsolata-go-nerd ttf-iosevka-nerd unclutter unrar wmctrl xcape xclip xdotool xss-lock youtube-dl zathura zathura-pdf-poppler
+sudo pacman -Syu --noconfirm --needed alacritty android-file-transfer arc-gtk-theme aria2 audacity base-devel bat bc btop cronie cpupower darktable discord emacs-nativecomp exa emoji-font fasd fd feh ffmpeg firefox flameshot foliate fzf gimp git gparted hunspell hunspell-en_us i3-gaps inotifywait jq kdeconnect kvantum-qt5 libreoffice-still light lxappearance-gtk3 miniserve mpv moreutils nano ncdu neovim nethogs network-manager-applet okular otf-firamono-nerd p7zip papirus-icon-theme playerctl polybar progress pipewire-pulse pulsemixer qbittorrent qalculate-gtk qt5ct qt6ct ranger ripgrep rofi rofimoji stalonetray starship sysstat thunar ttf-fira-code ttf-inconsolata-go-nerd ttf-iosevka-nerd ueberzug unclutter unrar wmctrl xcape xclip xdotool xss-lock xorg-xwininfo youtube-dl zathura zathura-pdf-poppler
 
-yay -Syua --answerdiff None --answerclean None --noremovemake --noconfirm --needed autotiling bibata-cursor-theme dunst-git eww-git git-secret i3lock-color i3-swallow-git joplin-appimage maestral-qt picom-git spotify spotify-adblock-git spicetify-cli spicetify-themes-git ttf-material-design-icons-git ttf-meslo-nerd-font-powerlevel10k windscribe-cli yay zoom
+# Required for eww-git package
+curl -sS https://github.com/elkowar.gpg | gpg --import -i -
+curl -sS https://github.com/web-flow.gpg | gpg --import -i -
+
+yay -Syua --answerdiff None --answerclean None --noremovemake --noconfirm --needed autotiling bibata-cursor-theme dunst-git eww-git git-secret i3lock-color i3-swallow-git joplin-appimage logseq-desktop-bin maestral-qt picom-git spotify spotify-adblock-git spicetify-cli spicetify-themes-git ttf-material-design-icons-git ttf-meslo-nerd-font-powerlevel10k windscribe-cli yay zoom
 
 # Reveal encrypted files
 git-secret reveal -f
 
 # Setup personal PKGBUILDs
-if [ ! -d "$pkgbuild_folder_base" ]
-then
-    mkdir $pkgbuild_folder_base
+if [ ! -d "$pkgbuild_folder_base" ]; then
+  mkdir $pkgbuild_folder_base
 fi
 
 cp -flav builds/* $pkgbuild_folder_base

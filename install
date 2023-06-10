@@ -2,6 +2,10 @@
 
 cd $(dirname $0)
 
+run_in_seperate_terminal() {
+    nohup alacritty --hold -e bash -c "''$@''" >/dev/null &
+}
+
 # Installing packages
 setup/install_packages
 

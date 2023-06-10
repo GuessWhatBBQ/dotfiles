@@ -6,11 +6,9 @@ device_id=$(xinput list --id-only pointer:'FTE1200:00 0B05:0701 Touchpad')
 
 current_state=$(xinput --list-props "$device_id" | grep "$property" | awk '{print($NF)}')
 
-new_state=1
+new_state="disable"
 if [ "$current_state" == "0" ]; then
-    new_state=1
-else
-    new_state=0
+    new_state="enable"
 fi
 
-xinput set-prop "$device_id" "$property" "$new_state"
+xinput "$new_state" "$device_id"

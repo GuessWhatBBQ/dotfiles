@@ -56,6 +56,10 @@ bindsym $mod+Control+Shift+8 move container to workspace 18
 bindsym $mod+Control+Shift+9 move container to workspace 19
 bindsym $mod+Control+Shift+0 move container to workspace 20
 
+##### Workspace Shifting between outputs
+bindsym $mod+Shift+greater move workspace to output right
+bindsym $mod+Shift+less move workspace to output left
+
 bindsym $mod+r mode "resize"
 bindsym $mod+Shift+g mode "$mode_gaps"
 bindsym $mod+F12 mode "Passthrough Mode - Press Win+F12 to exit"
@@ -182,7 +186,7 @@ bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 ##### next/previous workspace
-bindsym $mod+Tab workspace back_and_forth
+bindsym $mod+Tab focus output next
 
 bindsym $mod+f fullscreen toggle
 
@@ -294,7 +298,7 @@ exec_always --no-startup-id xset -dpms
 ################################
 
 #Workspace Setup
-bindsym $mod+w exec --no-startup-id $HOME/.config/i3/startup/startup.sh &
+bindsym $mod+w exec --no-startup-id $HOME/.config/i3/startup/startup &
 
 ##### Terminals #####
 

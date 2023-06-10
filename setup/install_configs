@@ -1,19 +1,18 @@
 #!/usr/bin/bash
 
 BACKUP_DIR="$HOME/.cache/config.bak"
-USER_CONFIG_FILES=(".config" ".zshrc" ".p10k.zsh" "unicode" ".icons" ".spacemacs" ".npmrc" ".Xmodmap" ".xprofile" ".SpaceVim.d")
+USER_CONFIG_FILES=(".config" ".zshrc" ".p10k.zsh" "unicode" ".icons" ".spacemacs" ".stalonetrayrc" ".npmrc" ".Xmodmap" ".xprofile" ".SpaceVim.d")
 
 # Ensuring the script is always run relative to the correct directory
 cd $(dirname $0)/..
 
 # Checking whether the BACKUP_DIR exists and creating it if it doesn't
-if [ ! -d "$BACKUP_DIR" ]
-then
+if [ ! -d "$BACKUP_DIR" ]; then
     mkdir $BACKUP_DIR
 fi
 
 # Cleaning up old config files
-for file in ${USER_CONFIG_FILES[@]}; do
+for file in "${USER_CONFIG_FILES[@]}"; do
     if [ -d "$file" ]; then
         find $file -mindepth 1 -maxdepth 1 -exec cp -far $HOME/{} $BACKUP_DIR \; -exec rm -rf $HOME/{} \;
     else
@@ -22,7 +21,7 @@ for file in ${USER_CONFIG_FILES[@]}; do
 done
 
 # Copying .config/* files and .rc files and friends
-for file in ${USER_CONFIG_FILES[@]}; do
+for file in "${USER_CONFIG_FILES[@]}"; do
     cp -flav $file $HOME/
 done
 

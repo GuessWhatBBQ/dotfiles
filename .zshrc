@@ -3,13 +3,16 @@ bindkey -e
 HISTFILE=~/.zsh_history
 
 export ZSH=/usr/share/oh-my-zsh
-plugins=(bgnotify colored-man-pages command-not-found copybuffer copyfile copypath cp extract fasd fzf git man safe-paste sudo zsh-autosuggestions zsh-completions zsh-hist zsh-interactive-cd zsh-syntax-highlighting history-substring-search)
+plugins=(bgnotify colored-man-pages command-not-found copybuffer copypath cp extract fzf git man safe-paste sudo zoxide zsh-autosuggestions zsh-hist zsh-interactive-cd zsh-syntax-highlighting history-substring-search)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=yellow,bold,underline"
 
 [[ ! -f $ZSH/oh-my-zsh.sh ]] || source $ZSH/oh-my-zsh.sh
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+
+bindkey '^P' up-history
+bindkey '^N' down-history
 
 if [ -d "$HOME/.local/bin" ] ;
   then export PATH="$HOME/.local/bin:$PATH"
@@ -21,7 +24,6 @@ fi
 
 alias exa="exa --icons"
 alias exat="exa -Tla"
-alias exaa="exa -a"
 alias exal="exa -la"
 
 alias get="aria2c --continue=true --max-connection-per-server=16 --split=64 --max-concurrent-downloads=64 --min-split-size=2M"

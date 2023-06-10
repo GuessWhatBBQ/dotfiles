@@ -140,3 +140,5 @@
 (setq evil-goggles-enable-paste nil)
 
 (global-visual-line-mode t)
+
+(setq lsp-csharp-server-path "/usr/bin/omnisharp")

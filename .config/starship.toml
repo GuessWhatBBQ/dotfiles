@@ -37,7 +37,7 @@ home_symbol = ""
 "Pictures" = ""
 "DATA" = ""
 "Dropbox" = ""
-"GithubRepos" = ""
+"Code" = ""
 
 [c]
 symbol = ""
@@ -49,7 +49,7 @@ format = "[$duration](bold yellow)"
 
 [fill]
 style = "fg:236"
-symbol = "󰧞"
+symbol = "·"
 
 [git_branch]
 symbol = ""
