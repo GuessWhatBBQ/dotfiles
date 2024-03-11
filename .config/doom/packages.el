@@ -58,6 +58,6 @@
 
 (package! impatient-mode)
 
-(package! vundo)
-
 (package! htmlize)
+
+(package! prisma-mode :recipe (:host github :repo "pimeys/emacs-prisma-mode" :branch "main"))

@@ -15,14 +15,13 @@
 ;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
 ;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
 ;;   presentations or streaming.
-;; - `doom-unicode-font' -- for unicode glyphs
+;; - `doom-symbol-font' -- for symbols
 ;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
 ;;
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(setq doom-font (font-spec :family "Fira Code" :size 15)
-      doom-unicode-font (font-spec :family "FuraMono Nerd Font":size 15))
+(setq doom-font (font-spec :family "Fira Code" :size 15))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -32,7 +31,11 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-molokai)
+(setq doom-theme 'doom-tokyo-night)
+;; (setq doom-themes-treemacs-theme "nerd-icons")
+;; (setq highlight-indent-guides-auto-odd-face-perc 30)
+;; (setq highlight-indent-guides-auto-even-face-perc 50)
+;; (setq highlight-indent-guides-auto-character-face-perc 80)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -84,29 +87,37 @@
 ;; Disable prettify-symbols-mode on javascript to deal with firacode conflict?
 (after! js
   (setq-default js--prettify-symbols-alist '()))
-(use-package! vundo
-  :defer t
-  :init
-  (defconst +vundo-unicode-symbols
-    '((selected-node   . ?●)
-      (node            . ?○)
-      (vertical-stem   . ?│)
-      (branch          . ?├)
-      (last-branch     . ?╰)
-      (horizontal-stem . ?─)))
-  (map! :leader
-        (:prefix ("o")
-         :desc "vundo" "v" #'vundo))
-  (setq-hook! 'vundo-mode-hook evil-emacs-state-cursor nil)
-  (setq-hook! 'vundo-mode-hook evil-normal-state-cursor nil)
+;; (use-package! vundo
+;;   :defer t
+;;   :init
+;;   (defconst +vundo-unicode-symbols
+;;     '((selected-node   . ?●)
+;;       (node            . ?○)
+;;       (vertical-stem   . ?│)
+;;       (branch          . ?├)
+;;       (last-branch     . ?╰)
+;;       (horizontal-stem . ?─)))
+;;   (setq-hook! 'vundo-mode-hook evil-emacs-state-cursor nil)
+;;   (setq-hook! 'vundo-mode-hook evil-normal-state-cursor nil)
 
-  :config
-  (setq vundo-glyph-alist +vundo-unicode-symbols
-        vundo-compact-display t
-        vundo-window-max-height 6))
+;;   :config
+;;   (setq vundo-glyph-alist +vundo-unicode-symbols
+;;         vundo-compact-display t
+;;         vundo-window-max-height 6))
 ;; (add-hook! rjsx-mode
 ;;   (print prettify-symbols-alist))
 ;;
+;; fix json-parse-error \u0000 is not allowed without JSON_ALLOW_NUL
+(advice-add 'json-parse-string :around
+            (lambda (orig string &rest rest)
+              (apply orig (s-replace "\\u0000" "" string)
+                     rest)))
+(advice-add 'json-parse-buffer :around
+            (lambda (oldfn &rest args)
+              (save-excursion
+                (while (search-forward "\\u0000" nil t)
+                  (replace-match "" nil t)))
+              (apply oldfn args)))
 ;; Setting up personal packages
 (use-package! evil-textobj-line
   :after (evil))
