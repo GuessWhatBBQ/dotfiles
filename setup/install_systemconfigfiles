@@ -6,7 +6,7 @@ cd $(dirname $0)/..
 
 sudo cp -frv usr /
 sudo cp -frv etc /
-sudo cp -frv var /
+# sudo cp -frv var /
 
 # Evaluating variable to produce actualy string
 sudo sed -i -e "s|\$PICOM_CONFIG_LOCATION|$PICOM_CONFIG_LOCATION|g" "/usr/lib/systemd/user/picom.service"
