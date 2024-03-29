@@ -8,7 +8,7 @@
  */
 
 configuration {
-    font:                           "Iosevka Nerd Font Bold 12";
+    font:                           "Recursive Mono Casual Static Bold 11";
     disable-history:                false;
     fullscreen:                     false;
     hide-scrollbar:                 true;
