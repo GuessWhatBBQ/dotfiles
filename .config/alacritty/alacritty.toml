@@ -1,0 +1,62 @@
+colors.draw_bold_text_with_bright_colors = true
+
+# Cyberpunk-Neon colours
+[colors.primary]
+background = '0x000b1e'
+foreground = '0x0abdc6'
+
+[colors.normal]
+black = '0x123e7c'
+red = '0xff0000'
+green = '0xd300c4'
+yellow = '0xf57800'
+blue = '0x123e7c'
+magenta = '0x711c91'
+cyan = '0x0abdc6'
+white = '0xd7d7d5'
+
+[colors.bright]
+black = '0x1c61c2'
+red = '0xff0000'
+green = '0xd300c4'
+yellow = '0xf57800'
+blue = '0x00ff00'
+magenta = '0x711c91'
+cyan = '0x0abdc6'
+white = '0xd7d7d5'
+
+[colors.dim]
+black = '0x1c61c2'
+red = '0xff0000'
+green = '0xd300c4'
+yellow = '0xf57800'
+blue = '0x123e7c'
+magenta = '0x711c91'
+cyan = '0x0abdc6'
+white = '0xd7d7d5'
+
+[cursor]
+blink_interval = 500
+unfocused_hollow = true
+vi_mode_style = "Block"
+
+[cursor.style]
+blinking = "Always"
+shape = "Beam"
+
+[font]
+builtin_box_drawing = true
+size = 8
+
+[font.normal]
+family = "MesloLGS NF"
+
+[scrolling]
+history = 100000
+
+[window]
+opacity = 0.8
+
+[window.padding]
+x = 5
+y = 5
