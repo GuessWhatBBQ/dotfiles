@@ -73,7 +73,7 @@
 
 (defwidget tray-icon []
   (eventbox
-    :onclick "xdotool ${tray-info.command} \$(xdotool search --class \"stalonetray\")"
+    :onclick "xdotool windowunmap \$(xdotool search --class \"stalonetray\") && xdotool ${tray-info.command} \$(xdotool search --class \"stalonetray\")"
     (box
      (label
       :text "${tray-info.icon}"))))
@@ -96,6 +96,7 @@
 (defwidget volume-info []
   (label
    :class "revealed-text"
+   :width 40
    :text {sound-info[0].front-left}))
 
 
@@ -106,7 +107,7 @@
 (defwidget battery-info []
            (label
             :class "revealed-text"
-            :text "${EWW_BATTERY.BAT0.capacity}%"))
+            :text "${EWW_BATTERY.BAT1.capacity}%"))
 
 (defwidget battery-visual []
            (eventbox
@@ -116,13 +117,14 @@
              :halign "end"
              :space-evenly false
              (circular-progress
-              :value "${round(EWW_BATTERY.BAT0.capacity, 0)}"
+              :value "${round(EWW_BATTERY.BAT1.capacity, 0)}"
               :start-at 75
               :width 27
               :height 27
               :thickness 4
               (label
-               :text "${EWW_BATTERY.BAT0.status == 'Discharging' ? '' : '' }"
+               :style "font-size: 8pt"
+               :text "${EWW_BATTERY.BAT1.status == 'Discharging' ? '' : '' }"
                )
              )
              (revealer
@@ -134,36 +136,42 @@
 (defwidget network-info []
            (box
             :space-evenly false
+            :orientation "vertical"
+            :style "margin-top: 2px;"
             (box
              :space-evenly false
              (label
               :class "material-icon"
-              :style "font-size: 25px;"
+              :style "font-size: 17px;"
               :text "󱦲"
               :halign "end")
              (box
-              :width 65
+              :width 64
               :space-evenly true
               :halign "end"
               :hexpand true
               (label
               :halign "end"
-              :text "${EWW_NET.wlan0.NET_UP > (1024*1024*2) ? round(EWW_NET.wlan0.NET_UP/(1024*1024*2), 2) : round(EWW_NET.wlan0.NET_UP/(1024*2), 0)}${EWW_NET.wlan0.NET_UP > (1024*1024*2) ? 'mb/s' : 'kb/s'}")))
+              :style "font-size: 11px"
+              :text "${EWW_NET.wlan0.NET_UP > (1024) ? round(EWW_NET.wlan0.NET_UP/(1024), 2) : round(EWW_NET.wlan0.NET_UP/(1024), 0)}${EWW_NET.wlan0.NET_UP > (1024) ? 'mb/s' : 'kb/s'}")))
+              ;; :text "${test > (1024*1024*2) ? round(test/(1024*1024*2), 2) : round(test/(1024*2), 0)}${test > (1024*1024*2) ? 'mb/s' : 'kb/s'}")))
             (box
              :space-evenly false
              (label
               :class "material-icon"
-              :style "font-size: 25px;"
+              :style "font-size: 17px;"
               :text "󱦳"
               :halign "end"
               )
              (box
-              :width 65
+              :width 64
               :space-evenly true
               :halign "end"
               (label
                :halign "end"
-               :text "${EWW_NET.wlan0.NET_DOWN > (1024*1024*2) ? round(EWW_NET.wlan0.NET_DOWN/(1024*1024*2), 2) : round(EWW_NET.wlan0.NET_DOWN/(1024*2), 0)}${EWW_NET.wlan0.NET_DOWN > (1024*1024*2) ? 'mb/s' : 'kb/s'}")))))
+               :style "font-size: 11px"
+               :text "${EWW_NET.wlan0.NET_DOWN > (1024) ? round(EWW_NET.wlan0.NET_DOWN/(1024), 2) : round(EWW_NET.wlan0.NET_DOWN/(1024), 0)}${EWW_NET.wlan0.NET_DOWN > (1024) ? 'mb/s' : 'kb/s'}")))))
+               ;; :text "${test > (1024*1024*2) ? round(test/(1024*1024*2), 2) : round(test/(1024*2), 0)}${test > (1024*1024*2) ? 'mb/s' : 'kb/s'}")))))
 
 (defwidget ram-usage []
            (box
@@ -188,7 +196,7 @@
               :height 27
               :thickness 4
               (label
-               :style "font-size: 14px; margin: 0 4px 1px 0;"
+               :style "font-size: 12px; margin: 0 4px 0px 0;"
                :text ""))
              (revealer
               :transition "slideright"
@@ -199,7 +207,7 @@
 (defwidget temp-info []
            (box
             (label
-             :text "${EWW_TEMPS.CORETEMP_PACKAGE_ID_0}°C")))
+             :text "${EWW_TEMPS.AMDGPU_EDGE}°C")))
 
 (defwidget cpu-usage []
            (box
@@ -224,7 +232,7 @@
               :height 27
               :thickness 4
               (label
-               :style "margin: 0 4px 0 0;"
+               :style "margin: 0 0px 0 0;"
                :text "﬙"))
              (revealer
               :transition "slideright"
@@ -240,6 +248,19 @@
 ;; Main Window
 (defwindow bar
            :monitor 0
+           :geometry (geometry :x "0%"
+                               :y "0%"
+                               :width "100%"
+                               :height "40px"
+                               :anchor "top center")
+           :stacking "fg"
+           :reserve (struts :distance "40px" :side "top")
+           :windowtype "dock"
+           :wm-ignore false
+           (top-bar))
+
+(defwindow bar-2
+           :monitor "HDMI-A-0"
            :geometry (geometry :x "0%"
                                :y "0%"
                                :width "100%"
