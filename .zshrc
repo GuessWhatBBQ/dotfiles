@@ -1,9 +1,9 @@
 setopt autocd correct extendedglob globdots histignorespace nocorrectall nomatch notify
-bindkey -e
 HISTFILE=~/.zsh_history
 
 export ZSH=/usr/share/oh-my-zsh
-plugins=(bgnotify colored-man-pages command-not-found copybuffer copypath cp extract fzf git man safe-paste sudo zoxide zsh-autosuggestions zsh-hist zsh-interactive-cd zsh-syntax-highlighting history-substring-search)
+export VI_MODE_SET_CURSOR=true
+plugins=(bgnotify colored-man-pages command-not-found copybuffer copypath cp extract fzf git man safe-paste sudo vi-mode zoxide zsh-autosuggestions zsh-hist zsh-interactive-cd zsh-syntax-highlighting history-substring-search)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=yellow,bold,underline"
 
 [[ ! -f $ZSH/oh-my-zsh.sh ]] || source $ZSH/oh-my-zsh.sh
@@ -49,6 +49,13 @@ e () {
   )
 }
 
+jre () {
+  (
+    export _JAVA_OPTIONS='-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dawt.useSystemAAFontSettings=lcd'
+    swallow java -jar $@ &>! /dev/null &!
+  )
+}
+
 rscp () {
   cpv --no-progress --info=progress2 "$@"
 }
@@ -70,3 +77,5 @@ alias zz="fzf-file-cd"
 alias convertpdf="libreoffice --headless --invisible --convert-to pdf"
 
 eval "$(starship init zsh)"
+
+bindkey -e
