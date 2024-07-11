@@ -22,9 +22,10 @@ echo $! >> "$pidcache"
 ewwbar="eww --config $HOME/.config/eww/bar"
 
 $ewwbar kill
-pkill stalonetray
+# pkill stalonetray
 
-stalonetray &
+# stalonetray &
 $ewwbar daemon
-xdotool windowunmap $(xdotool search --sync --class "stalonetray")
+# xdotool windowunmap $(xdotool search --sync --class "stalonetray")
 $ewwbar open bar
+$ewwbar open bar-2

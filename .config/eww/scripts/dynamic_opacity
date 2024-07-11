@@ -11,7 +11,7 @@ i3-msg -t subscribe -m '[ "window", "workspace" ]' |
         opaque=$(printf "%.0f\n" $($ewwbar get bar-opacity))
 
         workspace_number=$(xprop -notype -root _NET_CURRENT_DESKTOP | cut -c 24-)
-        window_count=$(i3-msg -t get_tree | jq "[.nodes[].nodes[]?.nodes[$workspace_number]? | select(.type == \"workspace\") | del(..?|.floating_nodes[]?) | ..? | select(.window?)] | length")
+        window_count=$(i3-msg -t get_tree | jq "[.nodes[].nodes[]?.nodes[$workspace_number]? | select(.type == \"workspace\") | del(..?|.floating_nodes?) | ..? | select(.window?)] | length")
 
         if [ "$window_count" -eq 1 ] && [ "$opaque" -eq 0 ]; then
             (
