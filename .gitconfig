@@ -1,0 +1,6 @@
+[user]
+	email = saminslm@gmail.com
+	name = GuessWhatBBQ
+	signingKey = BA6F24A9F273F3E4
+[commit]
+	gpgSign = true
