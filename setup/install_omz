@@ -1,9 +1,0 @@
-#!/usr/bin/bash
-
-yay -Syua --answerdiff None --answerclean All --noremovemake --noconfirm oh-my-zsh-git zsh-theme-powerlevel10k-git zsh-hist-git
-sudo pacman -Syu --noconfirm zsh-autosuggestions zsh-syntax-highlighting zsh-completions
-
-sudo ln -s /usr/share/zsh/plugins/* /usr/share/oh-my-zsh/custom/plugins
-sudo ln -s /usr/share/zsh-theme-powerlevel10k /usr/share/oh-my-zsh/custom/themes/powerlevel10k
-
-chsh --shell=/bin/zsh

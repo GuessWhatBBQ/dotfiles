@@ -1,8 +1,0 @@
-[module/date]
-type = internal/date
-interval = 1
-date = %a %d %b
-time = %l:%M:%S %p
-label = %date% %time%
-format-font = 2
-format-padding = 0

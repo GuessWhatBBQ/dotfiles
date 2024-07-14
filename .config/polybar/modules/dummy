@@ -1,3 +1,0 @@
-[module/dummymodule]
-type = custom/text
-content = " "

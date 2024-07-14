@@ -1,3 +1,0 @@
-QToolTip, QMenu {
-  border: 0px;
-}
