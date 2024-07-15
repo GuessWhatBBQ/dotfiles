@@ -16,7 +16,7 @@
     };
     syntaxHighlighting.enable = true;
     shellAliases = {
-      ll = "ls -l";
+      ll = "ls -la";
     };
     historySubstringSearch = {
       enable = true;
@@ -37,7 +37,7 @@
     oh-my-zsh = {
       enable = true;
       plugins = [
-        "bgnotify" "colored-man-pages" "command-not-found" "copybuffer"
+        "bgnotify" "colored-man-pages" "copybuffer"
         "copypath" "cp" "extract" "fzf" "git" "man" "safe-paste" "sudo"
         "vi-mode" "zoxide" "zsh-interactive-cd"
       ];
