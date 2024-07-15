@@ -8,6 +8,7 @@
 
   imports = [
     ./modules/default.nix
+    inputs.nix-index-database.hmModules.nix-index
   ];
 
   nixpkgs = {
@@ -29,6 +30,7 @@
   # home.packages = with pkgs; [ steam ];
 
   programs.home-manager.enable = true;
+  programs.nix-index.enable = true;
   programs.mpv.enable = true;
   programs.bat.enable = true;
   programs.wezterm.enable = true;
