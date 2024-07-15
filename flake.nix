@@ -17,7 +17,6 @@
     self,
     nixpkgs,
     home-manager,
-    spicetify-nix,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -26,7 +25,7 @@
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs spicetify-nix;};
+        specialArgs = {inherit inputs outputs;};
         # > Our main nixos configuration file <
         modules = [./nixos/configuration.nix];
       };
