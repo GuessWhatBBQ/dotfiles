@@ -4,7 +4,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
 
   imports = [
     ./modules/default.nix
@@ -12,8 +13,7 @@
   ];
 
   nixpkgs = {
-    overlays = [
-    ];
+    overlays = [ ];
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;

@@ -1,7 +1,5 @@
+{ config, ... }:
 {
-  config,
-  ...
-} : {
 
   # Plugin specific requirements
   programs.zoxide.enable = true;
@@ -37,9 +35,20 @@
     oh-my-zsh = {
       enable = true;
       plugins = [
-        "bgnotify" "colored-man-pages" "copybuffer"
-        "copypath" "cp" "extract" "fzf" "git" "man" "safe-paste" "sudo"
-        "vi-mode" "zoxide" "zsh-interactive-cd"
+        "bgnotify"
+        "colored-man-pages"
+        "copybuffer"
+        "copypath"
+        "cp"
+        "extract"
+        "fzf"
+        "git"
+        "man"
+        "safe-paste"
+        "sudo"
+        "vi-mode"
+        "zoxide"
+        "zsh-interactive-cd"
       ];
       theme = "robbyrussell";
     };

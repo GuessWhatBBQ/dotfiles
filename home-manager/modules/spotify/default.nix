@@ -1,19 +1,29 @@
-{ inputs, pkgs, lib, ... }:
-let
-  spicePkgs = inputs.spicetify-nix.packages.${pkgs.system}.default;
-in
 {
-
-  # import the flake's module for your system
-  imports = [ inputs.spicetify-nix.homeManagerModule ];
-
-  # configure spicetify :)
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
+{
+  imports = [ inputs.spicetify-nix.homeManagerModules.default ];
   programs.spicetify =
+    let
+      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+    in
     {
       enable = true;
-      theme = spicePkgs.themes.Sleek;
-      colorScheme = "Cherry";
-
-      enabledExtensions = with spicePkgs.extensions; [];
+      enabledExtensions = with spicePkgs.extensions; [
+        adblock
+        beautifulLyrics
+        betterGenres
+        fullAppDisplay
+        history
+        keyboardShortcut
+        lastfm
+        songStats
+        showQueueDuration
+      ];
+      theme = spicePkgs.themes.sleek;
+      colorScheme = "cherry";
     };
 }
