@@ -1,0 +1,333 @@
+;; -*- emacs-lisp -*-
+
+(defvar bar-opacity 1.0)
+
+(defvar battery-info-rev false)
+(defvar volume-info-rev false)
+(defvar ram-info-rev false)
+(defvar cpu-info-rev false)
+
+(deflisten tray-info :initial "[]"
+           `tail -F /tmp/eww/tray/state`)
+
+(deflisten workspaces-info :initial "[]"
+           `hyprland-workspaces $(hyprctl monitors -j | jq -r ".[0].name")`)
+
+(deflisten workspaces-info-2 :initial "[]"
+           `hyprland-workspaces $(hyprctl monitors -j | jq -r ".[1].name")`)
+
+;; (deflisten workspaces-info :initial "[]"
+;;            `tail -F /tmp/eww/workspace/workspaces`)
+
+(deflisten sound-info :initial "[]"
+           `tail -F /tmp/eww/sound/sound`)
+
+(defpoll sys-time-val :interval "500ms"
+         :initial ""
+         :run-while time-visible
+         `date +'%a, %d %b, %l:%M:%S %p'`)
+
+(defwidget top-bar []
+           (box
+            :style "background-color: rgba(35, 41, 70, ${bar-opacity})"
+            (bar-contents)))
+
+(defwidget top-bar-2 []
+           (box
+            :style "background-color: rgba(35, 41, 70, ${bar-opacity})"
+            (bar-contents-2)))
+
+(defwidget bar-contents []
+           (centerbox
+            (left)
+            (center)
+            (right)))
+
+(defwidget bar-contents-2 []
+           (centerbox
+            (left-2)
+            (center)
+            (right-2)))
+
+(defwidget left []
+           (workspaces))
+
+(defwidget left-2 []
+           (workspaces-2))
+
+;; (defwidget workspaces []
+;;            (box
+;;             :space-evenly false
+;;             (for workspace in workspaces-info
+;;                  (eventbox
+;;                   :width 50
+;;                   :onclick "wmctrl -s ${workspace.index}"
+;;                   (label
+;;                    :style "color: #eebbc3;"
+;;                    :text "${workspace.name}:${workspace.active ? '◆' : '◇'}")))))
+
+(defwidget workspaces []
+           (eventbox :onscroll "hyprctl dispatch workspace `echo {} | sed 's/up/+/\' | sed 's/down/-/'`1"
+                     (box :class "workspaces"
+                          :space-evenly false
+                          (for workspace in workspaces-info
+                               (eventbox
+                                :width 50
+                                :onclick "hyprctl dispatch workspace ${workspace.id}"
+                                (label
+                                 :style "color: #eebbc3;"
+                                 :text "${workspace.name}:${workspace.active ? '◆' : '◇'}"))))))
+
+(defwidget workspaces-2 []
+           (eventbox :onscroll "hyprctl dispatch workspace `echo {} | sed 's/up/+/\' | sed 's/down/-/'`1"
+                     (box :class "workspaces"
+                          :space-evenly false
+                          (for workspace in workspaces-info-2
+                               (eventbox
+                                :width 50
+                                :onclick "hyprctl dispatch workspace ${workspace.id}"
+                                (label
+                                 :style "color: #eebbc3;"
+                                 :text "${workspace.name}:${workspace.active ? '◆' : '◇'}"))))))
+
+(defwidget center []
+           (box
+            (sys-time)))
+
+(defwidget right []
+           (box
+            :class "bar-content"
+            :space-evenly false
+            :halign "end"
+            (tray)
+            (network-info)
+            (temp-info)
+            (cpu-usage)
+            (ram-usage)
+            (battery)
+            (sound)))
+
+(defwidget right-2 []
+           (box
+            :class "bar-content"
+            :space-evenly false
+            :halign "end"
+            (network-info)
+            (temp-info)
+            (cpu-usage)
+            (ram-usage)
+            (battery)
+            (sound)))
+
+(defwidget sound []
+           (box
+            (sound-visual)))
+
+(defwidget tray []
+           (box
+            (systray
+             :spacing 6
+             :orientation "horizontal"
+             :icon-size 28
+             :prepend-new true)))
+
+(defwidget tray-icon []
+           (eventbox
+            :onclick "xdotool windowunmap \$(xdotool search --class \"stalonetray\") && xdotool ${tray-info.command} \$(xdotool search --class \"stalonetray\")"
+            (box
+             (label
+              :text "${tray-info.icon}"))))
+
+(defwidget sound-visual []
+           (eventbox
+            :onhover "${EWW_CMD} update volume-info-rev=true"
+            :onhoverlost "${EWW_CMD} update volume-info-rev=false"
+            (box
+             :halign "end"
+             :space-evenly false
+             :width 20
+             (label :text " ")
+             (revealer
+              :transition "slideright"
+              :reveal volume-info-rev
+              :duration "250ms"
+              (volume-info)))))
+
+(defwidget volume-info []
+           (label
+            :class "revealed-text"
+            :width 40
+            :text {sound-info[0].front-left}))
+
+
+(defwidget battery []
+           (box
+            (battery-visual)))
+
+(defwidget battery-info []
+           (label
+            :class "revealed-text"
+            :text "${EWW_BATTERY.BAT1.capacity}%"))
+
+(defwidget battery-visual []
+           (eventbox
+            :onhover "${EWW_CMD} update battery-info-rev=true"
+            :onhoverlost "${EWW_CMD} update battery-info-rev=false"
+            (box
+             :halign "end"
+             :space-evenly false
+             (circular-progress
+              :value "${round(EWW_BATTERY.BAT1.capacity, 0)}"
+              :start-at 75
+              :width 27
+              :height 27
+              :thickness 4
+              (label
+               :style "font-size: 8pt"
+               :text "${EWW_BATTERY.BAT1.status == 'Discharging' ? '' : '' }"
+               )
+              )
+             (revealer
+              :transition "slideright"
+              :reveal battery-info-rev
+              :duration "250ms"
+              (battery-info)))))
+
+(defwidget network-info []
+           (box
+            :space-evenly false
+            :orientation "vertical"
+            :style "margin-top: 2px;"
+            (box
+             :space-evenly false
+             (label
+              :class "material-icon"
+              :style "font-size: 17px;"
+              :text "󱦲"
+              :halign "end")
+             (box
+              :width 64
+              :space-evenly true
+              :halign "end"
+              :hexpand true
+              (label
+               :halign "end"
+               :style "font-size: 11px"
+               :text "${EWW_NET.wlan0.NET_UP > (1024) ? round(EWW_NET.wlan0.NET_UP/(1024), 2) : round(EWW_NET.wlan0.NET_UP/(1024), 0)}${EWW_NET.wlan0.NET_UP > (1024) ? 'mb/s' : 'kb/s'}")))
+            ;; :text "${test > (1024*1024*2) ? round(test/(1024*1024*2), 2) : round(test/(1024*2), 0)}${test > (1024*1024*2) ? 'mb/s' : 'kb/s'}")))
+            (box
+             :space-evenly false
+             (label
+              :class "material-icon"
+              :style "font-size: 17px;"
+              :text "󱦳"
+              :halign "end"
+              )
+             (box
+              :width 64
+              :space-evenly true
+              :halign "end"
+              (label
+               :halign "end"
+               :style "font-size: 11px"
+               :text "${EWW_NET.wlan0.NET_DOWN > (1024) ? round(EWW_NET.wlan0.NET_DOWN/(1024), 2) : round(EWW_NET.wlan0.NET_DOWN/(1024), 0)}${EWW_NET.wlan0.NET_DOWN > (1024) ? 'mb/s' : 'kb/s'}")))))
+;; :text "${test > (1024*1024*2) ? round(test/(1024*1024*2), 2) : round(test/(1024*2), 0)}${test > (1024*1024*2) ? 'mb/s' : 'kb/s'}")))))
+
+(defwidget ram-usage []
+           (box
+            (ram-usage-visual)))
+
+(defwidget ram-usage-info []
+           (label
+            :class "revealed-text"
+            :text "${round(EWW_RAM.used_mem/(1024*1024), 0)}mb"))
+
+(defwidget ram-usage-visual []
+           (eventbox
+            :onhover "${EWW_CMD} update ram-info-rev=true"
+            :onhoverlost "${EWW_CMD} update ram-info-rev=false"
+            (box
+             :halign "end"
+             :space-evenly false
+             (circular-progress
+              :value "${round(EWW_RAM.used_mem*100/EWW_RAM.total_mem, 0)}"
+              :start-at 75
+              :width 27
+              :height 27
+              :thickness 4
+              (label
+               :style "font-size: 12px; margin: 0 4px 0px 0;"
+               :text ""))
+             (revealer
+              :transition "slideright"
+              :reveal ram-info-rev
+              :duration "250ms"
+              (ram-usage-info)))))
+
+(defwidget temp-info []
+           (box
+            (label
+             :text "${EWW_TEMPS.AMDGPU_EDGE}°C")))
+
+(defwidget cpu-usage []
+           (box
+            (cpu-usage-visual)))
+
+(defwidget cpu-usage-info []
+           (label
+            :class "revealed-text"
+            :text "${round(EWW_CPU.avg, 0)}%"))
+
+(defwidget cpu-usage-visual []
+           (eventbox
+            :onhover "${EWW_CMD} update cpu-info-rev=true"
+            :onhoverlost "${EWW_CMD} update cpu-info-rev=false"
+            (box
+             :halign "end"
+             :space-evenly false
+             (circular-progress
+              :value "${round(EWW_CPU.avg, 0)}"
+              :start-at 75
+              :width 27
+              :height 27
+              :thickness 4
+              (label
+               :style "margin: 0 0px 0 0;"
+               :text "﬙"))
+             (revealer
+              :transition "slideright"
+              :reveal cpu-info-rev
+              :duration "250ms"
+              (cpu-usage-info)))))
+
+(defwidget sys-time []
+           (label
+            :class "sys-time"
+            :text "${sys-time-val}"))
+
+;; Main Window
+(defwindow bar
+           :monitor 0
+           :geometry (geometry :x "0%"
+                               :y "0%"
+                               :width "100%"
+                               :height "40px"
+                               :anchor "top center")
+           :stacking "fg"
+           :reserve (struts :distance "40px" :side "top")
+           :windowtype "dock"
+           :wm-ignore false
+           (top-bar))
+
+(defwindow bar-2
+           :monitor 1
+           :geometry (geometry :x "0%"
+                               :y "0%"
+                               :width "100%"
+                               :height "40px"
+                               :anchor "top center")
+           :stacking "fg"
+           :reserve (struts :distance "40px" :side "top")
+           :windowtype "dock"
+           :wm-ignore false
+           (top-bar-2))

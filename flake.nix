@@ -19,12 +19,7 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      ...
-    }@inputs:
+    { self, nixpkgs, ... }@inputs:
     let
       inherit (self) outputs;
     in

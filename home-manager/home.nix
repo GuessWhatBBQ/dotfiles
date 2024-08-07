@@ -31,11 +31,12 @@
 
   programs.home-manager.enable = true;
   programs.nix-index.enable = true;
-  programs.mpv.enable = true;
   programs.bat.enable = true;
+  programs.btop.enable = true;
+  programs.yt-dlp.enable = true;
+  programs.aria2.enable = true;
   programs.wezterm.enable = true;
-
-  services.dunst.enable = true;
+  programs.ranger.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

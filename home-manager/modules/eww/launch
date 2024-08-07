@@ -1,0 +1,26 @@
+#!/bin/bash
+
+binfolder="$(dirname $0)/scripts"
+cache_location=$("$binfolder"/init_cache_dir)
+
+pidcache=$cache_location/processes
+
+if [[ -f $pidcache ]]; then
+    xargs kill < "$pidcache"
+    cat /dev/null > "$pidcache"
+fi
+
+"$binfolder"/get_sound &
+echo $! >> "$pidcache"
+"$binfolder"/get_workspaces &
+echo $! >> "$pidcache"
+"$binfolder"/dynamic_opacity &
+echo $! >> "$pidcache"
+
+ewwbar="eww --config $HOME/.config/eww/bar"
+
+$ewwbar kill
+
+$ewwbar daemon
+$ewwbar open bar
+$ewwbar open bar-2

@@ -78,7 +78,7 @@ format = '[$symbol ($version)]($style)'
 disabled = false
 
 [nodejs]
-symbol = ""
+symbol = " "
 style = "bg:053"
 format = '[$symbol ($version)]($style)'
 

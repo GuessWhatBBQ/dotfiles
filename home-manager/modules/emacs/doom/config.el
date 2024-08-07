@@ -22,7 +22,7 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 15))
-(setq doom-symbol-font (font-spec :family "Symbols Nerd Font" :size 15))
+(setq doom-symbol-font (font-spec :family "Symbols Nerd Font Mono" :size 15))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -156,3 +156,7 @@
 (setq lsp-csharp-server-path "/usr/bin/omnisharp")
 
 (setq-default +latex-viewers '(pdf-tools))
+
+(setq lsp-nix-nil-auto-eval-inputs nil)
+
+(setq lsp-modeline-code-action-fallback-icon "")
