@@ -1,5 +1,6 @@
 {
   imports = [
+    ./ags
     ./alacritty
     ./dunst
     ./emacs
@@ -10,6 +11,7 @@
     ./mpv
     ./spotify
     ./starship
+    ./theme
     ./zsh
   ];
 }

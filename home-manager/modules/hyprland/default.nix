@@ -11,7 +11,8 @@
     extraConfig = "# Dummy Settings";
   };
 
-  xdg.configFile."hypr" = {
-    source = ./hypr;
-  };
+  xdg.configFile."hypr/hyprland.conf".text = ''
+    ${builtins.readFile hypr/hyprland.conf}
+    exec-once = ${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1 &
+  '';
 }

@@ -11,39 +11,34 @@
   programs.bandwhich.enable = true;
 
   environment.systemPackages = with pkgs; [
-    discord
-    betterdiscordctl
-    maestral-gui
-    baobab
-    zoom-us
-
     audacity
+    baobab
+    betterdiscordctl
     darktable
+    discord
+    dunst
     foliate
     gimp-with-plugins
     libreoffice
     logseq
-    nomacs
-    qalculate-qt
-    qbittorrent
-
+    maestral-gui
     miniserve
     ncdu
+    networkmanagerapplet
+    nil
+    nixfmt-rfc-style
+    nomacs
+    nwg-look
     p7zip
     progress
-    pulsemixer
-
-    networkmanagerapplet
-    dunst
-
-    revanced-cli
-
-    python3
-    nixfmt-rfc-style
-    nil
-    sqlite
-
     protonvpn-gui
+    pulsemixer
+    python3
+    qalculate-qt
+    qbittorrent
+    revanced-cli
+    sqlite
+    zoom-us
   ];
   environment.shells = with pkgs; [ zsh ];
 }

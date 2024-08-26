@@ -10,6 +10,7 @@
     ./networking
     ./packages
     ./plasma
+    ./udev
     ./user
   ];
 }
