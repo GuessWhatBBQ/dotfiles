@@ -1,6 +1,8 @@
-{
+{ inputs, ... } : {
+  programs.ags.enable = true;
   imports = [
-    ./ags
+    # ./ags
+    inputs.ags.homeManagerModules.default
     ./alacritty
     ./dunst
     ./emacs

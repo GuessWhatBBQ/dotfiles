@@ -5,6 +5,9 @@
 
   networking.firewall = {
     enable = true;
+    allowedTCPPorts = [
+      51923 # miniserve
+    ];
     allowedTCPPortRanges = [
       {
         from = 1714;
