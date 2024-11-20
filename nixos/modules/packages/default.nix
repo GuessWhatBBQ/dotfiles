@@ -3,10 +3,6 @@
 
   programs.firefox.enable = true;
   programs.zsh.enable = true;
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-  };
   programs.hyprland.enable = true;
   programs.bandwhich.enable = true;
 
@@ -19,6 +15,7 @@
     dunst
     foliate
     gimp-with-plugins
+    kile
     libreoffice
     logseq
     maestral-gui
@@ -27,6 +24,8 @@
     networkmanagerapplet
     nil
     nixfmt-rfc-style
+    nodePackages.typescript-language-server
+    nodePackages.prettier
     nomacs
     nwg-look
     p7zip
@@ -38,6 +37,7 @@
     qbittorrent
     revanced-cli
     sqlite
+    typescript
     zoom-us
   ];
   environment.shells = with pkgs; [ zsh ];

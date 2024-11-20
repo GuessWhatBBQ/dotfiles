@@ -12,6 +12,7 @@
     in
     {
       enable = true;
+      spicetifyPackage = inputs.nixpkgs-unstable.legacyPackages."${pkgs.system}".spicetify-cli;
       enabledExtensions = with spicePkgs.extensions; [
         adblock
         beautifulLyrics

@@ -34,7 +34,7 @@
     overlays = [ ];
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = [ "electron-27.3.11" ];
+      permittedInsecurePackages = [ "electron-27.3.11" "qbittorrent-4.6.4" ];
     };
   };
 
