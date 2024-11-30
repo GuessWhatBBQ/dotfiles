@@ -15,7 +15,9 @@
     dunst
     foliate
     gimp-with-plugins
+    glances
     kile
+    libinput
     libreoffice
     logseq
     maestral-gui

@@ -2,12 +2,49 @@ import { App } from "astal/gtk3";
 import { Variable, GLib, bind } from "astal";
 import { Astal, Gtk, Gdk } from "astal/gtk3";
 import Hyprland from "gi://AstalHyprland";
-import Mpris from "gi://AstalMpris";
 import Battery from "gi://AstalBattery";
 import BT from "gi://AstalBluetooth";
 import Wp from "gi://AstalWp";
 import Network from "gi://AstalNetwork";
 import Tray from "gi://AstalTray";
+import {
+  glancesToJSON,
+  GlancesCpuStat,
+  GlancesMemoryStat,
+  bytesToHumanReadable,
+} from "../lib/glances";
+import { AnimatedIcon } from "./AnimatedIcon";
+
+const glancesCpuStat = glancesToJSON("percpu") as Variable<GlancesCpuStat>;
+const glancesMemoryStat = glancesToJSON("mem") as Variable<GlancesMemoryStat>;
+
+// Sourced from:
+// https://www.reddit.com/media?url=https%3A%2F%2Fi.redd.it%2Fqf46od2du2q11.gif
+// https://www.reddit.com/r/PixelArt/comments/9l7r4i/oc_bongo_cat_sped_up/
+// Should write nix module that fetches this automatically
+function BongoCat() {
+  const bongoCat = new AnimatedIcon({
+    gif: "/home/guesswhatbbq/Code/dotfiles/home-manager/modules/ags/ags/icons/bongocat-small.gif",
+  });
+
+  const a = Variable({}).watch(
+    `sudo libinput debug-events --device /dev/input/event17`,
+    () => {
+      bongoCat.loop = true;
+      setTimeout(() => (bongoCat.loop = false), 1000);
+    },
+  );
+
+  return (
+    <eventbox
+      onClick={() => {
+        bongoCat.toggle();
+      }}
+    >
+      {bongoCat}
+    </eventbox>
+  );
+}
 
 function SysTray() {
   const tray = Tray.get_default();
@@ -111,6 +148,8 @@ function SysStat() {
       css=" background: #4E2B4F; border-radius: 3px; padding: 0 5px; margin: 3px 2px; "
     >
       <BatteryLevel />
+      <CPU />
+      <Memory />
     </box>
   );
 }
@@ -123,6 +162,7 @@ function Audio() {
       <eventbox
         onClick={() => {
           speaker.set_mute(!speaker.get_mute());
+          console.log(glancesMemoryStat.get());
         }}
       >
         <icon
@@ -132,6 +172,47 @@ function Audio() {
           )}
         />
       </eventbox>
+    </box>
+  );
+}
+
+function CPU() {
+  return (
+    <box css="margin: 0 2px;">
+      <icon
+        icon="cpu-symbolic"
+        tooltipText={bind(glancesCpuStat).as(({ percpu }) =>
+          percpu
+            ? percpu
+                ?.map((cpu) => `CPU ${cpu.cpu_number}: ${cpu.total}`)
+                .join("\n")
+            : ``,
+        )}
+      />
+    </box>
+  );
+}
+
+function Memory() {
+  return (
+    <box css="margin: 0 1px;">
+      <icon
+        icon="randomaccessmemory-symbolic"
+        tooltipText={bind(glancesMemoryStat).as(({ mem }) =>
+          mem
+            ? Object.entries(
+                Object.keys(mem)
+                  .filter((key) => key !== "percent")
+                  .reduce((acc, key) => {
+                    acc[key] = bytesToHumanReadable(mem[key]);
+                    return acc;
+                  }, mem),
+              )
+                .map(([key, value]) => `${key}: ${value}`)
+                .join("\n")
+            : ``,
+        )}
+      />
     </box>
   );
 }
@@ -156,7 +237,7 @@ function Workspaces() {
     <box className="Workspaces">
       {bind(hypr, "workspaces").as((wss) =>
         wss
-          .sort((a, b) => a.id - b.id)
+          .sort((a: { id: number }, b: { id: number }) => a.id - b.id)
           .map((ws) => (
             <button
               className={bind(hypr, "focusedWorkspace").as((fw) =>
@@ -228,6 +309,7 @@ export default function Bar(monitor: Gdk.Monitor) {
           <Time />
         </box>
         <box hexpand halign={Gtk.Align.END} css="margin-right: 4px;">
+          <BongoCat />
           <SysTray />
           <SysStat />
           <Peripherals />

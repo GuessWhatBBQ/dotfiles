@@ -6,12 +6,8 @@ import Applauncher from "./widget/Applauncher";
 App.start({
   css: style,
   icons: `${SRC}/icons`,
-  requestHandler(request, res) {
-    print(request);
-    res("ok");
-  },
   main: () => {
     App.get_monitors().map(Bar);
-    Applauncher();
+    Applauncher().hide();
   },
 });
