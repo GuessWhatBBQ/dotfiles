@@ -1,5 +1,15 @@
-{ pkgs, config, ... }:
 {
+  pkgs,
+  config,
+  inputs,
+  ...
+}:
+{
+
+  imports = [
+    inputs.catppuccin.homeModules.catppuccin
+  ];
+
   home.pointerCursor = {
     package = pkgs.bibata-cursors;
     name = "Bibata-Modern-Classic";
@@ -19,6 +29,10 @@
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
     };
+    theme = {
+      name = "Materia-dark";
+      package = pkgs.materia-theme;
+    };
 
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
 
@@ -28,6 +42,20 @@
 
     gtk4.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
+    };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme.name = "kvantum";
+    style.name = "kvantum";
+  };
+
+  catppuccin = {
+    flavor = "mocha";
+    kvantum = {
+      enable = true;
+      apply = true;
     };
   };
 }

@@ -1,5 +1,5 @@
 import { App } from "astal/gtk3";
-import { Variable, GLib, bind } from "astal";
+import { Variable, GLib, bind, execAsync } from "astal";
 import { Astal, Gtk, Gdk } from "astal/gtk3";
 import Hyprland from "gi://AstalHyprland";
 import Battery from "gi://AstalBattery";
@@ -9,13 +9,13 @@ import Network from "gi://AstalNetwork";
 import Tray from "gi://AstalTray";
 import {
   glancesToJSON,
-  GlancesCpuStat,
+  GlancesPerCpuStat,
   GlancesMemoryStat,
   bytesToHumanReadable,
 } from "../lib/glances";
 import { AnimatedIcon } from "./AnimatedIcon";
 
-const glancesCpuStat = glancesToJSON("percpu") as Variable<GlancesCpuStat>;
+const glancesCpuStat = glancesToJSON("percpu") as Variable<GlancesPerCpuStat>;
 const glancesMemoryStat = glancesToJSON("mem") as Variable<GlancesMemoryStat>;
 
 // Sourced from:
@@ -48,32 +48,22 @@ function BongoCat() {
 
 function SysTray() {
   const tray = Tray.get_default();
-
   return (
     <box css=" background: #4E2B4F; border-radius: 10px 3px 3px 10px; padding: 0 5px; margin: 3px 2px; ">
       {bind(tray, "items").as((items) =>
-        items.map((item) => {
-          if (item.iconThemePath) App.add_icons(item.iconThemePath);
-
-          const menu = item.create_menu();
-
-          return (
-            <button
-              tooltipMarkup={bind(item, "tooltipMarkup")}
-              onDestroy={() => menu?.destroy()}
-              onClickRelease={(self) => {
-                menu?.popup_at_widget(
-                  self,
-                  Gdk.Gravity.SOUTH,
-                  Gdk.Gravity.NORTH,
-                  null,
-                );
-              }}
-            >
-              <icon gIcon={bind(item, "gicon")} />
-            </button>
-          );
-        }),
+        items.map((item) => (
+          <menubutton
+            tooltipMarkup={bind(item, "tooltipMarkup")}
+            usePopover={false}
+            actionGroup={bind(item, "action-group").as((ag) => [
+              "dbusmenu",
+              ag,
+            ])}
+            menuModel={bind(item, "menu-model")}
+          >
+            <icon gicon={bind(item, "gicon")} />
+          </menubutton>
+        )),
       )}
     </box>
   );
@@ -98,11 +88,11 @@ function Bluetooth() {
     [bind(bluetooth, "isPowered"), bind(bluetooth, "isConnected")],
     (isPowered, isConnected) => {
       if (isPowered && isConnected) {
-        return "bluetooth-connect";
+        return "bluetooth-paired";
       } else if (bluetooth.isPowered) {
-        return "bluetooth";
+        return "bluetooth-active";
       } else {
-        return "bluetooth-off";
+        return "bluetooth-disabled";
       }
     },
   );
@@ -118,7 +108,7 @@ function Bluetooth() {
     <box>
       {
         <icon
-          icon={bind(iconName).as((i) => `${i}-symbolic`)}
+          icon={bind(iconName).as((i) => `${i}`)}
           tooltipText={bind(devices).as(String)}
         />
       }
@@ -142,32 +132,48 @@ function Peripherals() {
 
 function SysStat() {
   return (
-    <box
-      hexpand
-      halign={Gtk.Align.END}
-      css=" background: #4E2B4F; border-radius: 3px; padding: 0 5px; margin: 3px 2px; "
-    >
-      <BatteryLevel />
-      <CPU />
-      <Memory />
-    </box>
+    <eventbox onClick={() => execAsync(["ags", "toggle", "systemcenter"])}>
+      <box
+        hexpand
+        halign={Gtk.Align.END}
+        css=" background: #4E2B4F; border-radius: 3px; padding: 0 5px; margin: 3px 2px; "
+      >
+        <BatteryLevel />
+        <CPU />
+        <Memory />
+      </box>
+    </eventbox>
   );
 }
 
 function Audio() {
   const speaker = Wp.get_default()?.audio.defaultSpeaker!;
+  const microphone = Wp.get_default()?.audio.defaultMicrophone!;
 
   return (
     <box>
       <eventbox
         onClick={() => {
           speaker.set_mute(!speaker.get_mute());
-          console.log(glancesMemoryStat.get());
+          console.log(speaker.volumeIcon);
         }}
       >
         <icon
           icon={bind(speaker, "volumeIcon")}
           tooltipText={bind(speaker, "volume").as(
+            (v) => `${Math.round(v * 100)}%`,
+          )}
+        />
+      </eventbox>
+      <eventbox
+        onClick={() => {
+          microphone.set_mute(!microphone.get_mute());
+          console.log(microphone.volumeIcon);
+        }}
+      >
+        <icon
+          icon={bind(microphone, "volumeIcon")}
+          tooltipText={bind(microphone, "volume").as(
             (v) => `${Math.round(v * 100)}%`,
           )}
         />
@@ -295,10 +301,14 @@ export default function Bar(monitor: Gdk.Monitor) {
 
   return (
     <window
+      name="bar"
+      namespace="ags-bar"
+      application={App}
       className="Bar"
       gdkmonitor={monitor}
       exclusivity={Astal.Exclusivity.EXCLUSIVE}
       anchor={anchor}
+      layer={Astal.Layer.BOTTOM}
     >
       <centerbox css="min-height: 25px;">
         <box hexpand halign={Gtk.Align.START} css="margin-left: 7px;">

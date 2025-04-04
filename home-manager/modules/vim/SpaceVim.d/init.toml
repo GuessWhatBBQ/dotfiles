@@ -6,6 +6,7 @@
     statusline_iseparator = "arrow"
     buffer_index_type = 4
     enable_tabline_filetype_icon = true
+    bootstrap_after = "myspacevim#after"
 
 [[layers]]
 name = 'autocomplete'

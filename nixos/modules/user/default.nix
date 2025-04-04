@@ -14,6 +14,9 @@
       extraGroups = [
         "networkmanager"
         "wheel"
+        # Recommended for adb
+        "adbusers"
+        "kvm"
       ];
     };
   };

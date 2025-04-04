@@ -2,6 +2,7 @@ import { App } from "astal/gtk3";
 import style from "./style.scss";
 import Bar from "./widget/Bar";
 import Applauncher from "./widget/Applauncher";
+import SystemCenter from "./widget/SystemCenter";
 
 App.start({
   css: style,
@@ -9,5 +10,7 @@ App.start({
   main: () => {
     App.get_monitors().map(Bar);
     Applauncher().hide();
+    SystemCenter().hide();
+    // App.get_monitors().map(SystemCenter);
   },
 });

@@ -54,9 +54,10 @@ export default function Applauncher() {
     return (
         <window
             name="launcher"
+            namespace="ags-launcher"
             anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM}
             exclusivity={Astal.Exclusivity.IGNORE}
-            keymode={Astal.Keymode.ON_DEMAND}
+            keymode={Astal.Keymode.EXCLUSIVE}
             application={App}
             onShow={() => text.set("")}
             onKeyPressEvent={function (self, event: Gdk.Event) {

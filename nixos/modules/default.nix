@@ -12,5 +12,6 @@
     ./plasma
     ./udev
     ./user
+    ./wireguard
   ];
 }

@@ -34,7 +34,11 @@
     overlays = [ ];
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = [ "electron-27.3.11" "qbittorrent-4.6.4" ];
+      android_sdk.accept_license = true;
+      permittedInsecurePackages = [
+        "electron-27.3.11"
+        "qbittorrent-4.6.4"
+      ];
     };
   };
 
@@ -60,5 +64,5 @@
     };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
 }
