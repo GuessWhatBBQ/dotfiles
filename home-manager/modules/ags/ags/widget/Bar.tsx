@@ -24,7 +24,7 @@ const glancesMemoryStat = glancesToJSON("mem") as Variable<GlancesMemoryStat>;
 // Should write nix module that fetches this automatically
 function BongoCat() {
   const bongoCat = new AnimatedIcon({
-    gif: "/home/guesswhatbbq/Code/dotfiles/home-manager/modules/ags/ags/icons/bongocat-small.gif",
+    gif: `${SRC}/gifs/bongocat-32.gif`,
   });
 
   const a = Variable({}).watch(
