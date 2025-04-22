@@ -1,5 +1,6 @@
 {
   inputs,
+  outputs,
   lib,
   config,
   ...
@@ -31,13 +32,13 @@
   # services.xserver.libinput.enable = true;
 
   nixpkgs = {
-    overlays = [ ];
+    overlays = [
+      outputs.overlays.unstable-packages
+    ];
     config = {
       allowUnfree = true;
-      android_sdk.accept_license = true;
       permittedInsecurePackages = [
         "electron-27.3.11"
-        "qbittorrent-4.6.4"
       ];
     };
   };
@@ -54,6 +55,13 @@
         flake-registry = "";
         # Workaround for https://github.com/NixOS/nix/issues/9574
         nix-path = config.nix.nixPath;
+
+        extra-substituters = [
+          "https://devenv.cachix.org?priority=999"
+        ];
+        extra-trusted-public-keys = [
+          "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+        ];
       };
       # Opinionated: disable channels
       channel.enable = false;

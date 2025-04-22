@@ -24,6 +24,6 @@
         showQueueDuration
       ];
       theme = spicePkgs.themes.sleek;
-      colorScheme = "cherry";
+      colorScheme = "Cherry";
     };
 }

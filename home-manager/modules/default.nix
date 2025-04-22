@@ -14,6 +14,8 @@
     ./starship
     ./theme
     ./vim
+    ./yazi
+    ./wezterm
     ./zsh
   ];
 }
