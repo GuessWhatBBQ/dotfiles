@@ -31,7 +31,7 @@ in
     package = pkgs.unstable.yazi;
 
     settings = {
-      manager = {
+      mgr = {
         show_hidden = true;
       };
       preview = {
@@ -62,7 +62,7 @@ in
       		'';
 
     keymap = {
-      manager.prepend_keymap = [ ];
+      mgr.prepend_keymap = [ ];
     };
   };
 }

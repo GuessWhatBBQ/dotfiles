@@ -1,9 +1,12 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
 
   programs.bandwhich.enable = true;
   programs.firefox.enable = true;
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
   programs.noisetorch.enable = true;
   programs.zsh.enable = true;
 
@@ -17,12 +20,14 @@
     baobab
     betterdiscordctl
     darktable
-    devenv
+    # devenv
     discord
     dunst
     foliate
     gimp-with-plugins
     glances
+    gns3-gui
+    grimblast
     kile
     libinput
     libreoffice
@@ -31,8 +36,6 @@
     miniserve
     ncdu
     networkmanagerapplet
-    nil
-    nixfmt-rfc-style
     nomacs
     nwg-look
     p7zip
@@ -40,9 +43,11 @@
     pulsemixer
     qalculate-qt
     qbittorrent
+    inputs.quickshell.packages.${system}.default
     revanced-cli
-    sqlite
+    satty
     swww
+    # texliveFull
+    wl-clipboard-rs
   ];
-  environment.shells = with pkgs; [ zsh ];
 }

@@ -8,18 +8,16 @@
 
       config.scrollback_lines = 100000
 
-      config.font = wezterm.font {
-          family = 'MesloLGS Nerd Font Mono'
+      config.font = wezterm.font_with_fallback {
+        'FiraMono Nerd Font Mono',
       }
-      config.font_size = 13.0
+      config.font_size = 14
+      config.line_height = 1
+
       config.freetype_load_flags = 'FORCE_AUTOHINT'
       config.freetype_load_target = 'Light'
       config.allow_square_glyphs_to_overflow_width = 'Never'
-      config.adjust_window_size_when_changing_font_size = false
-
-      config.line_height = 1.0
-      config.cell_width = 1.0
-
+      config.warn_about_missing_glyphs = false
 
       config.default_cursor_style = "BlinkingBar"
       config.cursor_blink_ease_in = "Ease"

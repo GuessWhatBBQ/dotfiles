@@ -50,7 +50,7 @@ let
   };
 
   agsConfigFile = pkgs.stdenv.mkDerivation {
-    name = "icons";
+    name = "ags-config";
 
     src = ./ags;
 
@@ -61,15 +61,15 @@ let
     '';
 
     installPhase = ''
-      mkdir --parents $out/icons $out/gifs
+      mkdir --parents $out/icons/hicolor/scalable/apps $out/gifs
       cp -r * $out/
-      cp ${circle} $out/icons/circle-symbolic.svg
-      cp ${circleOutline} $out/icons/circle-outline-symbolic.svg
-      cp ${logout} $out/icons/logout-symbolic.svg
-      cp ${networkspeed} $out/icons/networkspeed-symbolic.svg
-      cp ${randomaccessmemory} $out/icons/randomaccessmemory-symbolic.svg
-      cp ${restart} $out/icons/restart-symbolic.svg
-      cp ${shutdown} $out/icons/shutdown-symbolic.svg
+      cp ${circle} $out/icons/hicolor/scalable/apps/circle-symbolic.svg
+      cp ${circleOutline} $out/icons/hicolor/scalable/apps/circle-outline-symbolic.svg
+      cp ${logout} $out/icons/hicolor/scalable/apps/logout-symbolic.svg
+      cp ${networkspeed} $out/icons/hicolor/scalable/apps/networkspeed-symbolic.svg
+      cp ${randomaccessmemory} $out/icons/hicolor/scalable/apps/randomaccessmemory-symbolic.svg
+      cp ${restart} $out/icons/hicolor/scalable/apps/restart-symbolic.svg
+      cp ${shutdown} $out/icons/hicolor/scalable/apps/shutdown-symbolic.svg
       cp bongocat-32.gif $out/gifs
     '';
   };
@@ -81,8 +81,11 @@ in
   programs.ags = {
     enable = true;
 
+    # symlink to ~/.config/ags
+    configDir = null;
+
     # additional packages to add to gjs's runtime
-    extraPackages = [
+    extraPackages = with pkgs; [
       inputs.ags.packages.${pkgs.system}.apps
       inputs.ags.packages.${pkgs.system}.battery
       inputs.ags.packages.${pkgs.system}.bluetooth
@@ -92,6 +95,7 @@ in
       inputs.ags.packages.${pkgs.system}.notifd
       inputs.ags.packages.${pkgs.system}.tray
       inputs.ags.packages.${pkgs.system}.wireplumber
+      libadwaita
     ];
   };
 

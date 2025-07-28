@@ -5,13 +5,16 @@
     ./bootloader
     ./filesystem
     ./font
+    ./gns
     ./home-manager
     ./locale
     ./networking
     ./packages
     ./plasma
+    ./shell
     ./udev
     ./user
     ./wireguard
+    ./virtualization
   ];
 }

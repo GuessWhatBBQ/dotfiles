@@ -1,5 +1,6 @@
 @use "sass:string";
 @use "./widget/Notification.scss";
+@use "./widget/Applauncher.scss";
 
 $bg: #2b1931;
 $fg: #f1f1f1;
@@ -43,7 +44,7 @@ window.Bar {
     padding-bottom: 2px;
   }
 
-  .Workspaces button icon {
+  .Workspaces button image {
     color: $purple;
   }
 
@@ -92,7 +93,7 @@ window#launcher {
       outline-width: 3px;
       transition: none; // setting border radius to zero when focused causes a small transition to occur which i dislike.
 
-      icon {
+      image {
         font-size: 3em;
         margin-right: 0.3rem;
       }
@@ -114,7 +115,7 @@ window#launcher {
     box.not-found {
       padding: 1rem;
 
-      icon {
+      image {
         font-size: 6em;
         color: gtkalpha($fg-color, 0.7);
       }

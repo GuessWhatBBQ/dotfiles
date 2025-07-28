@@ -1,99 +1,108 @@
-import Apps from "gi://AstalApps";
-import { App, Astal, Gdk, Gtk } from "astal/gtk3";
-import { Variable } from "astal";
+import { For, createState } from "ags";
+import { Astal, Gtk, Gdk } from "ags/gtk4";
+import AstalApps from "gi://AstalApps";
+import Graphene from "gi://Graphene";
 
-const MAX_ITEMS = 8;
-
-function hide() {
-    App.get_window("launcher")!.hide();
-}
-
-function AppButton({ app }: { app: Apps.Application }) {
-    return (
-        <button
-            className="AppButton"
-            onClicked={() => {
-                hide();
-                app.launch();
-            }}
-        >
-            <box>
-                <icon icon={app.iconName} />
-                <box valign={Gtk.Align.CENTER} vertical>
-                    <label
-                        className="name"
-                        truncate
-                        xalign={0}
-                        label={app.name}
-                    />
-                    {app.description && (
-                        <label
-                            className="description"
-                            wrap
-                            xalign={0}
-                            label={app.description}
-                        />
-                    )}
-                </box>
-            </box>
-        </button>
-    );
-}
+const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor;
 
 export default function Applauncher() {
-    const { CENTER } = Gtk.Align;
-    const apps = new Apps.Apps();
+  let contentbox: Gtk.Box;
+  let searchentry: Gtk.Entry;
+  let win: Astal.Window;
 
-    const text = Variable("");
-    const list = text((text) => apps.fuzzy_query(text).slice(0, MAX_ITEMS));
-    const onEnter = () => {
-        apps.fuzzy_query(text.get())?.[0].launch();
-        hide();
-    };
+  const apps = new AstalApps.Apps();
+  const [list, setList] = createState(new Array<AstalApps.Application>());
 
-    return (
-        <window
-            name="launcher"
-            namespace="ags-launcher"
-            anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM}
-            exclusivity={Astal.Exclusivity.IGNORE}
-            keymode={Astal.Keymode.EXCLUSIVE}
-            application={App}
-            onShow={() => text.set("")}
-            onKeyPressEvent={function (self, event: Gdk.Event) {
-                if (event.get_keyval()[1] === Gdk.KEY_Escape) self.hide();
-            }}
-        >
-            <box>
-                <eventbox widthRequest={4000} expand onClick={hide} />
-                <box hexpand={false} vertical>
-                    <eventbox heightRequest={100} onClick={hide} />
-                    <box widthRequest={500} className="Applauncher" vertical>
-                        <entry
-                            placeholderText="Search"
-                            text={text()}
-                            onChanged={(self) => text.set(self.text)}
-                            onActivate={onEnter}
-                        />
-                        <box spacing={6} vertical>
-                            {list.as((list) =>
-                                list.map((app) => <AppButton app={app} />),
-                            )}
-                        </box>
-                        <box
-                            halign={CENTER}
-                            className="not-found"
-                            vertical
-                            visible={list.as((l) => l.length === 0)}
-                        >
-                            <icon icon="system-search-symbolic" />
-                            <label label="No match found" />
-                        </box>
-                    </box>
-                    <eventbox expand onClick={hide} />
+  function search(text: string) {
+    if (text === "") setList([]);
+    else setList(apps.fuzzy_query(text).slice(0, 8));
+  }
+
+  function launch(app?: AstalApps.Application) {
+    if (app) {
+      win.hide();
+      app.launch();
+    }
+  }
+
+  // close on ESC
+  // handle alt + number key
+  function onKey(
+    _e: Gtk.EventControllerKey,
+    keyval: number,
+    _: number,
+    mod: number,
+  ) {
+    if (keyval === Gdk.KEY_Escape) {
+      win.visible = false;
+      return;
+    }
+
+    if (mod === Gdk.ModifierType.ALT_MASK) {
+      for (const i of [1, 2, 3, 4, 5, 6, 7, 8, 9] as const) {
+        if (keyval === Gdk[`KEY_${i}`]) {
+          return launch(list.get()[i - 1]);
+        }
+      }
+    }
+  }
+
+  // close on clickaway
+  function onClick(_e: Gtk.GestureClick, _: number, x: number, y: number) {
+    const [, rect] = contentbox.compute_bounds(win);
+    const position = new Graphene.Point({ x, y });
+
+    if (!rect.contains_point(position)) {
+      win.visible = false;
+      return true;
+    }
+  }
+
+  return (
+    <window
+      $={(ref) => (win = ref)}
+      name="launcher"
+      anchor={TOP | BOTTOM | LEFT | RIGHT}
+      exclusivity={Astal.Exclusivity.IGNORE}
+      keymode={Astal.Keymode.EXCLUSIVE}
+      onNotifyVisible={({ visible }) => {
+        if (visible) searchentry.grab_focus();
+        else searchentry.set_text("");
+      }}
+    >
+      <Gtk.EventControllerKey onKeyPressed={onKey} />
+      <Gtk.GestureClick onPressed={onClick} />
+      <box
+        $={(ref) => (contentbox = ref)}
+        name="launcher-content"
+        valign={Gtk.Align.CENTER}
+        halign={Gtk.Align.CENTER}
+        orientation={Gtk.Orientation.VERTICAL}
+      >
+        <entry
+          $={(ref) => (searchentry = ref)}
+          onNotifyText={({ text }) => search(text)}
+          placeholderText="Start typing to search"
+        />
+        <Gtk.Separator visible={list((l) => l.length > 0)} />
+        <box orientation={Gtk.Orientation.VERTICAL}>
+          <For each={list}>
+            {(app, index) => (
+              <button onClicked={() => launch(app)}>
+                <box>
+                  <image iconName={app.iconName} />
+                  <label label={app.name} maxWidthChars={40} wrap />
+                  <label
+                    hexpand
+                    halign={Gtk.Align.END}
+                    label={index((i) => `󰘳${i + 1}`)}
+                  />
                 </box>
-                <eventbox widthRequest={4000} expand onClick={hide} />
-            </box>
-        </window>
-    );
+              </button>
+            )}
+          </For>
+        </box>
+      </box>
+    </window>
+  );
 }

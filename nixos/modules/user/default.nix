@@ -14,9 +14,13 @@
       extraGroups = [
         "networkmanager"
         "wheel"
-        # Recommended for adb
-        "adbusers"
-        "kvm"
+
+        "libvirtd"
+        "docker"
+
+        # GNS3
+        "ubridge"
+        "gns3"
       ];
     };
   };

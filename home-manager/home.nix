@@ -10,7 +10,7 @@
 
   imports = [
     ./modules/default.nix
-    inputs.nix-index-database.hmModules.nix-index
+    inputs.nix-index-database.homeModules.nix-index
   ];
 
   nixpkgs = {
@@ -28,6 +28,13 @@
     homeDirectory = "/home/guesswhatbbq";
   };
 
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = [ "qemu:///system" ];
+      uris = [ "qemu:///system" ];
+    };
+  };
+
   # Add stuff for your user as you see fit:
   # home.packages = with pkgs; [ steam ];
 
@@ -43,5 +50,5 @@
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
 }

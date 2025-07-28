@@ -30,7 +30,7 @@
       extended = true;
       ignoreAllDups = true;
     };
-    initExtra = ''
+    initContent = ''
       bindkey -e
       bindkey '^P' up-history
       bindkey '^N' down-history
