@@ -40,6 +40,8 @@
 
   programs.home-manager.enable = true;
   programs.nix-index.enable = true;
+  programs.nix-index-database.comma.enable = true;
+  programs.nh.enable = true;
   programs.bat.enable = true;
   programs.btop.enable = true;
   programs.yt-dlp.enable = true;
@@ -50,5 +52,5 @@
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "25.05";
+  home.stateVersion = "25.11";
 }

@@ -31,6 +31,8 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  services.ringboard.wayland.enable = true;
+
   nixpkgs = {
     overlays = [
       outputs.overlays.unstable-packages
@@ -56,12 +58,12 @@
         # Workaround for https://github.com/NixOS/nix/issues/9574
         nix-path = config.nix.nixPath;
 
-        extra-substituters = [
-          "https://devenv.cachix.org?priority=999"
-        ];
-        extra-trusted-public-keys = [
-          "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-        ];
+        # extra-substituters = [
+        #   "https://devenv.cachix.org?priority=999"
+        # ];
+        # extra-trusted-public-keys = [
+        #   "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+        # ];
       };
       # Opinionated: disable channels
       channel.enable = false;
@@ -72,5 +74,5 @@
     };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }

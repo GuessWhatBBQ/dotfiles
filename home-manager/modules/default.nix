@@ -8,6 +8,7 @@
     ./eza
     ./git
     ./hyprland
+    ./kanshi
     ./kdeconnect
     ./mpv
     ./spotify

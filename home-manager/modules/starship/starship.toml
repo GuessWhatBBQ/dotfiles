@@ -4,7 +4,7 @@ format = """
 $fill\
 ([ $cmd_duration ]())\
 $status\
-([](fg:053)[ $c$haskell$java$nodejs$python$rust ](bg:053))\
+([](fg:053)[ $c$golang$haskell$java$nix_shell$nodejs$python$rust$terraform](bg:053))\
 $username
 $character
 """
@@ -40,9 +40,9 @@ home_symbol = ""
 "Code" = ""
 
 [c]
-symbol = ""
+symbol = "󰙱"
 style = "bg:053"
-format = '[$symbol ($version)]($style)'
+format = '[$symbol ($version)]($style) '
 
 [cmd_duration]
 format = "[$duration](bold yellow)"
@@ -64,33 +64,49 @@ format = '[$all_status$ahead_behind]($style)'
 style = "bg:018"
 format = "[$hash$tag]($style)"
 
-[haskell]
-symbol = ""
+[golang]
+symbol = "󰟓"
 style = "bg:053"
-format = '[$symbol ($version)]($style)'
+format = "[$symbol ($version)($mod_version)]($style) "
+
+[haskell]
+symbol = "󰲒"
+style = "bg:053"
+format = '[$symbol ($version)]($style) '
 
 [java]
-symbol = ""
+symbol = "󰬷"
 style = "bg:053"
-format = '[$symbol ($version)]($style)'
+format = '[$symbol ($version)]($style) '
 
 [line_break]
 disabled = false
 
-[nodejs]
-symbol = " "
+[nix_shell]
+symbol = "󱄅"
 style = "bg:053"
-format = '[$symbol ($version)]($style)'
+unknown_msg = '[unknown]($style)'
+format = '[$symbol $state( \($name\))]($style) '
+
+[nodejs]
+symbol = "󰎙"
+style = "bg:053"
+format = '[$symbol ($version)]($style) '
 
 [python]
-symbol = ""
+symbol = "󰌠"
 style = "bg:053"
-format = '[$symbol ($version)]($style)'
+format = '[$symbol ($version)]($style) '
 
 [rust]
-symbol = ""
+symbol = "󱘗"
 style = "bg:053"
-format = '[$symbol ($version)]($style)'
+format = '[$symbol ($version)]($style) '
 
 [status]
 disabled = false
+
+[terraform]
+symbol = "󱁢"
+style = "bg:053"
+format = '[$symbol$workspace ($version)]($style) '

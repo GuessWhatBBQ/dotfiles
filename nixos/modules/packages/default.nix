@@ -26,12 +26,13 @@
     foliate
     gimp-with-plugins
     glances
-    gns3-gui
+    # gns3-gui
     grimblast
     kile
     libinput
     libreoffice
     logseq
+    # lunarvim
     maestral-gui
     miniserve
     ncdu
@@ -43,7 +44,7 @@
     pulsemixer
     qalculate-qt
     qbittorrent
-    inputs.quickshell.packages.${system}.default
+    inputs.quickshell.packages.${stdenv.hostPlatform.system}.default
     revanced-cli
     satty
     swww

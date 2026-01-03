@@ -14,6 +14,10 @@ in
     xwayland.enable = true;
     systemd.enable = true;
 
+    # set the Hyprland and XDPH packages to null to use the ones from the NixOS module
+    package = null;
+    portalPackage = null;
+
     plugins = [
       (pkgs.callPackage ./plugin.nix { })
     ];
