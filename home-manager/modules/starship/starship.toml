@@ -109,4 +109,4 @@ disabled = false
 [terraform]
 symbol = "󱁢"
 style = "bg:053"
-format = '[$symbol$workspace ($version)]($style) '
+format = '[$symbol $workspace ($version)]($style) '

@@ -10,6 +10,8 @@
 
       config.font = wezterm.font_with_fallback {
         'FiraMono Nerd Font Mono',
+        'DejaVu Sans Mono',
+        'Symbols Nerd Font',
       }
       config.font_size = 14
       config.line_height = 1
