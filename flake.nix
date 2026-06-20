@@ -3,13 +3,13 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Home manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -28,7 +28,7 @@
     };
 
     catppuccin = {
-      url = "github:catppuccin/nix";
+      url = "github:catppuccin/nix/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -42,6 +42,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    caelestia-shell = {
+      url = "github:caelestia-dots/shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

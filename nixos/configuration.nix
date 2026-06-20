@@ -15,6 +15,8 @@
 
   boot.supportedFilesystems = [ "ntfs" ];
 
+  hardware.enableRedistributableFirmware = true;
+
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
@@ -36,12 +38,11 @@
   nixpkgs = {
     overlays = [
       outputs.overlays.unstable-packages
+      outputs.overlays.modified-packages
     ];
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = [
-        "electron-27.3.11"
-      ];
+      permittedInsecurePackages = [ "electron-39.8.10" ];
     };
   };
 
@@ -51,6 +52,8 @@
     in
     {
       settings = {
+        # Enable optimization by hardlinking duplicate files in the Nix store
+        auto-optimise-store = true;
         # Enable flakes and new 'nix' command
         experimental-features = "nix-command flakes";
         # Opinionated: disable global registry
@@ -74,5 +77,5 @@
     };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 }

@@ -68,7 +68,7 @@
        word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       (dired +ranger +icons)             ; making dired pretty [functional]
+       (dired +icons)             ; making dired pretty [functional]
        electric          ; smarter, keyword-based electric-indent
        ;;eww               ; the internet is gross
        ;;ibuffer           ; interactive buffer management
@@ -105,7 +105,7 @@
        ;;prodigy           ; FIXME managing external services & code builders
        (terraform +lsp)         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
-       ;;tree-sitter       ; syntax and parsing, sitting in a tree...
+       tree-sitter       ; syntax and parsing, sitting in a tree...
        ;;upload            ; map local to remote projects via ssh/ftp
 
        :os
@@ -142,7 +142,7 @@
        ;;idris             ; a language you can depend on
        (json +lsp)              ; At least it ain't XML
        ;;(java +lsp)       ; the poster child for carpal tunnel syndrome
-       (javascript +lsp)   ; all(hope(abandon(ye(who(enter(here))))))
+       (javascript +lsp +tree-sitter)   ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        (latex +cdlatex +latexmk +fold +lsp)             ; writing papers in Emacs has never been so fun
@@ -158,7 +158,7 @@
        ;;plantuml          ; diagrams for confusing people more
        ;;graphviz          ; diagrams for confusing yourself even more
        ;;purescript        ; javascript, but functional
-       (python +lsp +pyenv +pyright)            ; beautiful is better than ugly
+       (python +lsp +pyenv +pyright +tree-sitter +uv)            ; beautiful is better than ugly
        qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6

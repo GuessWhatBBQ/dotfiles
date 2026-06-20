@@ -16,6 +16,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    antigravity-fhs
     audacity
     baobab
     betterdiscordctl
@@ -47,7 +48,7 @@
     inputs.quickshell.packages.${stdenv.hostPlatform.system}.default
     revanced-cli
     satty
-    swww
+    awww
     # texliveFull
     wl-clipboard-rs
   ];

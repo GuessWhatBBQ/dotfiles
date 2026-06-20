@@ -43,7 +43,7 @@ export default function SystemCenter(monitor: Gdk.Monitor) {
 
   const logoutClickHandler = createGestureClick({
     pressed: () => {
-      execAsync(["hyprctl", "dispatch", "exit"])
+      execAsync(["hyprctl", "dispatch", "hl.dsp.exit()"])
         .then((out) => console.log(out))
         .catch((err) => console.error(err));
     },

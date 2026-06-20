@@ -19,7 +19,6 @@
         fullAppDisplay
         history
         keyboardShortcut
-        lastfm
         songStats
         showQueueDuration
       ];

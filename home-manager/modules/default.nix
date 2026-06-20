@@ -3,6 +3,7 @@
   imports = [
     ./ags
     ./alacritty
+    ./caelestia
     ./dunst
     ./emacs
     ./eza

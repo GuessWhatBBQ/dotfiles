@@ -12,13 +12,13 @@ hyprlandPlugins.mkHyprlandPlugin (finalAttrs: {
   # This could also potentially be done like this
   # https://discourse.nixos.org/t/help-adding-plugins-for-hyprland/44945/14
   pluginName = "hyprhook";
-  version = "master-ee26626";
+  version = "master-06e206b";
 
   src = fetchFromGitHub {
     owner = "Hyprhook";
     repo = "Hyprhook";
-    rev = "ee26626f5e1be75f2a0855804954c4505fcb3e58";
-    hash = "sha256-2RqK7R4Cm6mnjnOtUs86W9hL5Sm+/mOqfX7Jd+RspNw=";
+    rev = "06e206b0e426427d47c02466eb63a613ff4b4c64";
+    hash = "sha256-EIIay9upB4Ntk80A0pfCau8DfKixeWqptnWAVQtMGwg=";
   };
 
   sourceRoot = "${finalAttrs.src.name}/hyprhook";

@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  virtualisation.vmware.host.enable = true;
+  # virtualisation.vmware.host.enable = true;
   virtualisation.vmware.host.package = pkgs.unstable.vmware-workstation;
   boot.kernelParams = [ "transparent_hugepage=never" ];
   programs.virt-manager.enable = true;

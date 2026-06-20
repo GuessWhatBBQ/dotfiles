@@ -259,7 +259,7 @@ function Workspaces() {
               hypr,
               "focusedWorkspace",
             )((fw) => (ws === fw ? "focused" : ""))}
-            onClicked={() => ws.focus()}
+            onClicked={() => execAsync(["hyprctl", "dispatch", `'hl.dsp.focus({ workspace = ${ws.id} })'`]).catch(console.error)}
             css="margin: 3px;"
           >
             <image
