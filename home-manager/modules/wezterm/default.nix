@@ -11,6 +11,7 @@
       config.font = wezterm.font_with_fallback {
         'FiraMono Nerd Font Mono',
         'DejaVu Sans Mono',
+        'Noto Sans Bengali',
         'Symbols Nerd Font',
       }
       config.font_size = 14

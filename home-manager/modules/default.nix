@@ -4,6 +4,7 @@
     ./ags
     ./alacritty
     ./caelestia
+    ./direnv
     ./dunst
     ./emacs
     ./eza

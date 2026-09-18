@@ -5,7 +5,7 @@
 }:
 {
   imports = [
-    inputs.nix4nvchad.homeManagerModule
+    inputs.nix4nvchad.homeManagerModules.default
   ];
 
   programs.nvchad = {
@@ -20,7 +20,7 @@
   #   defaultEditor = true;
   # };
 
-  home.file.".SpaceVim.d" = {
-    source = ./SpaceVim.d;
-  };
+  # home.file.".SpaceVim.d" = {
+  #   source = ./SpaceVim.d;
+  # };
 }

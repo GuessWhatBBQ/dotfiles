@@ -2,6 +2,7 @@
 let
 
   # Absolutely brilliant artwork by aconfuseddragon (https://aconfuseddragon.neocities.org)
+  # Their X account is @aconfuseddragon, check them out!
   autumnfeels = builtins.fetchurl {
     url = "https://aconfuseddragon.neocities.org/art/autumn-feels.gif";
     sha256 = "sha256:0hs927hizwh79gs6cwpjzfx9zcykj4sdahfv0bhir99gr8c6n2qv";

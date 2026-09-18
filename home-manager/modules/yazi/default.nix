@@ -6,21 +6,20 @@ let
   yazi-plugins = pkgs.fetchFromGitHub {
     owner = "yazi-rs";
     repo = "plugins";
-    rev = "b12a9ab085a8c2fe2b921e1547ee667b714185f9";
-    sha256 = "sha256-LWN0riaUazQl3llTNNUMktG+7GLAHaG/IxNj1gFhDRE=";
-
+    rev = "58c4f4e2f4835cc9bf6751f39e3f7c574fc7f55a";
+    sha256 = "06fz9i8fiyqc1sq86mh6zy66xqmbf3dij11s31br4byflpwgs1wk";
   };
   starship-plugin = pkgs.fetchFromGitHub {
     owner = "Rolv-Apneseth";
     repo = "starship.yazi";
-    rev = "c0707544f1d526f704dab2da15f379ec90d613c2";
-    sha256 = "sha256-H8j+9jcdcpPFXVO/XQZL3zq1l5f/WiOm4YUxAMduSRs=";
+    rev = "ea92cf49380466f07231c952b409831e6afd2156";
+    sha256 = "095nqmxbx68f23ip2i574qiq2aw2jnb99dn2pdlylf0snvziryi6";
   };
   tokyo-night-flavor = pkgs.fetchFromGitHub {
     owner = "BennyOe";
     repo = "tokyo-night.yazi";
-    rev = "695dac6bcc605ba4b0bf1b1f56169eaa7cc4bb40";
-    sha256 = "sha256-+wZzxLPCttJ2WoDdI89sQ+CcZSFIA44HshxMoh4rJIs=";
+    rev = "8e6296f14daff24151c736ebd0b9b6cd89b02b03";
+    sha256 = "039wyx3q1ws0hr9frc3lby967gl1fxyxd58b0q8y9v43sx3f22ic";
   };
 in
 {
@@ -37,6 +36,29 @@ in
       preview = {
         max_width = 1000;
         max_height = 1000;
+      };
+
+      opener = {
+        okular = [
+          {
+            run = "okular $s";
+            orphan = true;
+            desc = "Open with Okular";
+          }
+        ];
+      };
+
+      open = {
+        prepend_rules = [
+          {
+            mime = "application/pdf";
+            use = "okular";
+          }
+          {
+            url = "*.pdf";
+            use = "okular";
+          }
+        ];
       };
     };
 
@@ -58,8 +80,8 @@ in
     };
 
     initLua = ''
-      			require("starship"):setup()
-      		'';
+      require("starship"):setup()
+    '';
 
     keymap = {
       mgr.prepend_keymap = [ ];

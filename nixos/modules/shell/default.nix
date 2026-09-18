@@ -7,5 +7,10 @@
     # https://libvirt.org/uri.html#qemu-qemu-and-kvm-uris
     # https://www.libvirt.org/manpages/virsh.html#environment
     LIBVIRT_DEFAULT_URI = "qemu:///system";
+
+    # Required since nix4nvchad home-manager module does not provide the
+    # default editor config
+    EDITOR = "nvim";
+    VISUAL = "nvim";
   };
 }

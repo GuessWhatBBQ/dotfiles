@@ -31,25 +31,63 @@
       ignoreAllDups = true;
     };
     initContent = ''
-      bindkey -e
-      bindkey '^P' up-history
-      bindkey '^N' down-history
+        bindkey -e
+        bindkey '^P' up-history
+        bindkey '^N' down-history
 
-      e () {
-        (
-          unsetopt multios
-          $@ &>! /dev/null &!
-        )
+        e () {
+          (
+            unsetopt multios
+            $@ &>! /dev/null &!
+          )
+        }
+
+        rscp () {
+          cpv --no-progress --info=progress2 "$@"
+        }
+
+        rsmv () {
+          rscp --remove-source-files "$@"
+        }
+
+      mkdev() {
+        emulate -L zsh
+        local devroot="$HOME/.local/share/dev"
+
+        if [[ $# -eq 0 ]]; then
+          echo "usage: mkdev <env> [env2 ...]" >&2
+          echo "available: $(ls "$devroot" 2>/dev/null)" >&2
+          return 1
+        fi
+
+        local env
+        for env in "$@"; do
+          if [[ ! -d "$devroot/$env" ]]; then
+            echo "mkdev: no devshell named '$env' in $devroot" >&2
+            return 1
+          fi
+        done
+
+        if [[ -e .envrc ]]; then
+          echo "mkdev: .envrc already exists in $(pwd)" >&2
+          return 1
+        fi
+
+        { for env in "$@"; do
+            echo "use dev $env"
+          done
+        } > .envrc
+
+        direnv allow .
+        echo "mkdev: wrote .envrc for [$*] and allowed it"
       }
 
-      rscp () {
-        cpv --no-progress --info=progress2 "$@"
+      _mkdev() {
+        local -a envs
+        envs=(''${(f)"$(ls "$HOME/.local/share/dev" 2>/dev/null)"})
+        _describe 'devshell' envs
       }
-
-      rsmv () {
-        rscp --remove-source-files "$@"
-      }
-
+      compdef _mkdev mkdev
     '';
     oh-my-zsh = {
       enable = true;

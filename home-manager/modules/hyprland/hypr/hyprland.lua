@@ -25,7 +25,7 @@ hl.monitor({
     position = "auto",
     scale = "1",
     cm = "hdr",
-    sdrbrightness = 1.10,
+    sdrbrightness = 1.40,
     sdrsaturation = 1.00,
 })
 

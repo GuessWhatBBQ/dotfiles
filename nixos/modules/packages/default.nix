@@ -10,14 +10,10 @@
   programs.noisetorch.enable = true;
   programs.zsh.enable = true;
 
-  programs.direnv = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
   environment.systemPackages = with pkgs; [
-    antigravity-fhs
+    # antigravity-fhs
     audacity
+    awww
     baobab
     betterdiscordctl
     darktable
@@ -27,6 +23,7 @@
     foliate
     gimp-with-plugins
     glances
+    google-chrome
     # gns3-gui
     grimblast
     kile
@@ -48,7 +45,6 @@
     inputs.quickshell.packages.${stdenv.hostPlatform.system}.default
     revanced-cli
     satty
-    awww
     # texliveFull
     wl-clipboard-rs
   ];

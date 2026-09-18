@@ -27,5 +27,31 @@
     #       libsoup_3
     #     ]);
     # });
+
+    logseq =
+      let
+        pname = "logseq";
+        version = "0.10.15";
+        src = prev.fetchurl {
+          url = "https://github.com/logseq/logseq/releases/download/${version}/Logseq-linux-x64-${version}.AppImage";
+          hash = "sha256-i5EQUvSW1ix+8NT8nCs6mGH2B9xF7G4mB7vBhDJ7JdE=";
+        };
+        appimageContents = prev.appimageTools.extractType2 {
+          inherit pname version src;
+        };
+      in
+      prev.appimageTools.wrapType2 {
+        inherit pname version src;
+
+        extraInstallCommands = ''
+          install -m 444 -D ${appimageContents}/Logseq.desktop $out/share/applications/logseq.desktop
+
+          # 1. Inject Wayland flags
+          # 2. Hardcode the absolute Nix store path directly to the Papirus icon!
+          substituteInPlace $out/share/applications/logseq.desktop \
+            --replace-quiet 'Exec=Logseq %u' 'Exec=logseq --enable-features=UseOzonePlatform --ozone-platform=wayland %u' \
+            --replace-quiet 'Icon=Logseq' 'Icon=${prev.papirus-icon-theme}/share/icons/Papirus/64x64/apps/logseq.svg'
+        '';
+      };
   };
 }

@@ -5,7 +5,7 @@
   services.pipewire = {
     enable = true;
     alsa.enable = true;
-    alsa.support32Bit = true;
+    alsa.support32Bit = false;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
