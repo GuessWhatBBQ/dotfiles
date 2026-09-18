@@ -31,60 +31,50 @@
       ignoreAllDups = true;
     };
     initContent = ''
-        bindkey -e
-        bindkey '^P' up-history
-        bindkey '^N' down-history
+      bindkey -e
+      bindkey '^P' up-history
+      bindkey '^N' down-history
 
-        e () {
+      e () {
           (
-            unsetopt multios
-            $@ &>! /dev/null &!
+          unsetopt multios
+          $@ &>! /dev/null &!
           )
-        }
+      }
 
-        rscp () {
+      rscp () {
           cpv --no-progress --info=progress2 "$@"
-        }
+      }
 
-        rsmv () {
+      rsmv () {
           rscp --remove-source-files "$@"
-        }
+      }
 
       mkdev() {
         emulate -L zsh
         local devroot="$HOME/.local/share/dev"
 
-        if [[ $# -eq 0 ]]; then
-          echo "usage: mkdev <env> [env2 ...]" >&2
-          echo "available: $(ls "$devroot" 2>/dev/null)" >&2
-          return 1
-        fi
-
         local env
         for env in "$@"; do
-          if [[ ! -d "$devroot/$env" ]]; then
-            echo "mkdev: no devshell named '$env' in $devroot" >&2
+          if [[ ! -f "$devroot/envs/$env.nix" ]]; then
+            local -a names
+            names=("$devroot"/envs/*.nix(N:t:r))
+            echo "mkdev: no devshell named '$env' (available: ''${names[*]})" >&2
             return 1
           fi
         done
 
-        if [[ -e .envrc ]]; then
-          echo "mkdev: .envrc already exists in $(pwd)" >&2
-          return 1
-        fi
-
-        { for env in "$@"; do
-            echo "use dev $env"
-          done
-        } > .envrc
+        # drop the previous environment's cache so it can't outlive the new .envrc
+        rm -rf .direnv
+        echo "use dev $*" > .envrc
 
         direnv allow .
-        echo "mkdev: wrote .envrc for [$*] and allowed it"
+        echo "mkdev: wrote '$(<.envrc)' to .envrc and allowed it"
       }
 
       _mkdev() {
         local -a envs
-        envs=(''${(f)"$(ls "$HOME/.local/share/dev" 2>/dev/null)"})
+        envs=("$HOME"/.local/share/dev/envs/*.nix(N:t:r))
         _describe 'devshell' envs
       }
       compdef _mkdev mkdev
@@ -115,8 +105,8 @@
         src = pkgs.fetchFromGitHub {
           owner = "marlonrichert";
           repo = "zsh-hist";
-          rev = "0ef87bdb5847ae0df8536111f2b9888048e2e35c";
-          sha256 = "sha256-6A41J5RJ2v9Zaww3714kaoYmiBu21hS3QQRVHdiafBE=";
+          rev = "b2e65350660bdeb20f1a3059a7540c247a21b87d";
+          sha256 = "1bb4mdagzg78sfrz2j6fzzwk3sd54ccv9zkbmyarkn11fr6jwpg5";
         };
       }
     ];

@@ -6,8 +6,8 @@ let
   yazi-plugins = pkgs.fetchFromGitHub {
     owner = "yazi-rs";
     repo = "plugins";
-    rev = "58c4f4e2f4835cc9bf6751f39e3f7c574fc7f55a";
-    sha256 = "06fz9i8fiyqc1sq86mh6zy66xqmbf3dij11s31br4byflpwgs1wk";
+    rev = "f703392df78b5fba5e8f9f1ad0b1cb6d3def9736";
+    sha256 = "1sgw4xnaimkh3yfsfhnl5g2959fkkjv4ilxla8m17vqz3c19hp1v";
   };
   starship-plugin = pkgs.fetchFromGitHub {
     owner = "Rolv-Apneseth";
