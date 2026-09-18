@@ -14,7 +14,7 @@ in
         "$fill"
         "([ $cmd_duration ]())"
         "$status"
-        "([](fg:053)[ $c$golang$haskell$java$nix_shell$nodejs$python$rust$terraform](bg:053))"
+        "([](fg:053)[ $bun$c$golang$haskell$java$nix_shell$nodejs$python$rust$terraform](bg:053))"
         "$username\n$character\n"
       ];
 
@@ -45,6 +45,11 @@ in
           Dropbox = "";
           Code = "";
         };
+      };
+      bun = {
+        symbol = "";
+        style = "bg:053";
+        format = "[$symbol ($version)]($style) ";
       };
       c = {
         symbol = "󰙱";
