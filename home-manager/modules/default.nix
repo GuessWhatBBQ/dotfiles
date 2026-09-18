@@ -1,11 +1,8 @@
 { inputs, ... }:
 {
   imports = [
-    ./ags
-    ./alacritty
     ./caelestia
     ./direnv
-    ./dunst
     ./emacs
     ./eza
     ./git
