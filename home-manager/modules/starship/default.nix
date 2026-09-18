@@ -1,6 +1,123 @@
+{ lib, ... }:
+let
+  # the original TOML used \b (backspace) here
+  bs = builtins.fromJSON ''"\u0008"'';
+in
 {
-  programs.starship.enable = true;
-  xdg.configFile."starship.toml" = {
-    source = ./starship.toml;
+  programs.starship = {
+    enable = true;
+    settings = {
+      format = lib.concatStrings [
+        "[ $directory ](bg:053)"
+        "[](fg:053)"
+        "([${bs}](fg:053 bg:018 )[ $git_branch$git_commit $git_status ](bg:018)[](fg:018))"
+        "$fill"
+        "([ $cmd_duration ]())"
+        "$status"
+        "([](fg:053)[ $c$golang$haskell$java$nix_shell$nodejs$python$rust$terraform](bg:053))"
+        "$username\n$character\n"
+      ];
+
+      add_newline = false;
+      continuation_prompt = "[ ](fg:012)";
+      username = {
+        show_always = false;
+        style_user = "bg:#9A348E";
+        style_root = "bg:#9A348E";
+        format = "[$user]($style)";
+      };
+      character = {
+        success_symbol = "[](fg:012)";
+        error_symbol = "[](fg:red)";
+      };
+      directory = {
+        style = "bg:053";
+        format = "[$path]($style)";
+        truncation_length = 6;
+        truncation_symbol = "…/";
+        home_symbol = "";
+        substitutions = {
+          Documents = "󰈙";
+          Downloads = "";
+          Music = "";
+          Pictures = "";
+          DATA = "";
+          Dropbox = "";
+          Code = "";
+        };
+      };
+      c = {
+        symbol = "󰙱";
+        style = "bg:053";
+        format = "[$symbol ($version)]($style) ";
+      };
+      cmd_duration = {
+        format = "[$duration](bold yellow)";
+      };
+      fill = {
+        style = "fg:236";
+        symbol = "·";
+      };
+      git_branch = {
+        symbol = "";
+        style = "bg:018";
+        format = "[$symbol $branch]($style)";
+      };
+      git_status = {
+        style = "bg:018";
+        format = "[$all_status$ahead_behind]($style)";
+      };
+      git_commit = {
+        style = "bg:018";
+        format = "[$hash$tag]($style)";
+      };
+      golang = {
+        symbol = "󰟓";
+        style = "bg:053";
+        format = "[$symbol ($version)($mod_version)]($style) ";
+      };
+      haskell = {
+        symbol = "󰲒";
+        style = "bg:053";
+        format = "[$symbol ($version)]($style) ";
+      };
+      java = {
+        symbol = "󰬷";
+        style = "bg:053";
+        format = "[$symbol ($version)]($style) ";
+      };
+      line_break = {
+        disabled = false;
+      };
+      nix_shell = {
+        symbol = "󱄅";
+        style = "bg:053";
+        unknown_msg = "[unknown]($style)";
+        format = "[$symbol $state( \\($name\\))]($style) ";
+      };
+      nodejs = {
+        symbol = "󰎙";
+        style = "bg:053";
+        format = "[$symbol ($version)]($style) ";
+      };
+      python = {
+        symbol = "󰌠";
+        style = "bg:053";
+        format = "[$symbol ($version)]($style) ";
+      };
+      rust = {
+        symbol = "󱘗";
+        style = "bg:053";
+        format = "[$symbol ($version)]($style) ";
+      };
+      status = {
+        disabled = false;
+      };
+      terraform = {
+        symbol = "󱁢";
+        style = "bg:053";
+        format = "[$symbol $workspace ($version)]($style) ";
+      };
+    };
   };
 }

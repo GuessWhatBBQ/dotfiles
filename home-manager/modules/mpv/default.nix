@@ -1,10 +1,22 @@
 { pkgs, ... }:
 {
-  programs.mpv.enable = true;
+  programs.mpv = {
+    enable = true;
+    config = {
+      save-position-on-quit = true;
+      cache = true;
+      demuxer-max-bytes = "8192M";
+      demuxer-max-back-bytes = "1024M";
+      volume-max = 200;
+      pulse-latency-hacks = true;
+      input-ipc-server = "/tmp/mpvsocket";
 
-  xdg.configFile."mpv" = {
-    source = ./mpv/mpv.conf;
-    target = "mpv/mpv.conf";
+      video-sync = "display-resample";
+      interpolation = true;
+      tscale = "oversample";
+
+      af = "format=channels=stereo,acompressor=threshold=-22dB:ratio=8:makeup=4";
+    };
   };
 
   xdg.configFile."fastforward.lua" = {
