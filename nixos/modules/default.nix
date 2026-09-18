@@ -16,5 +16,6 @@
     ./user
     ./wireguard
     ./virtualization
+    ./xdg
   ];
 }

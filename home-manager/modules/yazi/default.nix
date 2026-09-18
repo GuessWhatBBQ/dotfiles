@@ -37,29 +37,6 @@ in
         max_width = 1000;
         max_height = 1000;
       };
-
-      opener = {
-        okular = [
-          {
-            run = "okular $s";
-            orphan = true;
-            desc = "Open with Okular";
-          }
-        ];
-      };
-
-      open = {
-        prepend_rules = [
-          {
-            mime = "application/pdf";
-            use = "okular";
-          }
-          {
-            url = "*.pdf";
-            use = "okular";
-          }
-        ];
-      };
     };
 
     plugins = {
