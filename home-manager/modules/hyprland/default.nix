@@ -15,9 +15,12 @@ let
   fileManager = "wezterm -e yazi";
   audiomixer = "wezterm -e pulsemixer";
   menu = "caelestia shell drawers toggle launcher";
-  screenshotPath = "~/Pictures/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png";
-  screenshotWindow = "grimblast --freeze save area - | satty --filename - --output-filename ${screenshotPath}";
-  screenshotOutput = "grimblast save output - | satty --filename - --output-filename ${screenshotPath}";
+  # Nothing here writes to disk: no --output-filename, so satty only copies to the
+  # clipboard; save manually via satty's "save as" if wanted.
+  satty = "satty --filename - --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard";
+  screenshotArea = "grimblast --freeze save area - | ${satty}";
+  screenshotWindow = "grimblast save active - | ${satty}";
+  screenshotOutput = "grimblast save output - | ${satty}";
 
   mainMod = "SUPER";
   mainModShift = "SUPER + SHIFT";
@@ -171,8 +174,9 @@ in
         (bind "${mainMod} + m" (exec audiomixer))
         (bind "${mainModShift} + return" (exec fileManager))
         (bind "${mainMod} + d" (exec menu))
-        (bind "Print" (exec screenshotWindow))
-        (bind "SHIFT + Print" (exec screenshotOutput))
+        (bind "Print" (exec screenshotArea))
+        (bind "SHIFT + Print" (exec screenshotWindow))
+        (bind "${mainModShift} + Print" (exec screenshotOutput))
 
         (bind "${mainMod} + grave" (dsp "window.close" [ ]))
         (bind "${mainModShift} + space" (dsp "window.float" [ { action = "toggle"; } ]))
@@ -219,6 +223,10 @@ in
       window_rule = [
         (windowRule { class = ".*"; } { suppress_event = "maximize"; })
         (windowRule { class = "(Rofi)"; } { float = true; })
+        (windowRule { class = "com.gabm.satty"; } {
+          float = true;
+          center = true;
+        })
 
         (assignWorkspace "(firefox)" "3")
         (assignWorkspace "(atom|Atom)" "4")
