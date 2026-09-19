@@ -1,20 +1,17 @@
 { lib, ... }:
-let
-  # the original TOML used \b (backspace) here
-  bs = builtins.fromJSON ''"\u0008"'';
-in
 {
   programs.starship = {
     enable = true;
     settings = {
       format = lib.concatStrings [
         "[ $directory ](bg:053)"
-        "[](fg:053)"
-        "([${bs}](fg:053 bg:018 )[ $git_branch$git_commit $git_status ](bg:018)[](fg:018))"
+        "([](fg:prev_bg bg:018)[ $git_branch$git_commit $git_status ](bg:018))"
+        "[](fg:prev_bg)"
         "$fill"
         "([ $cmd_duration ]())"
-        "$status"
-        "([](fg:053)[ $bun$c$golang$haskell$java$nix_shell$nodejs$python$rust$terraform](bg:053))"
+        "([](fg:052 bg:prev_bg)[ $status](bg:052))"
+        "([](fg:090 bg:prev_bg)[ $shlvl](bg:090))"
+        "([](fg:053 bg:prev_bg)[ $bun$c$golang$haskell$java$nix_shell$nodejs$python$rust$terraform](bg:053))"
         "$username\n$character\n"
       ];
 
@@ -115,8 +112,22 @@ in
         style = "bg:053";
         format = "[$symbol ($version)]($style) ";
       };
+      shlvl = {
+        disabled = false;
+        symbol = "󰌨";
+        style = "bg:090";
+        format = "[$symbol $shlvl]($style) ";
+      };
       status = {
         disabled = false;
+        map_symbol = true;
+        symbol = "󰅙";
+        not_executable_symbol = "󰌾";
+        not_found_symbol = "󰍉";
+        sigint_symbol = "󰅜";
+        signal_symbol = "󱐋";
+        style = "bg:052";
+        format = "[$symbol $common_meaning$signal_name$maybe_int]($style) ";
       };
       terraform = {
         symbol = "󱁢";
