@@ -37,6 +37,7 @@
     networkmanagerapplet
     nomacs
     nwg-look
+    pear-desktop
     p7zip
     progress
     pulsemixer
@@ -47,6 +48,5 @@
     satty
     # texliveFull
     wl-clipboard-rs
-    ytmdesktop
   ];
 }
