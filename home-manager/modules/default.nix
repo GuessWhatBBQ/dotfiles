@@ -10,7 +10,6 @@
     ./kanshi
     ./kdeconnect
     ./mpv
-    ./spotify
     ./starship
     ./theme
     ./vim

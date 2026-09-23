@@ -83,8 +83,9 @@
         enableMicrophone = true;
       };
       services = {
-        useTwelveHourClock = true;
-        useFahrenheit = false;
+        clockFormat = "Auto";
+        weatherUnits = "Celsius";
+        sensorUnits = "Celsius";
       };
     };
     cli = {

@@ -47,5 +47,6 @@
     satty
     # texliveFull
     wl-clipboard-rs
+    ytmdesktop
   ];
 }
