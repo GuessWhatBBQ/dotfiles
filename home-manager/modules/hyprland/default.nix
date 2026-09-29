@@ -80,13 +80,16 @@ let
     }
     // extra;
 
+  uwsmApp = cmd: "uwsm app -- ${cmd}";
+  uwsmShell = cmd: uwsmApp "sh -c ${lib.escapeShellArg cmd}";
+
   startupCommands = [
-    "caelestia shell -d"
-    "sleep 2; maestral_qt &"
-    "${pkgs.awww}/bin/awww-daemon && ${pkgs.awww}/bin/awww img ${autumnfeels} &"
-    "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1 &"
-    "${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init &"
-    "hyprmoncfgd --power-aware-refresh &"
+    (uwsmApp "caelestia shell -d")
+    (uwsmShell "sleep 2 && exec maestral_qt")
+    (uwsmShell "${pkgs.awww}/bin/awww-daemon && ${pkgs.awww}/bin/awww img ${autumnfeels}")
+    (uwsmApp "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1")
+    (uwsmApp "${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init")
+    (uwsmApp "${pkgs.unstable.modified.hyprmoncfg}/bin/hyprmoncfgd --power-aware-refresh")
   ];
 in
 {
@@ -94,7 +97,7 @@ in
     enable = true;
     configType = "lua";
     xwayland.enable = true;
-    systemd.enable = true;
+    systemd.enable = false;
 
     # set the Hyprland and XDPH packages to null to use the ones from the NixOS module
     package = null;
@@ -114,21 +117,6 @@ in
           scale = "1";
         }
       ];
-
-      env =
-        lib.mapAttrsToList
-          (name: value: {
-            _args = [
-              name
-              value
-            ];
-          })
-          {
-            XCURSOR_SIZE = "24";
-            XCURSOR_THEME = "Bibata-Modern-Classic";
-            HYPRCURSOR_SIZE = "24";
-            HYPRCURSOR_THEME = "Bibata-Modern-Classic";
-          };
 
       curve = {
         _args = [
@@ -354,5 +342,16 @@ in
           end
         end
       '';
+  };
+
+  xdg.configFile = {
+    "uwsm/env".text = ''
+      export XCURSOR_SIZE=24
+      export XCURSOR_THEME=Bibata-Modern-Classic
+    '';
+    "uwsm/env-hyprland".text = ''
+      export HYPRCURSOR_SIZE=24
+      export HYPRCURSOR_THEME=Bibata-Modern-Classic
+    '';
   };
 }

@@ -6,7 +6,11 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+    withUWSM = true;
+    package = pkgs.unstable.hyprland;
+    portalPackage = pkgs.unstable.xdg-desktop-portal-hyprland;
   };
+
   programs.noisetorch.enable = true;
   programs.zsh.enable = true;
 
@@ -18,10 +22,8 @@
     darktable
     ddcutil
     discord
-    dunst
     foliate
     gimp-with-plugins
-    glances
     google-chrome
     grimblast
     kile
@@ -31,7 +33,6 @@
     maestral-gui
     miniserve
     ncdu
-    networkmanagerapplet
     nomacs
     nwg-look
     pear-desktop
