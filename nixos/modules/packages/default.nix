@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 {
 
   programs.bandwhich.enable = true;
@@ -11,26 +11,23 @@
   programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [
-    # antigravity-fhs
     audacity
     awww
     baobab
-    betterdiscordctl
+    brightnessctl
     darktable
-    # devenv
+    ddcutil
     discord
     dunst
     foliate
     gimp-with-plugins
     glances
     google-chrome
-    # gns3-gui
     grimblast
     kile
     libinput
     libreoffice
     logseq
-    # lunarvim
     maestral-gui
     miniserve
     ncdu
@@ -39,14 +36,13 @@
     nwg-look
     pear-desktop
     p7zip
+    playerctl
     progress
     pulsemixer
     qalculate-qt
     qbittorrent
-    inputs.quickshell.packages.${stdenv.hostPlatform.system}.default
     revanced-cli
     satty
-    # texliveFull
     wl-clipboard-rs
   ];
 }

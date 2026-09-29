@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   inherit (lib.generators) mkLuaInline toLua;
   lua = toLua { };
@@ -15,8 +20,6 @@ let
   fileManager = "wezterm -e yazi";
   audiomixer = "wezterm -e pulsemixer";
   menu = "caelestia shell drawers toggle launcher";
-  # Nothing here writes to disk: no --output-filename, so satty only copies to the
-  # clipboard; save manually via satty's "save as" if wanted.
   satty = "satty --filename - --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard";
   screenshotArea = "grimblast --freeze save area - | ${satty}";
   screenshotWindow = "grimblast save active - | ${satty}";
@@ -35,8 +38,15 @@ let
       dispatcher
     ];
   };
+  # hl.bind(keys, dispatcher, opts) — opts = { locked = true; repeating = true; ... }
+  bindOpts = keys: dispatcher: opts: {
+    _args = [
+      keys
+      dispatcher
+      opts
+    ];
+  };
 
-  # Keys 1-9 then 0, mapped to workspaces 1-10
   workspaces = map (i: {
     key = toString (lib.mod i 10);
     id = i;
@@ -76,6 +86,7 @@ let
     "${pkgs.awww}/bin/awww-daemon && ${pkgs.awww}/bin/awww img ${autumnfeels} &"
     "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1 &"
     "${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init &"
+    "hyprmoncfgd --power-aware-refresh &"
   ];
 in
 {
@@ -96,23 +107,6 @@ in
     # Each attribute becomes an hl.<name>(...) call; lists produce one call per element
     settings = {
       monitor = [
-        {
-          output = "HDMI-A-1";
-          mode = "1920x1080@165";
-          position = "auto";
-          scale = "1";
-          cm = "hdr";
-          sdrbrightness = 1.4;
-          sdrsaturation = 1.0;
-        }
-        {
-          output = "eDP-1";
-          mode = "1920x1080@144";
-          position = "auto";
-          scale = "1";
-          bitdepth = 10;
-          sdrsaturation = 1.4;
-        }
         {
           output = "";
           mode = "preferred";
@@ -218,6 +212,28 @@ in
         (bind "${mainMod} + semicolon" (exec "dunstctl history-pop"))
         (bind "${mainMod} + apostrophe" (exec "dunstctl close"))
         (bind "${mainMod} + quotedbl" (exec "dunstctl close-all"))
+
+        (bindOpts "XF86AudioRaiseVolume" (exec "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+") {
+          locked = true;
+          repeating = true;
+        })
+        (bindOpts "XF86AudioLowerVolume" (exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-") {
+          locked = true;
+          repeating = true;
+        })
+        (bindOpts "XF86MonBrightnessUp" (exec "caelestia shell brightness set +5%") {
+          locked = true;
+          repeating = true;
+        })
+        (bindOpts "XF86MonBrightnessDown" (exec "caelestia shell brightness set 5%-") {
+          locked = true;
+          repeating = true;
+        })
+
+        (bindOpts "XF86AudioMute" (exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle") { locked = true; })
+        (bindOpts "XF86AudioPlay" (exec "playerctl play-pause") { locked = true; })
+        (bindOpts "XF86AudioNext" (exec "playerctl next") { locked = true; })
+        (bindOpts "XF86AudioPrev" (exec "playerctl previous") { locked = true; })
       ];
 
       window_rule = [
@@ -233,6 +249,7 @@ in
         (assignWorkspace "(emacs|Emacs)" "4")
         (assignWorkspace "(jetbrains-idea)" "4")
         (assignWorkspace "(Spotify|spotify)" "5")
+        (assignWorkspace "(com.github.th_ch.youtube_music)" "5")
         (assignWorkspace "(discord)" "6")
         (assignWorkspace "(Skype)" "9")
         (assignWorkspace "(Logseq)" "10")
@@ -266,7 +283,6 @@ in
             inactive_border = "rgba(595959aa)";
           };
           resize_on_border = false;
-          # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
           allow_tearing = false;
           layout = "dwindle";
         };
@@ -308,7 +324,7 @@ in
           kb_options = "ctrl:nocaps";
           kb_rules = "";
           follow_mouse = 1;
-          sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
+          sensitivity = 0;
           scroll_factor = 2;
           touchpad.natural_scroll = true;
         };
@@ -324,5 +340,19 @@ in
         ];
       };
     };
+
+    extraConfig =
+      let
+        monitorsLua = "${config.home.homeDirectory}/.config/hypr/hyprmoncfg-monitors.lua";
+      in
+      ''
+        do
+          local f = io.open("${monitorsLua}", "r")
+          if f then
+            f:close()
+            dofile("${monitorsLua}")
+          end
+        end
+      '';
   };
 }

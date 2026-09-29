@@ -7,7 +7,7 @@
     ./eza
     ./git
     ./hyprland
-    ./kanshi
+    ./hyprmoncfg
     ./kdeconnect
     ./mpv
     ./starship

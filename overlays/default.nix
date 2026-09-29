@@ -1,14 +1,33 @@
 # This file defines overlays
 { inputs, ... }:
+let
+  modified-unstable-packages = final: prev: {
+    modified = {
+      hyprmoncfg = prev.hyprmoncfg.overrideAttrs (
+        finalAttrs: previousAttrs: {
+          version = "1.21.0";
+          src = prev.fetchFromGitHub {
+            inherit (previousAttrs.src) owner repo;
+            tag = "v${finalAttrs.version}";
+            hash = "sha256-Qvgfo448n4/w2NFggeHhhccajM4B8xPkWundGIJ0H98=";
+          };
+          vendorHash = "sha256-gQbjvdKtO0hCXrs9RnWo1s0YeHf5W9t+8AgS2ELXlPo=";
+          doCheck = false;
+        }
+      );
+    };
+  };
+in
 {
-  # When applied, the unstable nixpkgs set (declared in the flake inputs) will
-  # be accessible through 'pkgs.unstable'
   unstable-packages = final: _prev: {
     unstable = import inputs.nixpkgs-unstable {
       system = final.stdenv.hostPlatform.system;
       config.allowUnfree = true;
+      overlays = [ modified-unstable-packages ];
     };
   };
+
+  inherit modified-unstable-packages;
 
   modified-packages = final: prev: {
     # antigravity = prev.antigravity.overrideAttrs (oldAttrs: {

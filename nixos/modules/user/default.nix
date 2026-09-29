@@ -18,6 +18,8 @@
         "libvirtd"
         "docker"
 
+        "i2c"
+
         # GNS3
         "ubridge"
         "gns3"
