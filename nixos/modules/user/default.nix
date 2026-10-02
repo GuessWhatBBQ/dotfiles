@@ -18,7 +18,12 @@
         "libvirtd"
         "docker"
 
+        # ddcutil
         "i2c"
+
+        # Printing & scanning
+        "lp"
+        "scanner"
 
         # GNS3
         "ubridge"

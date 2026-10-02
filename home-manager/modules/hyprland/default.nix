@@ -16,9 +16,9 @@ let
   };
   # keypress = ./keypresseventprocessor.bash;
 
-  terminal = "wezterm";
-  fileManager = "wezterm -e yazi";
-  audiomixer = "wezterm -e pulsemixer";
+  terminal = uwsmApp "wezterm";
+  fileManager = uwsmApp "wezterm -e yazi";
+  audiomixer = uwsmApp "wezterm -e pulsemixer";
   menu = "caelestia shell drawers toggle launcher";
   satty = "satty --filename - --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard";
   screenshotArea = "grimblast --freeze save area - | ${satty}";
@@ -80,7 +80,7 @@ let
     }
     // extra;
 
-  uwsmApp = cmd: "uwsm app -- ${cmd}";
+  uwsmApp = cmd: "uwsm-app -t service -- ${cmd}";
   uwsmShell = cmd: uwsmApp "sh -c ${lib.escapeShellArg cmd}";
 
   startupCommands = [

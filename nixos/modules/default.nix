@@ -11,6 +11,7 @@
     ./networking
     ./packages
     ./plasma
+    ./printing
     ./shell
     ./udev
     ./user
