@@ -54,12 +54,14 @@
         # Workaround for https://github.com/NixOS/nix/issues/9574
         nix-path = config.nix.nixPath;
 
-        # extra-substituters = [
-        #   "https://devenv.cachix.org?priority=999"
-        # ];
-        # extra-trusted-public-keys = [
-        #   "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-        # ];
+        extra-substituters = [
+          # "https://devenv.cachix.org?priority=999"
+          "https://noctalia.cachix.org"
+        ];
+        extra-trusted-public-keys = [
+          # "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+          "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+        ];
       };
       # Opinionated: disable channels
       channel.enable = false;

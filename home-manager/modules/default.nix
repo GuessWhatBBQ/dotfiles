@@ -1,7 +1,6 @@
-{ inputs, ... }:
+{ ... }:
 {
   imports = [
-    ./caelestia
     ./direnv
     ./emacs
     ./eza
@@ -10,6 +9,7 @@
     ./hyprmoncfg
     ./kdeconnect
     ./mpv
+    ./noctalia
     ./starship
     ./theme
     ./vim

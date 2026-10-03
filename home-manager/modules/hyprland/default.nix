@@ -19,7 +19,8 @@ let
   terminal = uwsmApp "wezterm";
   fileManager = uwsmApp "wezterm -e yazi";
   audiomixer = uwsmApp "wezterm -e pulsemixer";
-  menu = "caelestia shell drawers toggle launcher";
+  noctalia = cmd: "noctalia msg ${cmd}";
+  menu = noctalia "panel-toggle launcher";
   satty = "satty --filename - --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard";
   screenshotArea = "grimblast --freeze save area - | ${satty}";
   screenshotWindow = "grimblast save active - | ${satty}";
@@ -84,7 +85,7 @@ let
   uwsmShell = cmd: uwsmApp "sh -c ${lib.escapeShellArg cmd}";
 
   startupCommands = [
-    (uwsmApp "caelestia shell -d")
+    (uwsmApp "noctalia")
     (uwsmShell "sleep 2 && exec maestral_qt")
     (uwsmShell "${pkgs.awww}/bin/awww-daemon && ${pkgs.awww}/bin/awww img ${autumnfeels}")
     (uwsmApp "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1")
@@ -196,29 +197,30 @@ in
         (bind "${mainMod} + mouse:272" (dsp "window.drag" [ ]))
         (bind "${mainMod} + mouse:273" (dsp "window.resize" [ ]))
 
-        (bind "${mainModShift} + colon" (exec "dunstctl set-paused toggle"))
-        (bind "${mainMod} + semicolon" (exec "dunstctl history-pop"))
-        (bind "${mainMod} + apostrophe" (exec "dunstctl close"))
-        (bind "${mainMod} + quotedbl" (exec "dunstctl close-all"))
+        (bind "${mainModShift} + colon" (exec (noctalia "notification-dnd-toggle")))
+        (bind "${mainMod} + semicolon" (exec (noctalia "panel-toggle control-center notifications")))
+        (bind "${mainMod} + apostrophe" (exec (noctalia "notification-clear-active")))
+        (bind "${mainMod} + quotedbl" (exec (noctalia "notification-clear-history")))
+        (bind "${mainMod} + comma" (exec (noctalia "settings-toggle")))
 
-        (bindOpts "XF86AudioRaiseVolume" (exec "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+") {
+        (bindOpts "XF86AudioRaiseVolume" (exec (noctalia "volume-up")) {
           locked = true;
           repeating = true;
         })
-        (bindOpts "XF86AudioLowerVolume" (exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-") {
+        (bindOpts "XF86AudioLowerVolume" (exec (noctalia "volume-down")) {
           locked = true;
           repeating = true;
         })
-        (bindOpts "XF86MonBrightnessUp" (exec "caelestia shell brightness set +5%") {
+        (bindOpts "XF86MonBrightnessUp" (exec (noctalia "brightness-up")) {
           locked = true;
           repeating = true;
         })
-        (bindOpts "XF86MonBrightnessDown" (exec "caelestia shell brightness set 5%-") {
+        (bindOpts "XF86MonBrightnessDown" (exec (noctalia "brightness-down")) {
           locked = true;
           repeating = true;
         })
 
-        (bindOpts "XF86AudioMute" (exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle") { locked = true; })
+        (bindOpts "XF86AudioMute" (exec (noctalia "volume-mute")) { locked = true; })
         (bindOpts "XF86AudioPlay" (exec "playerctl play-pause") { locked = true; })
         (bindOpts "XF86AudioNext" (exec "playerctl next") { locked = true; })
         (bindOpts "XF86AudioPrev" (exec "playerctl previous") { locked = true; })
@@ -227,6 +229,13 @@ in
       window_rule = [
         (windowRule { class = ".*"; } { suppress_event = "maximize"; })
         (windowRule { class = "(Rofi)"; } { float = true; })
+        (windowRule { class = "dev.noctalia.Noctalia"; } {
+          float = true;
+          size = [
+            1080
+            920
+          ];
+        })
         (windowRule { class = "com.gabm.satty"; } {
           float = true;
           center = true;
@@ -249,6 +258,16 @@ in
         (noBordersOn "w[tv1]")
         (noBordersOn "f[1]")
       ];
+
+      # Blur Noctalia surfaces and let it run its own animations
+      layer_rule = {
+        name = "noctalia";
+        match.namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$";
+        no_anim = true;
+        ignore_alpha = 0.5;
+        blur = true;
+        blur_popups = true;
+      };
 
       workspace_rule = [
         (noGapsOn "w[tv1]")
@@ -295,6 +314,8 @@ in
 
         animations.enabled = true;
 
+        cursor.no_warps = true;
+
         dwindle.preserve_split = true;
 
         master.new_status = "master";
@@ -334,6 +355,23 @@ in
         monitorsLua = "${config.home.homeDirectory}/.config/hypr/hyprmoncfg-monitors.lua";
       in
       ''
+        -- Hold SUPER + space to peek at the bar. The space-release bind stays disabled
+        -- until the peek starts, so ordinary spaces never reach noctalia. It ignores
+        -- mods so it still fires when SUPER is let go before space.
+        do
+          local peekEnd
+          peekEnd = hl.bind("space", function()
+            peekEnd:set_enabled(false)
+            hl.exec_cmd(${lua (noctalia "bar-auto-hide-set smart")})
+          end, { release = true, ignore_mods = true, non_consuming = true, locked = true })
+          peekEnd:set_enabled(false)
+
+          hl.bind("${mainMod} + space", function()
+            peekEnd:set_enabled(true)
+            hl.exec_cmd(${lua (noctalia "bar-auto-hide-set off")})
+          end)
+        end
+
         do
           local f = io.open("${monitorsLua}", "r")
           if f then
