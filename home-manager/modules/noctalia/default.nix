@@ -4,6 +4,9 @@
 }:
 let
   opacity = 0.7;
+
+  # Shared capsule behind a set of bar widgets, referenced in a lane as "group:<id>"
+  capsuleGroup = id: members: { inherit id members opacity; };
 in
 {
   imports = [ inputs.noctalia.homeModules.default ];
@@ -22,6 +25,7 @@ in
           clipboard_placement = "attached";
           open_near_click_clipboard = true;
           open_near_click_session = true;
+          open_near_click_control_center = true;
         };
 
         session.show_shortcuts = false;
@@ -50,22 +54,42 @@ in
         capsule_thickness = 0.6;
 
         start = [
-          "workspaces"
+          "group:g2"
           "media"
         ];
-        center = [ "active_window" ];
+        center = [ "group:g1" ];
         end = [
           "tray"
-          "clock"
-          "network"
-          "bluetooth"
-          "volume"
-          "battery"
+          "sysmon"
+          "group:g4"
+          "group:g3"
           "session"
+        ];
+        capsule_group = [
+          (capsuleGroup "g1" [
+            "weather"
+            "clock"
+          ])
+          (capsuleGroup "g2" [
+            "workspaces"
+            "active_window"
+          ])
+          (capsuleGroup "g3" [
+            "network"
+            "bluetooth"
+            "brightness"
+            "battery"
+          ])
+          (capsuleGroup "g4" [
+            "volume"
+            "input_volume"
+          ])
         ];
         dead_zone.actions = {
           left = "panel-toggle control-center home";
-          right = "none";
+          right = "panel-toggle clipboard";
+          scroll_up = "workspace-switch prev";
+          scroll_down = "workspace-switch next";
         };
       };
 
@@ -76,9 +100,11 @@ in
         };
         active_window = {
           title_scroll = "on_hover";
+          # Has no click action of its own, so match the bar's empty-space click
+          actions.left = "panel-toggle control-center home";
         };
         clock = {
-          format = "{:%I:%M:%S %p}";
+          format = "{:%a %d %b | %I:%M:%S %p}";
           tooltip_format = "{:%A, %B %d, %Y}";
         };
         media = {
@@ -87,8 +113,24 @@ in
           show_progress = true;
           title_scroll = "on_hover";
         };
-        bluetooth.show_label = true;
         tray.drawer = true;
+
+        battery.show_label = false;
+        brightness.show_label = false;
+        network.show_label = false;
+        volume.show_label = false;
+        input_volume.show_label = false;
+
+        sysmon = {
+          glyph = "heart-rate-monitor";
+          highlight_color = "on_surface";
+          show_value = false;
+          visualization = "none";
+        };
+      };
+
+      lockscreen = {
+        transition = [ "zoom" ];
       };
 
       dock = {
@@ -127,14 +169,15 @@ in
         box_width = 1920;
         box_height = 176;
         cx = 960;
-        cy = 992;
+        cy = 88;
+        flip_y = true;
         settings = {
           background = false;
           bands = 128;
           centered = false;
           show_when_idle = false;
-          color_1 = "secondary";
-          color_2 = "secondary";
+          color_1 = "error";
+          color_2 = "error";
         };
       };
 
@@ -142,9 +185,10 @@ in
 
       osd = {
         orientation = "vertical";
-        position = "center_right"; # text popups
-        position_vertical = "center_right"; # volume/brightness sliders
+        position = "center_right";
+        position_vertical = "center_right";
         background_opacity = opacity;
+        hide_delay_ms = 4000;
       };
 
       audio.enable_sounds = false;

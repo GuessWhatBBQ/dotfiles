@@ -355,22 +355,41 @@ in
         monitorsLua = "${config.home.homeDirectory}/.config/hypr/hyprmoncfg-monitors.lua";
       in
       ''
-        -- Hold SUPER + space to peek at the bar. The space-release bind stays disabled
-        -- until the peek starts, so ordinary spaces never reach noctalia. It ignores
-        -- mods so it still fires when SUPER is let go before space.
-        do
-          local peekEnd
-          peekEnd = hl.bind("space", function()
-            peekEnd:set_enabled(false)
-            hl.exec_cmd(${lua (noctalia "bar-auto-hide-set smart")})
-          end, { release = true, ignore_mods = true, non_consuming = true, locked = true })
-          peekEnd:set_enabled(false)
+        -- Hold-to-show binds: `keys` runs `onPress`, and releasing `releaseKey` runs `onRelease`.
+        -- The release bind stays disabled until the hold starts, so ordinary presses of that
+        -- key never reach noctalia. It ignores mods so it still fires when the modifiers are
+        -- let go first, and is transparent so another bind pressed mid-hold can't shadow it
+        -- (a shadowed release bind never fires and the hold gets stuck).
+        local function holdBind(keys, releaseKey, onPress, onRelease)
+          local releaseBind
+          releaseBind = hl.bind(releaseKey, function()
+            releaseBind:set_enabled(false)
+            hl.exec_cmd(onRelease)
+          end, {
+            release = true,
+            ignore_mods = true,
+            non_consuming = true,
+            transparent = true,
+            locked = true,
+          })
+          releaseBind:set_enabled(false)
 
-          hl.bind("${mainMod} + space", function()
-            peekEnd:set_enabled(true)
-            hl.exec_cmd(${lua (noctalia "bar-auto-hide-set off")})
+          hl.bind(keys, function()
+            releaseBind:set_enabled(true)
+            hl.exec_cmd(onPress)
           end)
         end
+
+        -- Peek at the bar. bar-show/bar-hide slide it in and out with the auto-hide animation and
+        -- leave smart auto-hide in charge (bar-hide is a no-op on an empty workspace).
+        holdBind("${mainMod} + space", "space",
+          ${lua (noctalia "bar-show")},
+          ${lua (noctalia "bar-hide")})
+
+        -- Peek at the system monitor tab of the control center
+        holdBind("${mainModShift} + d", "d",
+          ${lua (noctalia "panel-open control-center system")},
+          ${lua (noctalia "panel-close control-center")})
 
         do
           local f = io.open("${monitorsLua}", "r")
