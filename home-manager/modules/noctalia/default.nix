@@ -99,7 +99,7 @@ in
           active_pill_size = 1.6;
         };
         active_window = {
-          title_scroll = "on_hover";
+          title_scroll = "always";
           # Has no click action of its own, so match the bar's empty-space click
           actions.left = "panel-toggle control-center home";
         };
@@ -111,7 +111,7 @@ in
           art_size = 20;
           rotate_album_art = true;
           show_progress = true;
-          title_scroll = "on_hover";
+          title_scroll = "always";
         };
         tray.drawer = true;
 
@@ -149,18 +149,6 @@ in
       hot_corners = {
         enabled = true;
         top_left.action = "window_switcher";
-      };
-
-      control_center = {
-        calendar.show_events_card = false;
-        shortcuts = map (type: { inherit type; }) [
-          "wifi"
-          "bluetooth"
-          "caffeine"
-          "notification"
-          "clipboard"
-          "power_profile"
-        ];
       };
 
       desktop_widgets.widget.desktop-widget-0000000000000001 = {
