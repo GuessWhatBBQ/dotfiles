@@ -5,13 +5,12 @@ let
     modified = {
       hyprmoncfg = prev.hyprmoncfg.overrideAttrs (
         finalAttrs: previousAttrs: {
-          version = "1.21.0";
+          version = "1.23.0";
           src = prev.fetchFromGitHub {
             inherit (previousAttrs.src) owner repo;
             tag = "v${finalAttrs.version}";
-            hash = "sha256-Qvgfo448n4/w2NFggeHhhccajM4B8xPkWundGIJ0H98=";
+            hash = "sha256-Xn0yqM4wb540BBIRgxRu7AM8biu/fDYuby2uYL6ex1k=";
           };
-          vendorHash = "sha256-gQbjvdKtO0hCXrs9RnWo1s0YeHf5W9t+8AgS2ELXlPo=";
           doCheck = false;
         }
       );
