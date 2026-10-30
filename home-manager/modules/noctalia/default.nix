@@ -191,6 +191,8 @@ in
       };
 
       location.auto_locate = true;
+
+      control_center.calendar.show_events_card = false;
     };
   };
 }

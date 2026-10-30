@@ -104,10 +104,6 @@ in
     package = null;
     portalPackage = null;
 
-    # plugins = [
-    #   (pkgs.callPackage ./plugin.nix { })
-    # ];
-
     # Each attribute becomes an hl.<name>(...) call; lists produce one call per element
     settings = {
       monitor = [
@@ -390,6 +386,31 @@ in
         holdBind("${mainModShift} + d", "d",
           ${lua (noctalia "panel-open control-center system")},
           ${lua (noctalia "panel-close control-center")})
+
+        -- Noctalia keeps desktop widgets rendering (and the visualizer capturing audio) even when
+        -- windows cover them, so hide them while the visualizer's monitor shows a non-empty
+        -- workspace. window.close fires before the window leaves its workspace, so the check runs
+        -- from a timer, which the event loop only fires once the close has been fully handled.
+        do
+          local function syncDesktopWidgets()
+            local monitor = hl.get_monitor("HDMI-A-1")
+            local workspace = monitor and monitor.active_workspace
+            local action = (workspace and workspace.windows > 0) and "hide" or "show"
+            hl.exec_cmd("noctalia msg desktop-widgets-" .. action)
+          end
+          local function deferSync()
+            hl.timer(syncDesktopWidgets, { timeout = 1, type = "oneshot" })
+          end
+          for _, event in ipairs({
+            "workspace.active",
+            "window.open",
+            "window.close",
+            "window.move_to_workspace",
+            "monitor.added",
+          }) do
+            hl.on(event, deferSync)
+          end
+        end
 
         do
           local f = io.open("${monitorsLua}", "r")
