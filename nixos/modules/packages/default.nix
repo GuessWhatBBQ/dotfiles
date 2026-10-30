@@ -24,6 +24,7 @@
     discord
     foliate
     gimp-with-plugins
+    godot
     google-chrome
     grimblast
     kile

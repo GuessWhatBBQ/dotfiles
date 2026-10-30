@@ -5,6 +5,7 @@
     ./emacs
     ./eza
     ./git
+    ./godot
     ./hyprland
     ./hyprmoncfg
     ./kdeconnect
