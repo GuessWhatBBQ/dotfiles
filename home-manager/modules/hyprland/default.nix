@@ -140,6 +140,8 @@ in
         (animation "border" 10 "default" { })
         (animation "borderangle" 8 "default" { })
         (animation "fade" 7 "default" { })
+        (animation "fadePopupsIn" 1.5 "default" { })
+        (animation "fadePopupsOut" 1 "default" { enabled = false; })
         (animation "workspaces" 6 "default" { })
       ];
 
@@ -294,12 +296,7 @@ in
           rounding = 10;
           active_opacity = 1.0;
           inactive_opacity = 1.0;
-          shadow = {
-            enabled = true;
-            range = 4;
-            render_power = 3;
-            color = "rgba(1a1a1aee)";
-          };
+          shadow.enabled = false;
           blur = {
             enabled = true;
             size = 3;
@@ -310,7 +307,11 @@ in
 
         animations.enabled = true;
 
-        cursor.no_warps = true;
+        cursor = {
+          no_warps = true;
+          # Hardware cursor plane skips color management, so it renders wrong on the HDR monitor
+          no_hardware_cursors = 1;
+        };
 
         dwindle.preserve_split = true;
 
